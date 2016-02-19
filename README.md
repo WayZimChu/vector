@@ -9,8 +9,9 @@ Time spent: **X** hours spent in total
 The following **required** functionality is completed:
 
 - [ ] GPS capability: User can get current location.
-- [ ] User can calculate the midpoint to meet between two location points and get a table view of options.
 - [ ] User can choose the type of meeting point (ex: bar, coffee shop, library).
+- [ ] User can pull a list of businesses around a radius of the meeting point.
+- [ ] Use the Google Maps API to calculate the midpoint to meet between two location points.
 
 The following **optional** features are implemented:
 
