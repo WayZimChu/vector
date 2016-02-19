@@ -12,6 +12,11 @@ The following **required** functionality is completed:
 - [ ] User can choose the type of meeting point (ex: bar, coffee shop, library).
 - [ ] User can pull a list of businesses around a radius of the meeting point.
 - [ ] Use the Google Maps API to calculate the midpoint to meet between two location points.
+- [ ] Friends view controller
+- [ ] Maps view controller
+- [ ] Businesses view controller
+- [ ] Details view for business (friends can decide whether or not it is accepted)
+
 
 The following **optional** features are implemented:
 
