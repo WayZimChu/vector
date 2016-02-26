@@ -38,15 +38,15 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ### Main View
 
-<img src='wireframes\WireFrame_main.jpg' title='Main Screen Wireframe' width='' alt='wireframes' />
+<img src='wireframes/WireFrame_main.jpg' title='Main Screen Wireframe' width='' alt='wireframes' />
 
 ### Location Details View
 
-<img src='wireframes\WireFrame_business.jpg' title='Main Screen Wireframe' width='' alt='wireframes' />
+<img src='wireframes/WireFrame_business.jpg' title='Main Screen Wireframe' width='' alt='wireframes' />
 
 ### Friends List View
 
-<img src='wireframes\WireFrame_friends.jpg' title='Main Screen Wireframe' width='' alt='wireframes' />
+<img src='wireframes/WireFrame_friends.jpg' title='Main Screen Wireframe' width='' alt='wireframes' />
 
 ## Notes
 
