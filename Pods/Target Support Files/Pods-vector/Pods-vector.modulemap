@@ -1,0 +1,6 @@
+framework module Pods_vector {
+  umbrella header "Pods-vector-umbrella.h"
+
+  export *
+  module * { export * }
+}
