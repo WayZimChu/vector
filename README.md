@@ -32,23 +32,30 @@ Here's a walkthrough of implemented user stories:
 
 <img src='images/vector.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-GIF created with Mac OS X screenshot & it's really a png <!--[LiceCap](http://www.cockos.com/licecap/). -->
+GIF created with Mac OS X screenshot & it's really a png 
+
+<!--- 
+[LiceCap](http://www.cockos.com/licecap/). 
+--->
 
 ## Wireframes
 
 ### Main View
 
 Default view allows interaction with the local area and nearest friends.
+
 <img src='images/wireframe_main.jpg' title='Main Screen Wireframe' width='360' alt='wireframes' />
 
 ### Location Details View
 
 When a location is selected along the vector between two friends.
+
 <img src='images/wireframe_business.jpg' title='Main Screen Wireframe' width='360' alt='wireframes' />
 
 ### Friends List View
 
 Tap the more friends button to access the full list of friends.
+
 <img src='images/wireframe_friends.jpg' title='Main Screen Wireframe' width='360' alt='wireframes' />
 
 ## Notes
