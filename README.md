@@ -2,27 +2,24 @@
 
 Vector is an interface to find a place to meet between two points of location.
 
-Time spent: **X** hours spent in total
+Time spent: **1** mythical man hours spent in total
 
 ## User Stories
 
 The following **required** functionality is completed:
 
-- [ ] GPS capability: User can get current location.
+- [ ] User can get current location
+- [ ] User can get input a friend's location & get a midpoint
+- [ ] User can get friends location from a list of friends
 - [ ] User can choose the type of meeting point (ex: bar, coffee shop, library).
-- [ ] User can pull a list of businesses around a radius of the meeting point using Yelp API.
-- [ ] Use the Google Maps API to calculate the midpoint to meet between two location points.
-- [ ] Friends view controller
-- [ ] Maps view controller
-- [ ] Businesses view controller
-- [ ] Details view for business (friends can decide whether or not it is accepted)
-- [ ] Using parse as a server backbone in order to get updates on GPS locations of others.
-
+- [ ] User can pull a list of businesses around a radius of the meeting point.
+- [ ] Users can access detailed view of midpoint location(s)
 
 The following **optional** features are implemented:
 
+- [ ] User can adjust midpoint based on time and/or distance
 - [ ] User can can choose method of transportation.
-- [ ] User can get GPS Tracking of 2nd user's location
+- [ ] Friends locations update based on their GPS location
 
 The following **additional** features are implemented:
 
@@ -30,14 +27,14 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. 
-2. 
+1. Using Google Map API
+2. Integrating multiple API datasets into a single "stream" of user info
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='vector.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
