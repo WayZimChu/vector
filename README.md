@@ -30,7 +30,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='vector.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='images/vector.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -38,15 +38,15 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ### Main View
 
-<img src='wireframes/WireFrame_main.jpg' title='Main Screen Wireframe' width='' alt='wireframes' />
+<img src='images/wireframe_main.jpg' title='Main Screen Wireframe' width='' alt='wireframes' />
 
 ### Location Details View
 
-<img src='wireframes/WireFrame_business.jpg' title='Main Screen Wireframe' width='' alt='wireframes' />
+<img src='images/wireframe_business.jpg' title='Main Screen Wireframe' width='' alt='wireframes' />
 
 ### Friends List View
 
-<img src='wireframes/WireFrame_friends.jpg' title='Main Screen Wireframe' width='' alt='wireframes' />
+<img src='images/wireframe_friends.jpg' title='Main Screen Wireframe' width='' alt='wireframes' />
 
 ## Notes
 
