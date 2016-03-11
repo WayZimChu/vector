@@ -5,8 +5,9 @@
 
 target 'vector' do
 
-pod 'AFNetworking'
-pod ‘Parse’
+	pod 'AFNetworking'
+	pod ‘Parse’
+	pod 'SwiftyJSON'
 
 end
 
