@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "C77572E3EA9AFB3F30C75BDCC6761762E3C6FFE9",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "CED20F73FDAF566013D83E22583693C6F0E9761C" : 0,
+    "C77572E3EA9AFB3F30C75BDCC6761762E3C6FFE9" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "E5C57D9B-60D9-4D14-911F-AFDA2319ED5D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "CED20F73FDAF566013D83E22583693C6F0E9761C" : "",
+    "C77572E3EA9AFB3F30C75BDCC6761762E3C6FFE9" : "vector\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "vector",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "vector.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/WayZimChu\/vector.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C77572E3EA9AFB3F30C75BDCC6761762E3C6FFE9"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/r3dcrosse\/Instagramer.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "CED20F73FDAF566013D83E22583693C6F0E9761C"
+    }
+  ]
+}

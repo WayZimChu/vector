@@ -8,18 +8,18 @@ Time spent: **1** mythical man hours spent in total
 
 The following **required** functionality is completed:
 
-- [ ] User can get current location
+- [x] User can get current location
 - [ ] User can get input a friend's location & get a midpoint
 - [ ] User can get friends location from a list of friends
 - [ ] User can choose the type of meeting point (ex: bar, coffee shop, library).
-- [ ] User can pull a list of businesses around a radius of the meeting point.
+- [x] User can pull a list of businesses around a radius of the meeting point.
 - [ ] Users can access detailed view of midpoint location(s)
 
 The following **optional** features are implemented:
 
 - [ ] User can adjust midpoint based on time and/or distance
 - [ ] User can can choose method of transportation.
-- [ ] Friends locations update based on their GPS location
+- [x] Friends locations update based on their GPS location
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
