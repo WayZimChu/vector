@@ -7,12 +7,21 @@
 //
 
 import UIKit
+import Foundation
+import CoreLocation
 
-class ViewController: UIViewController {
+class MapViewController: UIViewController {
+	
+	
+	
+	let locationManager = CLLocationManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+			
+			locationManager.delegate = self
+			locationManager.requestWhenInUseAuthorization()
     }
 
     override func didReceiveMemoryWarning() {
