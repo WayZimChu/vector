@@ -7,9 +7,15 @@
 //
 
 import UIKit
+import Foundation
+import CoreLocation
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+	let locationManager = CLLocationManager()
+
+	@IBOutlet weak var mapView: GMSMapView!
+	
     @IBOutlet weak var tableView: UITableView!
     //@IBOutlet weak var mapView: MKMapView! // NOT SURE IF THIS IS CORRECT FOR GOOGLE API
     
@@ -26,6 +32,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
+			
+			locationManager.delegate = self
+			locationManager.requestWhenInUseAuthorization()
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,7 +57,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
 
-    /*
+   /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -58,3 +68,33 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     */
 
 }
+
+extension MainViewController: CLLocationManagerDelegate {
+	// 2
+	func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+		// 3
+		if status == .AuthorizedWhenInUse {
+			
+			// 4
+			locationManager.startUpdatingLocation()
+			
+			//5
+			mapView.myLocationEnabled = true
+			mapView.settings.myLocationButton = true
+		}
+	}
+	
+	// 6
+	func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+		if let location = locations.first {
+			
+			// 7
+			mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+			
+			// 8
+			locationManager.stopUpdatingLocation()
+		}
+		
+	}
+}
+

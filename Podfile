@@ -8,6 +8,6 @@ target 'vector' do
 	pod 'AFNetworking'
 	pod ‘Parse’
 	pod 'SwiftyJSON'
-
+	pod 'GoogleMaps'
 end
 
