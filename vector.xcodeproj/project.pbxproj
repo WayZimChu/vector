@@ -26,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		274E45301C9271C200C54B94 /* bridging-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "bridging-header.h"; sourceTree = "<group>"; };
 		278E43231C92692A002BD781 /* GooglePlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePlace.swift; sourceTree = "<group>"; };
 		278E43251C92693C002BD781 /* GoogleDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleDataProvider.swift; sourceTree = "<group>"; };
 		7A4565251C92734600A24BF3 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -118,6 +119,7 @@
 				818AEEE11C7D3A370027BE00 /* LaunchScreen.storyboard */,
 				818AEEE41C7D3A370027BE00 /* Info.plist */,
 				818AEEDC1C7D3A370027BE00 /* vector.xcdatamodeld */,
+				274E45301C9271C200C54B94 /* bridging-header.h */,
 			);
 			path = vector;
 			sourceTree = "<group>";
