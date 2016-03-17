@@ -264,10 +264,10 @@
             </objects>
             <point key="canvasLocation" x="883" y="343"/>
         </scene>
-        <!--View Controller-->
+        <!--Sign Up View Controller-->
         <scene sceneID="6P0-5I-dOC">
             <objects>
-                <viewController id="oNE-h8-qmo" sceneMemberID="viewController">
+                <viewController id="oNE-h8-qmo" customClass="SignUpViewController" customModule="vector" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vZc-zs-eds"/>
                         <viewControllerLayoutGuide type="bottom" id="see-ev-Z0a"/>
@@ -328,6 +328,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="ProfilePicture" destination="MW3-Hj-APj" id="Vwu-fN-orh"/>
+                        <outlet property="firstNameField" destination="hnu-PN-F5q" id="tNd-ak-hzO"/>
+                        <outlet property="lastNameField" destination="E4d-i9-03h" id="MeX-Fw-TVN"/>
+                        <outlet property="phoneNumberField" destination="wEz-Rs-MI9" id="2FH-OK-sYh"/>
+                        <outlet property="userNameField" destination="2S5-84-OlR" id="x2l-ba-8bZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xk4-59-jgV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
