@@ -32,11 +32,7 @@ Here's a walkthrough of implemented user stories:
 
 <img src='images/vector.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-GIF created with Mac OS X screenshot & it's really a png 
-
-<!--- 
-[LiceCap](http://www.cockos.com/licecap/). 
---->
+GIF created with[LiceCap](http://www.cockos.com/licecap/). 
 
 ## Wireframes
 
