@@ -76,8 +76,8 @@ Describe any challenges encountered while building the app.
 
 ## Data Model
 
-Google Maps API: coordinate.longitude, coordinate.latitude
-Google Places API: name, vicinity, geometry.location.lat, geometry.location.lng, placeType, photos
+- Google Maps API: coordinate.longitude, coordinate.latitude
+- Google Places API: name, vicinity, geometry.location.lat, geometry.location.lng, placeType, photos
 
 ## License #
 
