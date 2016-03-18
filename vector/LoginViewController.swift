@@ -26,6 +26,10 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func onFree(sender: AnyObject) {
+        performSegueWithIdentifier("free", sender: nil)
+    }
+
     @IBAction func onLogin(sender: AnyObject) {
         // Check login from Parse backend
     }
