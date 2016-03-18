@@ -2,7 +2,7 @@
 
 Vector is an interface to find a place to meet between two points of location.
 
-Time spent: **1** mythical man hours spent in total
+Time spent: **7** mythical man hours spent in total
 
 ## User Stories
 
@@ -19,7 +19,7 @@ The following **optional** features are implemented:
 
 - [ ] User can adjust midpoint based on time and/or distance
 - [ ] User can can choose method of transportation.
-- [x] Friends locations update based on their GPS location
+- [ ] Friends locations update based on their GPS location
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
@@ -77,6 +77,11 @@ Tap the more friends button to access the full list of friends.
 ## Notes
 
 Describe any challenges encountered while building the app.
+
+## Data Model
+
+Google Maps API: coordinate.longitude, coordinate.latitude
+Google Places API: name, vicinity, geometry.location.lat, geometry.location.lng, placeType, photos
 
 ## License #
 

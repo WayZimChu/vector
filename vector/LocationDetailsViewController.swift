@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMaps
 
 class LocationDetailsViewController: UIViewController {
 
@@ -25,6 +26,8 @@ class LocationDetailsViewController: UIViewController {
     @IBOutlet weak var phoneIcon: UIImageView!
     @IBOutlet weak var clockIcon: UIImageView!
     
+	@IBOutlet weak var mapView: GMSMapView!
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 
