@@ -42,6 +42,13 @@
                                     <segue destination="oNE-h8-qmo" kind="presentation" id="ont-zx-bAy"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7zF-7j-cqg">
+                                <rect key="frame" x="128" y="67" width="111" height="30"/>
+                                <state key="normal" title="Segway for Free"/>
+                                <connections>
+                                    <segue destination="8ij-yz-ks2" kind="presentation" id="HFw-f8-5pF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -72,9 +79,6 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="375"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="br8-Xd-dKr">
-                                <rect key="frame" x="0.0" y="64" width="375" height="289"/>
-                            </mapView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="87" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vBo-3K-HqR">
                                 <rect key="frame" x="0.0" y="438" width="375" height="361"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -123,11 +127,6 @@
                             <constraint firstItem="enO-mS-WJE" firstAttribute="leading" secondItem="rpU-ul-lx7" secondAttribute="leading" id="anh-Qk-IhD"/>
                             <constraint firstItem="ExY-Yy-8Tu" firstAttribute="top" secondItem="enO-mS-WJE" secondAttribute="bottom" id="nJB-bK-vSM"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="br8-Xd-dKr"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="TYJ-tJ-PRg">
                         <barButtonItem key="leftBarButtonItem" title="Friends" id="huf-Cx-8kz">
@@ -367,7 +366,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MainViewCell" rowHeight="87" id="Hks-d9-0Kn" customClass="MainViewCell" customModule="vector" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="375" height="87"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="87"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hks-d9-0Kn" id="dRt-I2-fFb">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="86"/>
@@ -466,4 +465,7 @@
             <point key="canvasLocation" x="1839.5" y="1105.5"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="HFw-f8-5pF"/>
+    </inferredMetricsTieBreakers>
 </document>
