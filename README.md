@@ -58,6 +58,22 @@ Tap the more friends button to access the full list of friends.
 
 <img src='images/wireframe_friends.png' title='Main Screen Wireframe' width='360' alt='wireframes' />
 
+### Data Schema
+
+#### User Model:
+```
+ var owner: PFUser?
+ var userName: String?
+ var profilePicture: UIImage?
+ var phone: String?
+ var latitude: Double?
+ var longitude: Double?
+ var destination: String?
+ var friends: [String]?
+ var friendRequest: [String]?
+ var friendAdd: [String]?
+```
+
 ## Notes
 
 Describe any challenges encountered while building the app.
