@@ -13,8 +13,6 @@ import GoogleMaps
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 	
-	let locationManager = CLLocationManager()
-	
 	@IBOutlet weak var mapView: GMSMapView!
 	
 	@IBOutlet weak var tableView: UITableView!
@@ -25,6 +23,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	@IBAction func onCalcPoint(sender: AnyObject) {
 		// GO TO LOCATION DETAILS VIEW
 	}
+	
+	let locationManager = CLLocationManager()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()

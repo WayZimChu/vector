@@ -32,11 +32,7 @@ Here's a walkthrough of implemented user stories:
 
 <img src='images/vector.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-GIF created with Mac OS X screenshot & it's really a png 
-
-<!--- 
-[LiceCap](http://www.cockos.com/licecap/). 
---->
+GIF created with[LiceCap](http://www.cockos.com/licecap/). 
 
 ## Wireframes
 
@@ -58,14 +54,30 @@ Tap the more friends button to access the full list of friends.
 
 <img src='images/wireframe_friends.png' title='Main Screen Wireframe' width='360' alt='wireframes' />
 
+### Data Schema
+
+#### User Model:
+```
+ var owner: PFUser?
+ var userName: String?
+ var profilePicture: UIImage?
+ var phone: String?
+ var latitude: Double?
+ var longitude: Double?
+ var destination: String?
+ var friends: [String]?
+ var friendRequest: [String]?
+ var friendAdd: [String]?
+```
+
 ## Notes
 
 Describe any challenges encountered while building the app.
 
 ## Data Model
 
-Google Maps API: coordinate.longitude, coordinate.latitude
-Google Places API: name, vicinity, geometry.location.lat, geometry.location.lng, placeType, photos
+- Google Maps API: coordinate.longitude, coordinate.latitude
+- Google Places API: name, vicinity, geometry.location.lat, geometry.location.lng, placeType, photos
 
 ## License #
 
