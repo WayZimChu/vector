@@ -24,8 +24,8 @@ class Profile: NSObject {
      - parameter completion: Block to be executed after save operation is complete
      */
     class func postNewProfile(image: UIImage?, withFirstname firstname: String?, withLastname lastname: String?, withPhoneNum phonenum: String?, withCompletion completion: PFBooleanResultBlock?) {
-        let latitude: Double = 0.0 // TODO: GET CURRENT LOCATION AND SET THIS NUMBER
-        let longitude: Double = 0.0 // TODO: GET CURRENT LOCATION AND SET THIS NUMBER
+        let latitude: Double = 37.7241129 // TODO: GET CURRENT LOCATION AND SET THIS NUMBER
+        let longitude: Double = -122.4509215 // TODO: GET CURRENT LOCATION AND SET THIS NUMBER
         let destination: String = ""
         let friends: [String] = [""]
         let friendRequest: [String] = [""]

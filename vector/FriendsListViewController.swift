@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Parse
+
+let userDidLogoutNotification = "userDidLogoutNotification"
 
 class FriendsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -42,6 +45,11 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         return cell
     }
     
+    @IBAction func onLogout(sender: AnyObject) {
+        print("Logging out user: \(PFUser.currentUser()!.username!)")
+        PFUser.logOut()
+        NSNotificationCenter.defaultCenter().postNotificationName(userDidLogoutNotification, object: nil)
+    }
 
     /*
     // MARK: - Navigation

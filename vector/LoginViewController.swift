@@ -33,10 +33,6 @@ class LoginViewController: UIViewController {
     @IBAction func onLogin(sender: AnyObject) {
         // Check login from Parse backend
     }
-
-    @IBAction func onSignUp(sender: AnyObject) {
-        // Sign a user up on Parse backend
-    }
     
     /*
     // MARK: - Navigation

@@ -38,7 +38,6 @@
                                 <rect key="frame" x="160" y="313" width="55" height="30"/>
                                 <state key="normal" title="Sign Up"/>
                                 <connections>
-                                    <action selector="onSignUp:" destination="bdx-go-1cA" eventType="touchUpInside" id="VSD-ae-Mea"/>
                                     <segue destination="MW5-Gh-jTR" kind="presentation" id="ont-zx-bAy"/>
                                 </connections>
                             </button>
@@ -456,6 +455,14 @@
                                 <connections>
                                     <action selector="onAddFriend:" destination="klM-va-Qac" eventType="touchUpInside" id="iVP-ky-OJj"/>
                                     <segue destination="Jyd-y4-hAm" kind="presentation" identifier="addFriendSegue" id="dbu-ic-wYg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2gk-Rv-p0N">
+                                <rect key="frame" x="268" y="83" width="48" height="30"/>
+                                <state key="normal" title="Logout"/>
+                                <connections>
+                                    <action selector="onAddFriend:" destination="klM-va-Qac" eventType="touchUpInside" id="352-V0-59g"/>
+                                    <action selector="onLogout:" destination="klM-va-Qac" eventType="touchUpInside" id="bCa-Ak-yGP"/>
                                 </connections>
                             </button>
                         </subviews>

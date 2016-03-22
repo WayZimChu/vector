@@ -94,6 +94,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBAction func onProfilePicCancel(sender: AnyObject) {
         // TODO: Animate Take Picture, Choose Library, and Cancel button
         //       to disappear off screen. Keyboard should come up maybe?
+        self.dismissViewControllerAnimated(true, completion:  nil)
     }
     
     func imageTapped(img: AnyObject)
