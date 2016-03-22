@@ -14,6 +14,7 @@ The following **required** functionality is completed:
 - [ ] User can choose the type of meeting point (ex: bar, coffee shop, library).
 - [x] User can pull a list of businesses around a radius of the meeting point.
 - [ ] Users can access detailed view of midpoint location(s)
+- [ ] User account persists through app restarts
 
 The following **optional** features are implemented:
 
@@ -58,16 +59,18 @@ Tap the more friends button to access the full list of friends.
 
 #### User Model:
 ```
- var owner: PFUser?
- var userName: String?
- var profilePicture: UIImage?
- var phone: String?
- var latitude: Double?
- var longitude: Double?
- var destination: String?
- var friends: [String]?
- var friendRequest: [String]?
- var friendAdd: [String]?
+var owner: PFUser?
+var userName: String?
+var firstname: String?
+var lastname: String?
+var profilePicture: UIImage?
+var phone: String?
+var latitude: Double?
+var longitude: Double?
+var destination: String?
+var friends: [String]?
+var friendRequest: [String]?
+var friendAdd: [String]?
 ```
 
 ## Notes

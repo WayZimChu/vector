@@ -13,6 +13,8 @@ import Parse
 class User: NSObject {
     var owner: PFUser?
     var userName: String?
+    var firstname: String?
+    var lastname: String?
     var profilePicture: UIImage?
     var phone: String?
     var latitude: Double?
