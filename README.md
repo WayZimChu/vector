@@ -14,6 +14,7 @@ The following **required** functionality is completed:
 - [ ] User can choose the type of meeting point (ex: bar, coffee shop, library).
 - [x] User can pull a list of businesses around a radius of the meeting point.
 - [ ] Users can access detailed view of midpoint location(s)
+- [ ] User account persists through app restarts
 
 The following **optional** features are implemented:
 
