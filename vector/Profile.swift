@@ -27,9 +27,9 @@ class Profile: NSObject {
         let latitude: Double = 0.0 // TODO: GET CURRENT LOCATION AND SET THIS NUMBER
         let longitude: Double = 0.0 // TODO: GET CURRENT LOCATION AND SET THIS NUMBER
         let destination: String = ""
-        let friends: [String] = {""}
-        let friendRequest: [String] = {""}
-        let friendAdd: [String] = {""}
+        let friends: [String] = [""]
+        let friendRequest: [String] = [""]
+        let friendAdd: [String] = [""]
         
         // Create Parse object PFObject
         let profile = PFObject(className: "Profile")
@@ -44,6 +44,8 @@ class Profile: NSObject {
         profile["longitude"] = longitude
         profile["destination"] = destination
         profile["friends"] = friends
+        profile["friendRequest"] = friendRequest
+        profile["friendAdd"] = friendAdd
         
         // Save object (following function will save the object in Parse asynchronously)
         profile.saveInBackgroundWithBlock(completion)
