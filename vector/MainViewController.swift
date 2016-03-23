@@ -88,16 +88,17 @@ extension MainViewController: CLLocationManagerDelegate {
 	
 	// called when new location data is received
 	func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-		if let location = locations.first {
+        
+		if let location = locations.last {
 			
 			// center camera on user location
 			mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
 			
 			// turns off location updates
 			// TODO: probably want to set this on a timer
-			locationManager.stopUpdatingLocation()
-		}
-		
+			//locationManager.stopUpdatingLocation()
+        }
+        
 	}
 }
 
