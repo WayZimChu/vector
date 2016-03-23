@@ -2,7 +2,7 @@
 
 Vector is an interface to find a place to meet between two points of location.
 
-Time spent: **7** mythical man hours spent in total
+Time spent: **12** mythical man hours spent in total
 
 ## User Stories
 
@@ -14,7 +14,7 @@ The following **required** functionality is completed:
 - [ ] User can choose the type of meeting point (ex: bar, coffee shop, library).
 - [x] User can pull a list of businesses around a radius of the meeting point.
 - [ ] Users can access detailed view of midpoint location(s)
-- [ ] User account persists through app restarts
+- [x] User account persists through app restarts
 
 The following **optional** features are implemented:
 
@@ -27,13 +27,13 @@ Please list two areas of the assignment you'd like to **discuss further with you
 1. Using Google Map API
 2. Integrating multiple API datasets into a single "stream" of user info
 
-## Video Walkthrough 
+## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
 <img src='images/vector.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-GIF created with[LiceCap](http://www.cockos.com/licecap/). 
+GIF created with[LiceCap](http://www.cockos.com/licecap/).
 
 ## Wireframes
 
