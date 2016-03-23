@@ -70,5 +70,17 @@ class Post: NSObject {
         UIGraphicsEndImageContext()
         return newImage
     }
-    
+    class func updateProfile(user: String, long: Double, lat: double) {
+        var query = PFQuery(className:"Profile")
+        query.getObjectInBackgroundWithId("\(user)") {
+            (profileObject: PFObject?, error: NSError?) -> Void in
+            if error != nil {
+                print(error)
+            } else if let profileObject = profileObject {
+                profileObject["longitude"] = 0.0
+                profileObject["latitutde"] = 0.0
+                profileObject.saveInBackground()
+            }
+        }
+    }
 }
