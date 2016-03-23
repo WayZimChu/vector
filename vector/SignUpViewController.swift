@@ -58,7 +58,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
                     
                     Profile.postNewProfile(image, withFirstname: firstname, withLastname: lastname, withPhoneNum: phonenum) { (success: Bool, error: NSError?) -> Void in
                         //self.dismissViewControllerAnimated(true, completion: nil)
-                        self.performSegueWithIdentifier("free", sender: nil) // TODO: Change segue to actual segue
+                        self.performSegueWithIdentifier("signUpComplete", sender: nil) // TODO: Change segue to actual segue
                     }
                 } else {
                     print(error?.localizedDescription)
