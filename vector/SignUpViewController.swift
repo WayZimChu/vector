@@ -22,8 +22,6 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let defaultProfilePic = UIImage(named: "default-profile-pic.png")
-        profileImageView.image =  defaultProfilePic
         let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
         profileImageView.userInteractionEnabled = true
         profileImageView.addGestureRecognizer(tapGestureRecognizer)
@@ -38,14 +36,14 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         // TODO: Add firstname, lastname, phonenum to Parse backend
         //       Also upload profile photo to Parse backend
         
-        let username = usernameTextField.text ?? ""
-        let password = passwordTextField.text ?? ""
-        let firstname = firstnameTextField.text ?? ""
-        let lastname = lastnameTextField.text ?? ""
-        let phone = phonenumTextField.text ?? ""
+        let username = usernameTextField.text! ?? ""
+        let password = passwordTextField.text! ?? ""
+        let firstname = firstnameTextField.text! ?? ""
+        let lastname = lastnameTextField.text! ?? ""
+        let phonenum = phonenumTextField.text! ?? ""
         
         if username != "" && password != "" &&
-           firstname != "" && lastname != "" && phone != "" {
+           firstname != "" && lastname != "" && phonenum != "" {
             // sign up user
             let newUser = PFUser()
             
@@ -55,7 +53,13 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             newUser.signUpInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
                 if success {
                     print("Yay created a user")
-                    self.performSegueWithIdentifier("loginSegue", sender: nil)
+                    let profilePic = self.profileImageView.image!
+                    let image = Profile.resize(profilePic, newSize: CGSize(width: 200, height: 200))
+                    
+                    Profile.postNewProfile(image, withFirstname: firstname, withLastname: lastname, withPhoneNum: phonenum) { (success: Bool, error: NSError?) -> Void in
+                        //self.dismissViewControllerAnimated(true, completion: nil)
+                        self.performSegueWithIdentifier("free", sender: nil) // TODO: Change segue to actual segue
+                    }
                 } else {
                     print(error?.localizedDescription)
                     if error?.code == 202 {
@@ -90,6 +94,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBAction func onProfilePicCancel(sender: AnyObject) {
         // TODO: Animate Take Picture, Choose Library, and Cancel button
         //       to disappear off screen. Keyboard should come up maybe?
+        self.dismissViewControllerAnimated(true, completion:  nil)
     }
     
     func imageTapped(img: AnyObject)
@@ -106,8 +111,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             let editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
             
             // Do something with the images (based on your use case)
-            //newImage = editedImage
-            //photoImageView.image = newImage
+            profileImageView.image =  editedImage
             
             // Dismiss UIImagePickerController to go back to your original view controller
             dismissViewControllerAnimated(true, completion: nil)

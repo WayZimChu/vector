@@ -38,7 +38,6 @@
                                 <rect key="frame" x="160" y="313" width="55" height="30"/>
                                 <state key="normal" title="Sign Up"/>
                                 <connections>
-                                    <action selector="onSignUp:" destination="bdx-go-1cA" eventType="touchUpInside" id="VSD-ae-Mea"/>
                                     <segue destination="MW5-Gh-jTR" kind="presentation" id="ont-zx-bAy"/>
                                 </connections>
                             </button>
@@ -302,8 +301,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MW3-Hj-APj">
-                                <rect key="frame" x="127" y="81" width="121" height="119"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default-profile-pic" translatesAutoresizingMaskIntoConstraints="NO" id="MW3-Hj-APj">
+                                <rect key="frame" x="127" y="81" width="121" height="121"/>
                                 <color key="backgroundColor" red="0.47330686615917184" green="1" blue="0.9853946347774214" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2S5-84-OlR">
@@ -401,6 +400,7 @@
                         <outlet property="phonenumTextField" destination="wEz-Rs-MI9" id="z3q-fU-9vc"/>
                         <outlet property="profileImageView" destination="MW3-Hj-APj" id="Fsg-PV-0Im"/>
                         <outlet property="usernameTextField" destination="2S5-84-OlR" id="LZs-aS-Unc"/>
+                        <segue destination="NW1-OY-OqV" kind="presentation" identifier="signUpComplete" id="SQm-2q-r90"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xk4-59-jgV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -465,6 +465,14 @@
                                 <connections>
                                     <action selector="onAddFriend:" destination="klM-va-Qac" eventType="touchUpInside" id="iVP-ky-OJj"/>
                                     <segue destination="Jyd-y4-hAm" kind="presentation" identifier="addFriendSegue" id="dbu-ic-wYg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2gk-Rv-p0N">
+                                <rect key="frame" x="268" y="83" width="48" height="30"/>
+                                <state key="normal" title="Logout"/>
+                                <connections>
+                                    <action selector="onAddFriend:" destination="klM-va-Qac" eventType="touchUpInside" id="352-V0-59g"/>
+                                    <action selector="onLogout:" destination="klM-va-Qac" eventType="touchUpInside" id="bCa-Ak-yGP"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -542,4 +550,10 @@
             <point key="canvasLocation" x="361.5" y="1163.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="default-profile-pic" width="200" height="200"/>
+    </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="SQm-2q-r90"/>
+    </inferredMetricsTieBreakers>
 </document>
