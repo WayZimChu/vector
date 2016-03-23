@@ -11,11 +11,13 @@
 		278E43261C92693C002BD781 /* GoogleDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278E43251C92693C002BD781 /* GoogleDataProvider.swift */; };
 		7A4565271C92734600A24BF3 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4565251C92734600A24BF3 /* Post.swift */; };
 		7A4565281C92734600A24BF3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4565261C92734600A24BF3 /* User.swift */; };
+		813290801CA1E991004E3FFC /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8132907F1CA1E991004E3FFC /* Profile.swift */; };
 		818AEED61C7D3A370027BE00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818AEED51C7D3A370027BE00 /* AppDelegate.swift */; };
 		818AEEDB1C7D3A370027BE00 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 818AEED91C7D3A370027BE00 /* Main.storyboard */; };
 		818AEEDE1C7D3A370027BE00 /* vector.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 818AEEDC1C7D3A370027BE00 /* vector.xcdatamodeld */; };
 		818AEEE01C7D3A370027BE00 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 818AEEDF1C7D3A370027BE00 /* Assets.xcassets */; };
 		818AEEE31C7D3A370027BE00 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 818AEEE11C7D3A370027BE00 /* LaunchScreen.storyboard */; };
+		81AF3D551CA13AEA00AC953B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AF3D541CA13AEA00AC953B /* SignUpViewController.swift */; };
 		81E061851C97788400D49DEE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E061841C97788400D49DEE /* LoginViewController.swift */; };
 		81E061871C977D9F00D49DEE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E061861C977D9F00D49DEE /* MainViewController.swift */; };
 		81E0618A1C977E6D00D49DEE /* MainViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E061891C977E6D00D49DEE /* MainViewCell.swift */; };
@@ -31,6 +33,7 @@
 		278E43251C92693C002BD781 /* GoogleDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleDataProvider.swift; sourceTree = "<group>"; };
 		7A4565251C92734600A24BF3 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		7A4565261C92734600A24BF3 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		8132907F1CA1E991004E3FFC /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		818AEED21C7D3A370027BE00 /* vector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		818AEED51C7D3A370027BE00 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		818AEEDA1C7D3A370027BE00 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -38,6 +41,7 @@
 		818AEEDF1C7D3A370027BE00 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		818AEEE21C7D3A370027BE00 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		818AEEE41C7D3A370027BE00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		81AF3D541CA13AEA00AC953B /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		81E061841C97788400D49DEE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		81E061861C977D9F00D49DEE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		81E061891C977E6D00D49DEE /* MainViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewCell.swift; sourceTree = "<group>"; };
@@ -68,6 +72,7 @@
 				7A4565261C92734600A24BF3 /* User.swift */,
 				278E43231C92692A002BD781 /* GooglePlace.swift */,
 				278E43251C92693C002BD781 /* GoogleDataProvider.swift */,
+				8132907F1CA1E991004E3FFC /* Profile.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -128,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				81E061841C97788400D49DEE /* LoginViewController.swift */,
+				81AF3D541CA13AEA00AC953B /* SignUpViewController.swift */,
 				81E061861C977D9F00D49DEE /* MainViewController.swift */,
 				81E0618B1C97827F00D49DEE /* LocationDetailsViewController.swift */,
 				81E0618D1C9782F100D49DEE /* FriendsListViewController.swift */,
@@ -270,6 +276,7 @@
 				81E061901C97851F00D49DEE /* AddFriendViewController.swift in Sources */,
 				81E0618A1C977E6D00D49DEE /* MainViewCell.swift in Sources */,
 				81E061851C97788400D49DEE /* LoginViewController.swift in Sources */,
+				813290801CA1E991004E3FFC /* Profile.swift in Sources */,
 				278E43261C92693C002BD781 /* GoogleDataProvider.swift in Sources */,
 				81E0618E1C9782F100D49DEE /* FriendsListViewController.swift in Sources */,
 				818AEEDE1C7D3A370027BE00 /* vector.xcdatamodeld in Sources */,
@@ -278,6 +285,7 @@
 				278E43241C92692A002BD781 /* GooglePlace.swift in Sources */,
 				818AEED61C7D3A370027BE00 /* AppDelegate.swift in Sources */,
 				7A4565281C92734600A24BF3 /* User.swift in Sources */,
+				81AF3D551CA13AEA00AC953B /* SignUpViewController.swift in Sources */,
 				81E061871C977D9F00D49DEE /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

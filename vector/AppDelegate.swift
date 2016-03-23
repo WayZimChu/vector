@@ -9,19 +9,50 @@
 import UIKit
 import CoreData
 import GoogleMaps
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var storyboard = UIStoryboard(name: "Main", bundle: nil)
 
 	let googleMapsApiKey = "AIzaSyA8NUqGGEBc-OiUwfgRg_XEyO_WJCfHMMA"
+    let parseApplicationID = "vector"
+    let parseBackendKey = "sdf978ys3oh109sdfp939psg9jf803hldf394ls0df3l20sfd9uw"
+    let parseServer = "http://mighty-springs-90101.herokuapp.com/parse"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-			GMSServices.provideAPIKey(googleMapsApiKey)
+        GMSServices.provideAPIKey(googleMapsApiKey)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userDidLogout", name: userDidLogoutNotification, object: nil)
+        // Parse backend
+        Parse.initializeWithConfiguration(
+            ParseClientConfiguration(block: { (configuration:
+                ParseMutableClientConfiguration) -> Void in
+                configuration.applicationId = self.parseApplicationID
+                configuration.clientKey = self.parseBackendKey
+                configuration.server = self.parseServer
+            })
+        )
+        
+        let currentUser = PFUser.currentUser()
+        
+        // Check if a user is logged in to persist user session
+        if currentUser != nil {
+            // Go to home view controller
+            print("Current user detected: \(currentUser!.username!)")
+            let vc = storyboard.instantiateViewControllerWithIdentifier("MainNavigationController") as UIViewController
+            window?.rootViewController = vc
+        }
+        
 
         return true
+    }
+    
+    func userDidLogout() {
+        let vc = storyboard.instantiateInitialViewController()! as UIViewController
+        window?.rootViewController = vc
     }
 
     func applicationWillResignActive(application: UIApplication) {

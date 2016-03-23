@@ -31,11 +31,17 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func onLogin(sender: AnyObject) {
-        // Check login from Parse backend
-    }
-
-    @IBAction func onSignUp(sender: AnyObject) {
-        // Sign a user up on Parse backend
+        let username = usernameTextField.text ?? ""
+        let password = passwordTextField.text ?? ""
+        
+        PFUser.logInWithUsernameInBackground(username, password: password) { (user: PFUser?, error: NSError?) -> Void in
+            if user != nil {
+                print("Logging in user: \(PFUser.currentUser()!.username!)")
+                self.performSegueWithIdentifier("loginSegue", sender: nil)
+            } else {
+                print("Username is required")
+            }
+        }
     }
     
     /*
