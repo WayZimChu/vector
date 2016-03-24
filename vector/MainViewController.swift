@@ -11,9 +11,10 @@ import Foundation
 import CoreLocation
 import GoogleMaps
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, GMSMapViewDelegate{
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
     var placeArray: GooglePlace?
     var dataMachine = GoogleDataProvider()
+    var placesClient: GMSPlacesClient?
     var time: NSDate?
     let searchRadius: Double = 1000
 	@IBOutlet weak var mapView: GMSMapView!
@@ -25,12 +26,32 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	}
 	@IBAction func onCalcPoint(sender: AnyObject) {
 		// GO TO LOCATION DETAILS VIEW
-        print((locationManager.location?.coordinate)!)
+        //print((locationManager.location?.coordinate)!)
         fetchLocations((locationManager.location?.coordinate)!)
-	}
-	
+        placesClient?.currentPlaceWithCallback({
+            (placeLikelihoodList: GMSPlaceLikelihoodList?, error: NSError?) -> Void in
+            if let error = error {
+                print("Pick Place error: \(error.localizedDescription)")
+                return
+            }
+            
+         //   self.nameLabel.text = "No current place"
+           // self.addressLabel.text = ""
+            
+            if let placeLikelihoodList = placeLikelihoodList {
+                let place = placeLikelihoodList.likelihoods.first?.place
+                if let place = place {
+                  //  self.nameLabel.text = place.name
+                   // self.addressLabel.text = place.formattedAddress!.componentsSeparatedByString(", ")
+                       // .joinWithSeparator("\n")
+                    print("\(place.name) \(place.formattedAddress!.componentsSeparatedByString(", ").joinWithSeparator("\n"))")
+                }
+            }
+        })
+    }
+
 	let locationManager = CLLocationManager()
-	
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -40,6 +61,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		
 		locationManager.delegate = self
 		locationManager.requestWhenInUseAuthorization()
+        placesClient = GMSPlacesClient()
         
        // fetchLocations()
 	}
@@ -82,7 +104,29 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	// Pass the selected object to the new view controller.
 	}
 	*/
+    
+
 	
+}
+
+extension MainViewController: GMSMapViewDelegate {
+    func mapView(mapView: GMSMapView, markerInfoContents marker: GMSMarker) -> UIView? {
+        let placeMarker = marker as! PlaceMarker
+    
+        if let infoView = UIView.viewFromNibName("MarkerInfoView") as? MarkerInfoView {
+            infoView.nameLabel.text = placeMarker.place.name
+
+            if let photo = placeMarker.place.photo {
+                infoView.placePhoto.image = photo
+            } else {
+                infoView.placePhoto.image = UIImage(named: "generic")
+            }
+            
+            return infoView
+        } else {
+            return nil
+        }
+    }
 }
 
 extension MainViewController: CLLocationManagerDelegate {
@@ -119,3 +163,11 @@ extension MainViewController: CLLocationManagerDelegate {
 	}
 }
 
+extension UIView {
+    class func viewFromNibName(nibNamed: String, bundle : NSBundle? = nil) -> UIView? {
+        return UINib(
+            nibName: nibNamed,
+            bundle: bundle
+            ).instantiateWithOwner(nil, options: nil)[0] as? UIView
+    }
+}

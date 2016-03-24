@@ -11,6 +11,8 @@
 		278E43261C92693C002BD781 /* GoogleDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278E43251C92693C002BD781 /* GoogleDataProvider.swift */; };
 		7A4565271C92734600A24BF3 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4565251C92734600A24BF3 /* Post.swift */; };
 		7A4565281C92734600A24BF3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4565261C92734600A24BF3 /* User.swift */; };
+		7AB5A3911CA4877A0051ADCE /* MarkerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB5A38F1CA4877A0051ADCE /* MarkerInfoView.swift */; };
+		7AB5A3921CA4877A0051ADCE /* MarkerInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AB5A3901CA4877A0051ADCE /* MarkerInfoView.xib */; };
 		7ACBA7581CA44495009D5A7F /* PlaceMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ACBA7571CA44495009D5A7F /* PlaceMarker.swift */; };
 		813290801CA1E991004E3FFC /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8132907F1CA1E991004E3FFC /* Profile.swift */; };
 		818AEED61C7D3A370027BE00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818AEED51C7D3A370027BE00 /* AppDelegate.swift */; };
@@ -34,6 +36,8 @@
 		278E43251C92693C002BD781 /* GoogleDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleDataProvider.swift; sourceTree = "<group>"; };
 		7A4565251C92734600A24BF3 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		7A4565261C92734600A24BF3 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		7AB5A38F1CA4877A0051ADCE /* MarkerInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkerInfoView.swift; sourceTree = "<group>"; };
+		7AB5A3901CA4877A0051ADCE /* MarkerInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MarkerInfoView.xib; sourceTree = "<group>"; };
 		7ACBA7571CA44495009D5A7F /* PlaceMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceMarker.swift; sourceTree = "<group>"; };
 		8132907F1CA1E991004E3FFC /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		818AEED21C7D3A370027BE00 /* vector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vector.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,6 +152,8 @@
 		81E061881C977E4500D49DEE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7AB5A38F1CA4877A0051ADCE /* MarkerInfoView.swift */,
+				7AB5A3901CA4877A0051ADCE /* MarkerInfoView.xib */,
 				81E061891C977E6D00D49DEE /* MainViewCell.swift */,
 			);
 			name = Views;
@@ -215,6 +221,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7AB5A3921CA4877A0051ADCE /* MarkerInfoView.xib in Resources */,
 				818AEEE31C7D3A370027BE00 /* LaunchScreen.storyboard in Resources */,
 				818AEEE01C7D3A370027BE00 /* Assets.xcassets in Resources */,
 				818AEEDB1C7D3A370027BE00 /* Main.storyboard in Resources */,
@@ -284,6 +291,7 @@
 				278E43261C92693C002BD781 /* GoogleDataProvider.swift in Sources */,
 				81E0618E1C9782F100D49DEE /* FriendsListViewController.swift in Sources */,
 				818AEEDE1C7D3A370027BE00 /* vector.xcdatamodeld in Sources */,
+				7AB5A3911CA4877A0051ADCE /* MarkerInfoView.swift in Sources */,
 				81E0618C1C97827F00D49DEE /* LocationDetailsViewController.swift in Sources */,
 				7A4565271C92734600A24BF3 /* Post.swift in Sources */,
 				278E43241C92692A002BD781 /* GooglePlace.swift in Sources */,

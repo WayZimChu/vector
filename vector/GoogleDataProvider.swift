@@ -60,7 +60,7 @@ class GoogleDataProvider {
           for rawPlace in results {
             let place = GooglePlace(dictionary: rawPlace, acceptedTypes: types)
             placesArray.append(place)
-             print(placesArray)
+             //print(placesArray)
             if let reference = place.photoReference {
               self.fetchPhotoFromReference(reference) { image in
                 place.photo = image
