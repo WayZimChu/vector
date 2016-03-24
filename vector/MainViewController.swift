@@ -11,10 +11,11 @@ import Foundation
 import CoreLocation
 import GoogleMaps
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, GMSMapViewDelegate{
     var placeArray: GooglePlace?
     var dataMachine = GoogleDataProvider()
     var time: NSDate?
+    let searchRadius: Double = 1000
 	@IBOutlet weak var mapView: GMSMapView!
 	
 	@IBOutlet weak var tableView: UITableView!
@@ -62,11 +63,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	}
     
     func fetchLocations(xy: CLLocationCoordinate2D) {
-        dataMachine.fetchPlacesNearCoordinate(xy, radius: 1.0, types: ["food", "pets", "coffee", "car repair"]){places in
+        dataMachine.fetchPlacesNearCoordinate(xy, radius: searchRadius, types: ["food", "pets", "coffee", "car repair"]){places in
             for place: GooglePlace in places {
-                print(place)
-                //let marker = PlaceMarker(place: place)
-                //marker.map = self.mapView
+                let marker = PlaceMarker(place: place)
+                marker.map = self.mapView
             }
             
         }
@@ -108,11 +108,11 @@ extension MainViewController: CLLocationManagerDelegate {
 		if let location = locations.last {
 			time = NSDate()
 			// center camera on user location
-			mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
-			
+			mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 14, bearing: 0, viewingAngle: 0)
+			fetchLocations(location.coordinate)
 			// turns off location updates
 			// TODO: probably want to set this on a timer
-			//locationManag er.stopUpdatingLocation()
+			locationManager.stopUpdatingLocation()
             //print("Got IT")
         }
         
