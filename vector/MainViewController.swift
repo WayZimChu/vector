@@ -11,8 +11,10 @@ import Foundation
 import CoreLocation
 import GoogleMaps
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-	
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
+    var placeArray: GooglePlace?
+    var dataMachine = GoogleDataProvider()
+    var time: NSDate?
 	@IBOutlet weak var mapView: GMSMapView!
 	
 	@IBOutlet weak var tableView: UITableView!
@@ -22,6 +24,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	}
 	@IBAction func onCalcPoint(sender: AnyObject) {
 		// GO TO LOCATION DETAILS VIEW
+        print((locationManager.location?.coordinate)!)
+        fetchLocations((locationManager.location?.coordinate)!)
 	}
 	
 	let locationManager = CLLocationManager()
@@ -35,7 +39,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		
 		locationManager.delegate = self
 		locationManager.requestWhenInUseAuthorization()
-		
+        
+       // fetchLocations()
 	}
 	
 	override func didReceiveMemoryWarning() {
@@ -55,6 +60,17 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		
 		return cell
 	}
+    
+    func fetchLocations(xy: CLLocationCoordinate2D) {
+        dataMachine.fetchPlacesNearCoordinate(xy, radius: 1.0, types: ["food", "pets", "coffee", "car repair"]){places in
+            for place: GooglePlace in places {
+                print(place)
+                //let marker = PlaceMarker(place: place)
+                //marker.map = self.mapView
+            }
+            
+        }
+    }
 	
 	
 	/*
@@ -90,13 +106,14 @@ extension MainViewController: CLLocationManagerDelegate {
 	func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
 		if let location = locations.last {
-			
+			time = NSDate()
 			// center camera on user location
 			mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
 			
 			// turns off location updates
 			// TODO: probably want to set this on a timer
-			//locationManager.stopUpdatingLocation()
+			//locationManag er.stopUpdatingLocation()
+            //print("Got IT")
         }
         
 	}
