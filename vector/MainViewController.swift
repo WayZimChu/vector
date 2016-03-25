@@ -28,8 +28,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	}
 	@IBAction func onCalcPoint(sender: AnyObject) {
 		// GO TO LOCATION DETAILS VIEW
-        //print((locationManager.location?.coordinate)!)
-        //fetchLocations((locationManager.location?.coordinate)!)
+        print((locationManager.location?.coordinate)!)
+        fetchLocations((locationManager.location?.coordinate)!)
 	}
 	
 	let locationManager = CLLocationManager()
