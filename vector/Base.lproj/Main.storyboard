@@ -138,9 +138,9 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="distanceLabel" destination="4pP-MH-2hY" id="L16-Ac-zNf"/>
-                                            <outlet property="nameLabel" destination="6zR-JQ-pbH" id="5Cz-tF-ynC"/>
+                                            <outlet property="nameLabel" destination="6zR-JQ-pbH" id="xM0-H3-MNj"/>
                                             <outlet property="onlineStatusImage" destination="Vys-hQ-6JI" id="G5G-YH-mlW"/>
-                                            <outlet property="profileImage" destination="Z6P-TX-nwg" id="kbP-al-KeG"/>
+                                            <outlet property="profileImage" destination="Z6P-TX-nwg" id="ryj-c1-rY4"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -482,10 +482,10 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="distanceLabel" destination="NcP-OE-C8G" id="a8b-j3-5m1"/>
-                                            <outlet property="nameLabel" destination="dRt-I2-fFb" id="hjT-z0-VDa"/>
-                                            <outlet property="onlineStatusImage" destination="Tst-cA-avN" id="NuV-CL-FRz"/>
-                                            <outlet property="profileImage" destination="dRt-I2-fFb" id="9Ke-eW-N5T"/>
+                                            <outlet property="distanceLabel" destination="NcP-OE-C8G" id="w5i-EL-prz"/>
+                                            <outlet property="nameLabel" destination="q3W-xy-fZX" id="c7y-E5-afy"/>
+                                            <outlet property="onlineStatusImage" destination="Tst-cA-avN" id="Bor-yY-Ydt"/>
+                                            <outlet property="profileImage" destination="Z5W-MZ-qcS" id="UDI-EB-y0Z"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
