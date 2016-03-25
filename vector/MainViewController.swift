@@ -18,7 +18,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var placesClient: GMSPlacesClient?
     var time: NSDate?
     var users: [PFObject]?
+
     let searchRadius: Double = 1000
+    
 	@IBOutlet weak var mapView: GMSMapView!
 	
 	@IBOutlet weak var tableView: UITableView!
@@ -128,6 +130,56 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
         }
     }
+    
+    func calculateMidpoint(arrayOfCoordinates: [CLLocationCoordinate2D]) -> CLLocationCoordinate2D {
+        // Get lat/long of all friends online, store into an array
+        //    Do this in cellForRowAtIndexPath I think...
+        // TEST DATA:::
+        //let yourLocation = CLLocationCoordinate2DMake(37.7258391,-122.4507056) // CCSF Coordinates
+        //let friend1Loc = CLLocationCoordinate2DMake(37.8049393,-122.4233581) // David's old address
+        //let onlineCoordinates = [yourLocation, friend1Loc]
+        let onlineCoordinates = arrayOfCoordinates
+        
+        // Let's calculate the center of gravity of everything in the onlineCoordinates array
+        let π = M_PI
+        var numCoordinates: Int = 0
+        var combinedCartesianX: Double = 0.0
+        var combinedCartesianY: Double = 0.0
+        var combinedCartesianZ: Double = 0.0
+        
+        // Iterate through all online friends' coordinates
+        for (location) in onlineCoordinates {
+            numCoordinates++
+            print("Lat: \(location.latitude) | Long: \(location.longitude)")
+            let latRadians = location.latitude * (π/180)   // Convert Latitude to Radians
+            let longRadians = location.longitude * (π/180) // Convert Longitude to Radians
+            print("latRadians: \(latRadians)")
+            print("longRadians: \(longRadians)")
+            
+            // Convert latitude and longitude to cartesian coordinates
+            combinedCartesianX += (cos(latRadians) * cos(longRadians)) // Combined X Coordinate
+            combinedCartesianY += (cos(latRadians) * sin(longRadians)) // Combined Y Coordinate
+            combinedCartesianZ += sin(latRadians)
+        }
+        
+        combinedCartesianX /= Double(numCoordinates)
+        combinedCartesianY /= Double(numCoordinates)
+        combinedCartesianZ /= Double(numCoordinates)
+        print("combinedCartesianX: \(combinedCartesianX)")
+        print("combinedCartesianY: \(combinedCartesianY)")
+        print("combinedCartesianZ: \(combinedCartesianZ)")
+        
+        let midpointX = atan2(combinedCartesianZ, (sqrt(pow(combinedCartesianX, 2) + pow(combinedCartesianY, 2))))
+        let midpointY = atan2(combinedCartesianY, combinedCartesianX)
+        
+        let midpointLatitude = (180/π) * midpointX  // Convert from radians to degrees
+        let midpointLongitude = (180/π) * midpointY // Convert from radians to degrees
+        
+        print("Midpoint | Lat: \(midpointLatitude) | Long: \(midpointLongitude)")
+        let midpoint = CLLocationCoordinate2DMake(midpointLatitude, midpointLongitude)
+    
+        return midpoint
+    }
 	
     func loadProfiles() -> [PFObject]? {
         
@@ -225,7 +277,8 @@ extension MainViewController: CLLocationManagerDelegate {
 			time = NSDate()
 			// center camera on user location
 			mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 14, bearing: 0, viewingAngle: 0)
-			fetchLocations(location.coordinate)
+			//fetchLocations(location.coordinate)
+            
 			// turns off location updates
 			// TODO: probably want to set this on a timer
 			locationManager.stopUpdatingLocation()
