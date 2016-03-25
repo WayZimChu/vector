@@ -82,7 +82,7 @@ Describe any challenges encountered while building the app.
 - Google Maps API: coordinate.longitude, coordinate.latitude
 - Google Places API: name, vicinity, geometry.location.lat, geometry.location.lng, placeType, photos
 
-## License #
+## License 
 
     Copyright 2016 [name of copyright owner]
 
