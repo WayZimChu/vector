@@ -12,6 +12,7 @@ import Parse
 let userDidLogoutNotification = "userDidLogoutNotification"
 
 class FriendsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    var users: [PFObject]?
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -25,6 +26,12 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
+        
+        self.tableView.reloadData()
+    }
+    override func viewWillAppear(animated: Bool) {
+        users = loadProfiles()
+        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,14 +40,30 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // Replace this with number of friends!
-        return 3
+        if let users = users {
+            return users.count
+        }
+        else {
+            return 0
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("MainViewCell", forIndexPath: indexPath) as! MainViewCell
+        let user = users![indexPath.row]
+        cell.nameLabel.text = user["username"] as? String
         
-        // cell.user = users![indexPath.row] // USE SOMETHING LIKE THIS TO GET THE LIST OF FRIENDS DATA
+        if let profile = user.valueForKey("profilePic")! as? PFFile {
+            profile.getDataInBackgroundWithBlock({
+                (imageData: NSData?, error: NSError?) -> Void in
+                if (error == nil) {
+                    let image = UIImage(data:imageData!)
+                    cell.profileImage.image = image
+                    
+                    print("Profile Picture Loaded")
+                }
+            })
+        }
         
         return cell
     }
@@ -51,6 +74,43 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         NSNotificationCenter.defaultCenter().postNotificationName(userDidLogoutNotification, object: nil)
     }
 
+    func loadProfiles() -> [PFObject]? {
+        
+        var user: [PFObject]?
+        let query = PFQuery(className:"Profile")
+        //query.whereKey("name", equalTo: "\(name)")
+        query.orderByDescending("createdAt")
+        //query.includeKey("username")
+        query.limit = 20
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            user = objects
+            self.tableView.reloadData()
+            if error == nil {
+                // The find succeeded.
+                print("Successfully retrieved \(objects!.count) Points In Time.")
+                self.users = objects
+                self.tableView.reloadData()
+                
+                if let objects = objects {
+                    for object in objects {
+                        print(object.objectId)
+                        print(object)
+                    }
+                }
+                
+                
+                
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+            }
+            self.tableView.reloadData()
+        }
+        self.tableView.reloadData()
+        return user
+        
+    }
     /*
     // MARK: - Navigation
 
