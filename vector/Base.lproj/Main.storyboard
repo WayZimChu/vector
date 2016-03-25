@@ -137,10 +137,10 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="distanceLabel" destination="4pP-MH-2hY" id="5kE-q2-Tka"/>
-                                            <outlet property="nameLabel" destination="qfD-gB-mtu" id="060-jq-giO"/>
-                                            <outlet property="onlineStatusImage" destination="Vys-hQ-6JI" id="cJN-3g-TMR"/>
-                                            <outlet property="profileImage" destination="qfD-gB-mtu" id="a7e-Qk-bi8"/>
+                                            <outlet property="distanceLabel" destination="4pP-MH-2hY" id="L16-Ac-zNf"/>
+                                            <outlet property="nameLabel" destination="6zR-JQ-pbH" id="5Cz-tF-ynC"/>
+                                            <outlet property="onlineStatusImage" destination="Vys-hQ-6JI" id="G5G-YH-mlW"/>
+                                            <outlet property="profileImage" destination="Z6P-TX-nwg" id="kbP-al-KeG"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

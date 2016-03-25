@@ -10,8 +10,8 @@ import UIKit
 
 class MainViewCell: UITableViewCell {
 
-    @IBOutlet weak var profileImage: UIView!
-    @IBOutlet weak var nameLabel: UIView!
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var onlineStatusImage: UIImageView!
     

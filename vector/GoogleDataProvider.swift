@@ -30,7 +30,7 @@ import CoreLocation
 import SwiftyJSON
 
 class GoogleDataProvider {
-  let apiKey = "AIzaSyCnIoj_O7MX-MKUI7kGiBuNvmfqt1UtCGo"
+  let apiKey = "AIzaSyBjkr78eByfQnT7Tf-CwUifQHEqbT05qqY"
   var photoCache = [String:UIImage]()
   var placesTask: NSURLSessionDataTask?
   var session: NSURLSession {
@@ -56,7 +56,7 @@ class GoogleDataProvider {
         let json = JSON(data:aData, options:NSJSONReadingOptions.MutableContainers, error: nil)
         print(json["error_message"])
         if let results = json["results"].arrayObject as? [[String : AnyObject]] {
-            print(results)
+            //print(results)
           for rawPlace in results {
             let place = GooglePlace(dictionary: rawPlace, acceptedTypes: types)
             placesArray.append(place)
