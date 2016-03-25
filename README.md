@@ -9,8 +9,8 @@ Time spent: **12** mythical man hours spent in total
 The following **required** functionality is completed:
 
 - [x] User can get current location
-- [ ] User can get input a friend's location & get a midpoint
-- [ ] User can get friends location from a list of friends
+- [x] User can get input a friend's location & get a midpoint
+- [x] User can get friends location from a list of friends
 - [ ] User can choose the type of meeting point (ex: bar, coffee shop, library).
 - [x] User can pull a list of businesses around a radius of the meeting point.
 - [ ] Users can access detailed view of midpoint location(s)
@@ -82,7 +82,7 @@ Describe any challenges encountered while building the app.
 - Google Maps API: coordinate.longitude, coordinate.latitude
 - Google Places API: name, vicinity, geometry.location.lat, geometry.location.lng, placeType, photos
 
-## License #
+## License 
 
     Copyright 2016 [name of copyright owner]
 

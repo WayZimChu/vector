@@ -77,8 +77,8 @@ class Post: NSObject {
             if error != nil {
                 print(error)
             } else if let profileObject = profileObject {
-                profileObject["longitude"] = 0.0
-                profileObject["latitutde"] = 0.0
+                profileObject["longitude"] = long
+                profileObject["latitutde"] = lat
                 profileObject.saveInBackground()
             }
         }

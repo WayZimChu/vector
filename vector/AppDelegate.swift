@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var storyboard = UIStoryboard(name: "Main", bundle: nil)
 
-	let googleMapsApiKey = "AIzaSyA8NUqGGEBc-OiUwfgRg_XEyO_WJCfHMMA"
+    let googleMapsApiKey = "AIzaSyCnIoj_O7MX-MKUI7kGiBuNvmfqt1UtCGo"
     let parseApplicationID = "vector"
     let parseBackendKey = "sdf978ys3oh109sdfp939psg9jf803hldf394ls0df3l20sfd9uw"
     let parseServer = "http://mighty-springs-90101.herokuapp.com/parse"
@@ -46,7 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = vc
         }
         
-
         return true
     }
     

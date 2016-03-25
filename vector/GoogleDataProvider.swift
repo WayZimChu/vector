@@ -30,6 +30,7 @@ import CoreLocation
 import SwiftyJSON
 
 class GoogleDataProvider {
+  let apiKey = "AIzaSyBjkr78eByfQnT7Tf-CwUifQHEqbT05qqY"
   var photoCache = [String:UIImage]()
   var placesTask: NSURLSessionDataTask?
   var session: NSURLSession {
@@ -38,7 +39,7 @@ class GoogleDataProvider {
   
   func fetchPlacesNearCoordinate(coordinate: CLLocationCoordinate2D, radius: Double, types:[String], completion: (([GooglePlace]) -> Void)) -> ()
   {
-    var urlString = "http://localhost:10000/maps/api/place/nearbysearch/json?location=\(coordinate.latitude),\(coordinate.longitude)&radius=\(radius)&rankby=prominence&sensor=true"
+    var urlString = "http://localhost:10000/maps/api/place/nearbysearch/json?key=\(apiKey)&location=\(coordinate.latitude),\(coordinate.longitude)&radius=\(radius)&rankby=prominence&sensor=true"
     let typesString = types.count > 0 ? types.joinWithSeparator("|") : "food"
     urlString += "&types=\(typesString)"
     urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
@@ -52,24 +53,30 @@ class GoogleDataProvider {
       UIApplication.sharedApplication().networkActivityIndicatorVisible = false
       var placesArray = [GooglePlace]()
       if let aData = data {
-        let json = JSON(data:aData, options:NSJSONReadingOptions.MutableContainers, error:nil)
+        let json = JSON(data:aData, options:NSJSONReadingOptions.MutableContainers, error: nil)
+        print(json["error_message"])
         if let results = json["results"].arrayObject as? [[String : AnyObject]] {
+            //print(results)
           for rawPlace in results {
             let place = GooglePlace(dictionary: rawPlace, acceptedTypes: types)
             placesArray.append(place)
+             //print(placesArray)
             if let reference = place.photoReference {
               self.fetchPhotoFromReference(reference) { image in
                 place.photo = image
+                
               }
+          
             }
-          }
+            
+            }
         }
       }
       dispatch_async(dispatch_get_main_queue()) {
         completion(placesArray)
       }
     }
-    placesTask?.resume()
+    self.placesTask!.resume()
   }
   
   
@@ -80,7 +87,7 @@ class GoogleDataProvider {
       let urlString = "http://localhost:10000/maps/api/place/photo?maxwidth=200&photoreference=\(reference)"
       UIApplication.sharedApplication().networkActivityIndicatorVisible = true
       session.downloadTaskWithURL(NSURL(string: urlString)!) {url, response, error in
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         if let url = url {
           let downloadedPhoto = UIImage(data: NSData(contentsOfURL: url)!)
           self.photoCache[reference] = downloadedPhoto
