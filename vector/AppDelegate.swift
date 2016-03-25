@@ -46,7 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = vc
         }
         
-
         return true
     }
     
