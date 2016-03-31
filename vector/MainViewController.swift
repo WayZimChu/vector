@@ -18,7 +18,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var placesClient: GMSPlacesClient?
     var time: NSDate?
     var users: [PFObject]?
-    var myOwnObject: PFObject?
+    var myOwnObject: PFObject? //All update functions revolve around this object.
 
     let searchRadius: Double = 1000
     
@@ -198,7 +198,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
         return midpoint
     }
-	
+	/** loads profile owner's profile object so it can be updated
+     *
+     */
     func loadOwnObject(myName: String){
         var user:  PFObject?
         let query = PFQuery(className: "Profile")
@@ -235,8 +237,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 if let objects = objects {
                     for object in objects {
-                        print(object.objectId)
-                        print(object)
+                        //print(object.objectId)
+                        //print(object)
                     }
                 }
                 
