@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let parseServer = "http://mighty-springs-90101.herokuapp.com/parse"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        UIImageView.appearance().layer.cornerRadius = 4
         // Override point for customization after application launch.
         GMSServices.provideAPIKey(googleMapsApiKey)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userDidLogout", name: userDidLogoutNotification, object: nil)
@@ -45,6 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let vc = storyboard.instantiateViewControllerWithIdentifier("MainNavigationController") as UIViewController
             window?.rootViewController = vc
         }
+        
+        
         
         return true
     }
