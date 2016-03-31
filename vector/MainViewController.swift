@@ -18,6 +18,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var placesClient: GMSPlacesClient?
     var time: NSDate?
     var users: [PFObject]?
+    var myOwnObject: PFObject?
 
     let searchRadius: Double = 1000
     
@@ -70,6 +71,17 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.tableView.reloadData()
         //print(users)
         // fetchLocations()
+        print("%%%%% \((PFUser.currentUser()?.username!)!)")
+        loadOwnObject((PFUser.currentUser()?.username!)!)
+        
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+            // do some task
+            self.recursiveUpdate()
+            dispatch_async(dispatch_get_main_queue()) {
+                // update some UI
+            }
+        }
     }
     override func viewWillAppear(animated: Bool) {
         self.users = loadProfiles()
@@ -82,8 +94,14 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		// Dispose of any resources that can be recreated.
 	}
 	
-    
-    
+    func recursiveUpdate()
+    {
+        sleep(10)
+        //print(self.myOwnObject?.objectId)
+        Post.updateLocation((myOwnObject?.objectId!)!, long: (locationManager.location?.coordinate.longitude)!, lat: (locationManager.location?.coordinate.latitude)!)
+        sleep(30)
+        recursiveUpdate()
+    }
     
     
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -181,6 +199,22 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return midpoint
     }
 	
+    func loadOwnObject(myName: String){
+        var user:  PFObject?
+        let query = PFQuery(className: "Profile")
+        query.whereKey("username", containsString: myName)
+        query.limit = 1
+        query.findObjectsInBackgroundWithBlock {
+            (object: [PFObject]?, error: NSError?) -> Void in
+            user = object![0]
+            if error == nil {
+                //The find succeeded.
+                print("Successfully retrieved my own object \(user)")
+                self.myOwnObject = user
+            }
+        }
+    }
+    
     func loadProfiles() -> [PFObject]? {
         
         var user: [PFObject]?
