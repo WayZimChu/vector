@@ -37,31 +37,36 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	}
 	@IBAction func onCalcPoint(sender: AnyObject) {
 		// GO TO LOCATION DETAILS VIEW
-		//print((locationManager.location?.coordinate)!)
-		self.tableView.reloadData();
-		fetchLocations((locationManager.location?.coordinate)!)
-		placesClient?.currentPlaceWithCallback({
-			(placeLikelihoodList: GMSPlaceLikelihoodList?, error: NSError?) -> Void in
-			if let error = error {
-				print("Pick Place error: \(error.localizedDescription)")
-				return
-			}
-			
-			//   self.nameLabel.text = "No current place"
-			// self.addressLabel.text = ""
-			
-			if let placeLikelihoodList = placeLikelihoodList {
-				let place = placeLikelihoodList.likelihoods.first?.place
-				if let place = place {
-					//  self.nameLabel.text = place.name
-					// self.addressLabel.text = place.formattedAddress!.componentsSeparatedByString(", ")
-					// .joinWithSeparator("\n")
-					print("\(place.name) \(place.formattedAddress!.componentsSeparatedByString(", ").joinWithSeparator("\n"))")
-				}
-			}
-		})
-	}
-	
+       //print((locationManager.location?.coordinate)!)
+        self.tableView.reloadData();
+        fetchLocations((locationManager.location?.coordinate)!)
+        placesClient?.currentPlaceWithCallback({
+            (placeLikelihoodList: GMSPlaceLikelihoodList?, error: NSError?) -> Void in
+            if let error = error {
+                print("Pick Place error: \(error.localizedDescription)")
+                return
+            }
+            
+         //   self.nameLabel.text = "No current place"
+           // self.addressLabel.text = ""
+            
+            if let placeLikelihoodList = placeLikelihoodList {
+                let place = placeLikelihoodList.likelihoods.first?.place
+                if let place = place {
+                  //  self.nameLabel.text = place.name
+                   // self.addressLabel.text = place.formattedAddress!.componentsSeparatedByString(", ")
+                       // .joinWithSeparator("\n")
+                    print("\(place.name) \(place.formattedAddress!.componentsSeparatedByString(", ").joinWithSeparator("\n"))")
+                }
+            }
+        })
+        
+        //This is used to update friends into own object
+        //myOwnObject!.addUniqueObjectsFromArray(["MachoMan", "TaylorSwift"], forKey:"friends")
+        //myOwnObject!.saveInBackground()
+    }
+
+
 	let locationManager = CLLocationManager()
 	
 	override func viewDidLoad() {
@@ -203,61 +208,62 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		return midpoint
 	}
 	/** loads profile owner's profile object so it can be updated
-	*
-	*/
-	func loadOwnObject(myName: String){
-		var user:  PFObject?
-		let query = PFQuery(className: "Profile")
-		query.whereKey("username", containsString: myName)
-		query.limit = 1
-		query.findObjectsInBackgroundWithBlock {
-			(object: [PFObject]?, error: NSError?) -> Void in
-			user = object![0]
-			if error == nil {
-				//The find succeeded.
-				print("Successfully retrieved my own object \(user)")
-				self.myOwnObject = user
-			}
-		}
-	}
-	
-	func loadProfiles() -> [PFObject]? {
-		
-		var user: [PFObject]?
-		let query = PFQuery(className:"Profile")
-		//query.whereKey("name", equalTo: "\(name)")
-		query.orderByDescending("createdAt")
-		//query.includeKey("username")
-		query.limit = 20
-		query.findObjectsInBackgroundWithBlock {
-			(objects: [PFObject]?, error: NSError?) -> Void in
-			user = objects
-			self.tableView.reloadData()
-			if error == nil {
-				// The find succeeded.
-				print("Successfully retrieved \(objects!.count) Points In Time.")
-				self.users = objects
-				self.tableView.reloadData()
-				
-				if let objects = objects {
-					for object in objects {
-						//print(object.objectId)
-						//print(object)
-					}
-				}
-				
-				
-				
-			} else {
-				// Log details of the failure
-				print("Error: \(error!) \(error!.userInfo)")
-			}
-			self.tableView.reloadData()
-		}
-		self.tableView.reloadData()
-		return user
-		
-	}
+     *
+     */
+    func loadOwnObject(myName: String){
+        var user:  PFObject?
+        let query = PFQuery(className: "Profile")
+        query.whereKey("username", containsString: myName)
+        query.limit = 1
+        query.findObjectsInBackgroundWithBlock {
+            (object: [PFObject]?, error: NSError?) -> Void in
+            user = object![0]
+            if error == nil {
+                //The find succeeded.
+                print("Successfully retrieved my own object \(user)")
+                self.myOwnObject = user
+            }
+        }
+    }
+    
+    func loadProfiles() -> [PFObject]? {
+        
+        var user: [PFObject]?
+        let query = PFQuery(className:"Profile")
+        //query.whereKey("name", equalTo: "\(name)")
+        query.whereKey("friends",   containedIn: ["\((PFUser.currentUser()?.username!)!)"])
+        query.orderByDescending("createdAt")
+        //query.includeKey("username")
+        query.limit = 20
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            user = objects
+            self.tableView.reloadData()
+            if error == nil {
+                // The find succeeded.
+                print("Successfully retrieved \(objects!.count) Points In Time.")
+                self.users = objects
+                self.tableView.reloadData()
+                
+                if let objects = objects {
+                    for object in objects {
+                        //print(object.objectId)
+                        //print(object)
+                    }
+                }
+                
+                
+                
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+            }
+            self.tableView.reloadData()
+        }
+        self.tableView.reloadData()
+        return user
+        
+    }
 	
 	/*
 	// MARK: - Navigation
