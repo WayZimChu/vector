@@ -54,6 +54,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
         })
+        
+        //This is used to update friends into own object
+        //myOwnObject!.addUniqueObjectsFromArray(["MachoMan", "TaylorSwift"], forKey:"friends")
+        //myOwnObject!.saveInBackground()
     }
 
 	let locationManager = CLLocationManager()
@@ -222,6 +226,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         var user: [PFObject]?
         let query = PFQuery(className:"Profile")
         //query.whereKey("name", equalTo: "\(name)")
+        query.whereKey("friends",   containedIn: ["\((PFUser.currentUser()?.username!)!)"])
         query.orderByDescending("createdAt")
         //query.includeKey("username")
         query.limit = 20
