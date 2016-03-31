@@ -70,9 +70,9 @@ class Post: NSObject {
         UIGraphicsEndImageContext()
         return newImage
     }
-    class func updateProfile(user: String, long: Double, lat: Double) {
-        var query = PFQuery(className:"Profile")
-        query.getObjectInBackgroundWithId("\(user)") {
+    class func updateLocation(ID: String, long: Double, lat: Double) {
+        let query = PFQuery(className:"Profile")
+        query.getObjectInBackgroundWithId("\(ID)") {
             (profileObject: PFObject?, error: NSError?) -> Void in
             if error != nil {
                 print(error)
