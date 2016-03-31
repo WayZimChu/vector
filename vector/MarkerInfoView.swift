@@ -28,6 +28,45 @@ import UIKit
 
 class MarkerInfoView: UIView {
   
+	@IBOutlet var markerInfoView: UIView!
   @IBOutlet weak var placePhoto: UIImageView!
   @IBOutlet weak var nameLabel: UILabel!
+	@IBOutlet weak var travelIcon: UIImageView!
+	
+	var label: String? {
+		get { print("getting name")
+			return nameLabel?.text }
+		set { nameLabel.text = newValue }
+	}
+	
+	var image: UIImage? {
+		get { print("getting image")
+			return placePhoto.image }
+		set { placePhoto.image = newValue }
+	}
+	
+	var icon: UIImage? {
+		get { return travelIcon.image }
+		set { travelIcon.image = newValue }
+	}
+
+	required init(coder aDecoder: NSCoder) {
+		
+		super.init(coder: aDecoder)!
+		print ("initializing subviews")
+		initSubviews()
+	}
+	
+	override init (frame: CGRect) {
+		super.init(frame: frame)
+		initSubviews()
+	}
+	
+	func initSubviews() {
+		let nib = UINib(nibName: "MarkerInfoView", bundle: nil)
+		print("in subviews")
+		nib.instantiateWithOwner(self, options: nil)
+		markerInfoView.frame = bounds
+		addSubview(markerInfoView)
+	}
 }
