@@ -13,18 +13,24 @@ import GoogleMaps
 import Parse
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
-    var placeArray: GooglePlace?
-    var dataMachine = GoogleDataProvider()
-    var placesClient: GMSPlacesClient?
-    var time: NSDate?
-    var users: [PFObject]?
-    var myOwnObject: PFObject? //All update functions revolve around this object.
-
-    let searchRadius: Double = 1000
-
+	var placeArray: GooglePlace?
+	var dataMachine = GoogleDataProvider()
+	var placesClient: GMSPlacesClient?
+	var time: NSDate?
+	var users: [PFObject]?
+	var myOwnObject: PFObject? //All update functions revolve around this object.
+	
+	let meetingPlaceTypes = ["bakery", "bar", "cafe", "grocery_or_supermarket", "restaurant"]
+	
+	
+	
+	let searchRadius: Double = 1000
+	
 	@IBOutlet weak var mapView: GMSMapView!
 	
 	@IBOutlet weak var tableView: UITableView!
+	
+	@IBOutlet weak var markerInfoView: MarkerInfoView!
 	
 	@IBAction func onFriends(sender: AnyObject) {
 		// GO TO FRIENDS LIST VIEW CONTROLLER
@@ -83,6 +89,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 			}
 		}
 	}
+	
 	override func viewWillAppear(animated: Bool) {
 		self.users = loadProfiles()
 		print("#### \(users)")
@@ -102,7 +109,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		sleep(30)
 		recursiveUpdate()
 	}
-	
 	
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if let users = users {
@@ -132,126 +138,126 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		
 		return cell
 	}
-    
-    
-    
-    
-    
-    func fetchLocations(xy: CLLocationCoordinate2D) {
-        dataMachine.fetchPlacesNearCoordinate(xy, radius: searchRadius, types: ["food", "pets", "coffee", "car repair"]){places in
-            for place: GooglePlace in places {
-                let marker = PlaceMarker(place: place)
-                marker.map = self.mapView
-            }
-            
-        }
-    }
-    
-    func calculateMidpoint(arrayOfCoordinates: [CLLocationCoordinate2D]) -> CLLocationCoordinate2D {
-        // Get lat/long of all friends online, store into an array
-        //    Do this in cellForRowAtIndexPath I think...
-        // TEST DATA:::
-        //let yourLocation = CLLocationCoordinate2DMake(37.7258391,-122.4507056) // CCSF Coordinates
-        //let friend1Loc = CLLocationCoordinate2DMake(37.8049393,-122.4233581) // David's old address
-        //let onlineCoordinates = [yourLocation, friend1Loc]
-        let onlineCoordinates = arrayOfCoordinates
-        
-        // Let's calculate the center of gravity of everything in the onlineCoordinates array
-        let π = M_PI
-        var numCoordinates: Int = 0
-        var combinedCartesianX: Double = 0.0
-        var combinedCartesianY: Double = 0.0
-        var combinedCartesianZ: Double = 0.0
-        
-        // Iterate through all online friends' coordinates
-        for (location) in onlineCoordinates {
-            numCoordinates++
-            print("Lat: \(location.latitude) | Long: \(location.longitude)")
-            let latRadians = location.latitude * (π/180)   // Convert Latitude to Radians
-            let longRadians = location.longitude * (π/180) // Convert Longitude to Radians
-            print("latRadians: \(latRadians)")
-            print("longRadians: \(longRadians)")
-            
-            // Convert latitude and longitude to cartesian coordinates
-            combinedCartesianX += (cos(latRadians) * cos(longRadians)) // Combined X Coordinate
-            combinedCartesianY += (cos(latRadians) * sin(longRadians)) // Combined Y Coordinate
-            combinedCartesianZ += sin(latRadians)
-        }
-        
-        combinedCartesianX /= Double(numCoordinates)
-        combinedCartesianY /= Double(numCoordinates)
-        combinedCartesianZ /= Double(numCoordinates)
-        print("combinedCartesianX: \(combinedCartesianX)")
-        print("combinedCartesianY: \(combinedCartesianY)")
-        print("combinedCartesianZ: \(combinedCartesianZ)")
-        
-        let midpointX = atan2(combinedCartesianZ, (sqrt(pow(combinedCartesianX, 2) + pow(combinedCartesianY, 2))))
-        let midpointY = atan2(combinedCartesianY, combinedCartesianX)
-        
-        let midpointLatitude = (180/π) * midpointX  // Convert from radians to degrees
-        let midpointLongitude = (180/π) * midpointY // Convert from radians to degrees
-        
-        print("Midpoint | Lat: \(midpointLatitude) | Long: \(midpointLongitude)")
-        let midpoint = CLLocationCoordinate2DMake(midpointLatitude, midpointLongitude)
-    
-        return midpoint
-    }
+	
+	
+	
+	
+	
+	func fetchLocations(xy: CLLocationCoordinate2D) {
+		dataMachine.fetchPlacesNearCoordinate(xy, radius: searchRadius, types: meetingPlaceTypes){places in
+			for place: GooglePlace in places {
+				let marker = PlaceMarker(place: place)
+				marker.map = self.mapView
+			}
+			
+		}
+	}
+	
+	func calculateMidpoint(arrayOfCoordinates: [CLLocationCoordinate2D]) -> CLLocationCoordinate2D {
+		// Get lat/long of all friends online, store into an array
+		//    Do this in cellForRowAtIndexPath I think...
+		// TEST DATA:::
+		//let yourLocation = CLLocationCoordinate2DMake(37.7258391,-122.4507056) // CCSF Coordinates
+		//let friend1Loc = CLLocationCoordinate2DMake(37.8049393,-122.4233581) // David's old address
+		//let onlineCoordinates = [yourLocation, friend1Loc]
+		let onlineCoordinates = arrayOfCoordinates
+		
+		// Let's calculate the center of gravity of everything in the onlineCoordinates array
+		let π = M_PI
+		var numCoordinates: Int = 0
+		var combinedCartesianX: Double = 0.0
+		var combinedCartesianY: Double = 0.0
+		var combinedCartesianZ: Double = 0.0
+		
+		// Iterate through all online friends' coordinates
+		for (location) in onlineCoordinates {
+			numCoordinates++
+			print("Lat: \(location.latitude) | Long: \(location.longitude)")
+			let latRadians = location.latitude * (π/180)   // Convert Latitude to Radians
+			let longRadians = location.longitude * (π/180) // Convert Longitude to Radians
+			print("latRadians: \(latRadians)")
+			print("longRadians: \(longRadians)")
+			
+			// Convert latitude and longitude to cartesian coordinates
+			combinedCartesianX += (cos(latRadians) * cos(longRadians)) // Combined X Coordinate
+			combinedCartesianY += (cos(latRadians) * sin(longRadians)) // Combined Y Coordinate
+			combinedCartesianZ += sin(latRadians)
+		}
+		
+		combinedCartesianX /= Double(numCoordinates)
+		combinedCartesianY /= Double(numCoordinates)
+		combinedCartesianZ /= Double(numCoordinates)
+		print("combinedCartesianX: \(combinedCartesianX)")
+		print("combinedCartesianY: \(combinedCartesianY)")
+		print("combinedCartesianZ: \(combinedCartesianZ)")
+		
+		let midpointX = atan2(combinedCartesianZ, (sqrt(pow(combinedCartesianX, 2) + pow(combinedCartesianY, 2))))
+		let midpointY = atan2(combinedCartesianY, combinedCartesianX)
+		
+		let midpointLatitude = (180/π) * midpointX  // Convert from radians to degrees
+		let midpointLongitude = (180/π) * midpointY // Convert from radians to degrees
+		
+		print("Midpoint | Lat: \(midpointLatitude) | Long: \(midpointLongitude)")
+		let midpoint = CLLocationCoordinate2DMake(midpointLatitude, midpointLongitude)
+		
+		return midpoint
+	}
 	/** loads profile owner's profile object so it can be updated
-     *
-     */
-    func loadOwnObject(myName: String){
-        var user:  PFObject?
-        let query = PFQuery(className: "Profile")
-        query.whereKey("username", containsString: myName)
-        query.limit = 1
-        query.findObjectsInBackgroundWithBlock {
-            (object: [PFObject]?, error: NSError?) -> Void in
-            user = object![0]
-            if error == nil {
-                //The find succeeded.
-                print("Successfully retrieved my own object \(user)")
-                self.myOwnObject = user
-            }
-        }
-    }
-    
-    func loadProfiles() -> [PFObject]? {
-        
-        var user: [PFObject]?
-        let query = PFQuery(className:"Profile")
-        //query.whereKey("name", equalTo: "\(name)")
-        query.orderByDescending("createdAt")
-        //query.includeKey("username")
-        query.limit = 20
-        query.findObjectsInBackgroundWithBlock {
-            (objects: [PFObject]?, error: NSError?) -> Void in
-            user = objects
-            self.tableView.reloadData()
-            if error == nil {
-                // The find succeeded.
-                print("Successfully retrieved \(objects!.count) Points In Time.")
-                self.users = objects
-                self.tableView.reloadData()
-                
-                if let objects = objects {
-                    for object in objects {
-                        //print(object.objectId)
-                        //print(object)
-                    }
-                }
-                
-                
-                
-            } else {
-                // Log details of the failure
-                print("Error: \(error!) \(error!.userInfo)")
-            }
-            self.tableView.reloadData()
-        }
-        self.tableView.reloadData()
-        return user
-        
-    }
+	*
+	*/
+	func loadOwnObject(myName: String){
+		var user:  PFObject?
+		let query = PFQuery(className: "Profile")
+		query.whereKey("username", containsString: myName)
+		query.limit = 1
+		query.findObjectsInBackgroundWithBlock {
+			(object: [PFObject]?, error: NSError?) -> Void in
+			user = object![0]
+			if error == nil {
+				//The find succeeded.
+				print("Successfully retrieved my own object \(user)")
+				self.myOwnObject = user
+			}
+		}
+	}
+	
+	func loadProfiles() -> [PFObject]? {
+		
+		var user: [PFObject]?
+		let query = PFQuery(className:"Profile")
+		//query.whereKey("name", equalTo: "\(name)")
+		query.orderByDescending("createdAt")
+		//query.includeKey("username")
+		query.limit = 20
+		query.findObjectsInBackgroundWithBlock {
+			(objects: [PFObject]?, error: NSError?) -> Void in
+			user = objects
+			self.tableView.reloadData()
+			if error == nil {
+				// The find succeeded.
+				print("Successfully retrieved \(objects!.count) Points In Time.")
+				self.users = objects
+				self.tableView.reloadData()
+				
+				if let objects = objects {
+					for object in objects {
+						//print(object.objectId)
+						//print(object)
+					}
+				}
+				
+				
+				
+			} else {
+				// Log details of the failure
+				print("Error: \(error!) \(error!.userInfo)")
+			}
+			self.tableView.reloadData()
+		}
+		self.tableView.reloadData()
+		return user
+		
+	}
 	
 	/*
 	// MARK: - Navigation
@@ -278,6 +284,8 @@ extension MainViewController: GMSMapViewDelegate {
 			} else {
 				infoView.placePhoto.image = UIImage(named: "generic")
 			}
+			
+			view.addSubview(infoView);
 			
 			return infoView
 		} else {

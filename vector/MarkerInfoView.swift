@@ -29,13 +29,15 @@ import UIKit
 class MarkerInfoView: UIView {
   
 	@IBOutlet var markerInfoView: UIView!
-  @IBOutlet weak var placePhoto: UIImageView!
-  @IBOutlet weak var nameLabel: UILabel!
+	@IBOutlet weak var nameLabel: UILabel!
+	@IBOutlet weak var placePhoto: UIImageView!
 	@IBOutlet weak var travelIcon: UIImageView!
+
+	
+	//	@IBOutlet weak var travelIcon: UIImageView!
 	
 	var label: String? {
-		get { print("getting name")
-			return nameLabel?.text }
+		get { return nameLabel?.text }
 		set { nameLabel.text = newValue }
 	}
 	
@@ -44,7 +46,7 @@ class MarkerInfoView: UIView {
 			return placePhoto.image }
 		set { placePhoto.image = newValue }
 	}
-	
+
 	var icon: UIImage? {
 		get { return travelIcon.image }
 		set { travelIcon.image = newValue }

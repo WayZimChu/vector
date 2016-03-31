@@ -8,6 +8,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MarkerInfoView" customModule="vector" customModuleProvider="target">
             <connections>
                 <outlet property="markerInfoView" destination="deK-wm-fUY" id="Ct6-qy-rdr"/>
+                <outlet property="nameLabel" destination="Ggu-GN-94s" id="Qaj-hT-P6K"/>
+                <outlet property="placePhoto" destination="Qhb-tQ-t8V" id="EBK-yW-Ep7"/>
+                <outlet property="travelIcon" destination="HXI-I9-qMO" id="4Vq-VW-DRm"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -46,11 +49,6 @@
                 <constraint firstAttribute="bottom" secondItem="HXI-I9-qMO" secondAttribute="bottom" id="snN-yI-FL9"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <connections>
-                <outlet property="nameLabel" destination="Ggu-GN-94s" id="bSx-yX-VR7"/>
-                <outlet property="placePhoto" destination="Qhb-tQ-t8V" id="tke-mF-GQL"/>
-                <outlet property="travelIcon" destination="HXI-I9-qMO" id="PbF-qE-eia"/>
-            </connections>
             <point key="canvasLocation" x="536" y="378"/>
         </view>
     </objects>

@@ -77,6 +77,12 @@
                         <subviews>
                             <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="enO-mS-WJE" customClass="GMSMapView">
                                 <rect key="frame" x="0.0" y="64" width="375" height="356"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xJh-Yj-XTR" customClass="MarkerInfoView" customModule="vector" customModuleProvider="target">
+                                        <rect key="frame" x="123" y="36" width="128" height="128"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -182,6 +188,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="mapView" destination="enO-mS-WJE" id="2X0-gD-IHI"/>
+                        <outlet property="markerInfoView" destination="xJh-Yj-XTR" id="OUe-HY-d3n"/>
                         <outlet property="tableView" destination="vBo-3K-HqR" id="czo-oQ-HGh"/>
                         <segue destination="Vcz-R1-Cp7" kind="show" identifier="calcPointSegue" id="Zsq-Ke-ggZ"/>
                     </connections>
@@ -589,6 +596,6 @@
         <image name="default-profile-pic" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="SQm-2q-r90"/>
+        <segue reference="noC-ed-15a"/>
     </inferredMetricsTieBreakers>
 </document>
