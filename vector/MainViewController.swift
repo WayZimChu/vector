@@ -21,7 +21,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var myOwnObject: PFObject? //All update functions revolve around this object.
 
     let searchRadius: Double = 1000
-    
+
 	@IBOutlet weak var mapView: GMSMapView!
 	
 	@IBOutlet weak var tableView: UITableView!
@@ -31,109 +31,107 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	}
 	@IBAction func onCalcPoint(sender: AnyObject) {
 		// GO TO LOCATION DETAILS VIEW
-        //print((locationManager.location?.coordinate)!)
-        self.tableView.reloadData();
-        fetchLocations((locationManager.location?.coordinate)!)
-        placesClient?.currentPlaceWithCallback({
-            (placeLikelihoodList: GMSPlaceLikelihoodList?, error: NSError?) -> Void in
-            if let error = error {
-                print("Pick Place error: \(error.localizedDescription)")
-                return
-            }
-            
-         //   self.nameLabel.text = "No current place"
-           // self.addressLabel.text = ""
-            
-            if let placeLikelihoodList = placeLikelihoodList {
-                let place = placeLikelihoodList.likelihoods.first?.place
-                if let place = place {
-                  //  self.nameLabel.text = place.name
-                   // self.addressLabel.text = place.formattedAddress!.componentsSeparatedByString(", ")
-                       // .joinWithSeparator("\n")
-                    print("\(place.name) \(place.formattedAddress!.componentsSeparatedByString(", ").joinWithSeparator("\n"))")
-                }
-            }
-        })
-    }
-
+		//print((locationManager.location?.coordinate)!)
+		self.tableView.reloadData();
+		fetchLocations((locationManager.location?.coordinate)!)
+		placesClient?.currentPlaceWithCallback({
+			(placeLikelihoodList: GMSPlaceLikelihoodList?, error: NSError?) -> Void in
+			if let error = error {
+				print("Pick Place error: \(error.localizedDescription)")
+				return
+			}
+			
+			//   self.nameLabel.text = "No current place"
+			// self.addressLabel.text = ""
+			
+			if let placeLikelihoodList = placeLikelihoodList {
+				let place = placeLikelihoodList.likelihoods.first?.place
+				if let place = place {
+					//  self.nameLabel.text = place.name
+					// self.addressLabel.text = place.formattedAddress!.componentsSeparatedByString(", ")
+					// .joinWithSeparator("\n")
+					print("\(place.name) \(place.formattedAddress!.componentsSeparatedByString(", ").joinWithSeparator("\n"))")
+				}
+			}
+		})
+	}
+	
 	let locationManager = CLLocationManager()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        placesClient = GMSPlacesClient()
-        self.tableView.reloadData()
-        //print(users)
-        // fetchLocations()
-        print("%%%%% \((PFUser.currentUser()?.username!)!)")
-        loadOwnObject((PFUser.currentUser()?.username!)!)
-        
-        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-        dispatch_async(dispatch_get_global_queue(priority, 0)) {
-            // do some task
-            self.recursiveUpdate()
-            dispatch_async(dispatch_get_main_queue()) {
-                // update some UI
-            }
-        }
-    }
-    override func viewWillAppear(animated: Bool) {
-        self.users = loadProfiles()
-        print("#### \(users)")
-        self.tableView.reloadData()
-    }
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		// Do any additional setup after loading the view.
+		tableView.delegate = self
+		tableView.dataSource = self
+		
+		locationManager.delegate = self
+		locationManager.requestWhenInUseAuthorization()
+		placesClient = GMSPlacesClient()
+		self.tableView.reloadData()
+		//print(users)
+		// fetchLocations()
+		print("%%%%% \((PFUser.currentUser()?.username!)!)")
+		loadOwnObject((PFUser.currentUser()?.username!)!)
+		
+		let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+		dispatch_async(dispatch_get_global_queue(priority, 0)) {
+			// do some task
+			self.recursiveUpdate()
+			dispatch_async(dispatch_get_main_queue()) {
+				// update some UI
+			}
+		}
+	}
+	override func viewWillAppear(animated: Bool) {
+		self.users = loadProfiles()
+		print("#### \(users)")
+		self.tableView.reloadData()
+	}
 	
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
 	
-    func recursiveUpdate()
-    {
-        sleep(10)
-        //print(self.myOwnObject?.objectId)
-        Post.updateLocation((myOwnObject?.objectId!)!, long: (locationManager.location?.coordinate.longitude)!, lat: (locationManager.location?.coordinate.latitude)!)
-        sleep(30)
-        recursiveUpdate()
-    }
-    
-    
+	func recursiveUpdate()
+	{
+		sleep(10)
+		//print(self.myOwnObject?.objectId)
+		Post.updateLocation((myOwnObject?.objectId!)!, long: (locationManager.location?.coordinate.longitude)!, lat: (locationManager.location?.coordinate.latitude)!)
+		sleep(30)
+		recursiveUpdate()
+	}
+	
+	
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let users = users {
-            return users.count
-        }
-        else {
-            return 0
-        }
+		if let users = users {
+			return users.count
+		}
+		else {
+			return 0
+		}
 	}
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("MainViewCell", forIndexPath: indexPath) as! MainViewCell
 		let user = users![indexPath.row]
 		cell.nameLabel.text = user["username"] as? String
-        
-        if let profile = user.valueForKey("profilePic")! as? PFFile {
-            profile.getDataInBackgroundWithBlock({
-                (imageData: NSData?, error: NSError?) -> Void in
-                if (error == nil) {
-                    let image = UIImage(data:imageData!)
-                    cell.profileImage.image = image
-
-                    print("Profile Picture Loaded")
-                }
-            })
-        }
+		
+		if let profile = user.valueForKey("profilePic")! as? PFFile {
+			profile.getDataInBackgroundWithBlock({
+				(imageData: NSData?, error: NSError?) -> Void in
+				if (error == nil) {
+					let image = UIImage(data:imageData!)
+					cell.profileImage.image = image
+					
+					print("Profile Picture Loaded")
+				}
+			})
+		}
 		
 		return cell
 	}
-    
-    
     
     
     
@@ -264,37 +262,41 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	// Pass the selected object to the new view controller.
 	}
 	*/
-    
-
+	
 	
 }
 
 extension MainViewController: GMSMapViewDelegate {
-    func mapView(mapView: GMSMapView, markerInfoContents marker: GMSMarker) -> UIView? {
-        let placeMarker = marker as! PlaceMarker
-    
-        if let infoView = UIView.viewFromNibName("MarkerInfoView") as? MarkerInfoView {
-            infoView.nameLabel.text = placeMarker.place.name
-
-            if let photo = placeMarker.place.photo {
-                infoView.placePhoto.image = photo
-            } else {
-                infoView.placePhoto.image = UIImage(named: "generic")
-            }
-            
-            return infoView
-        } else {
-            return nil
-        }
-    }
+	func mapView(mapView: GMSMapView, markerInfoContents marker: GMSMarker) -> UIView? {
+		let placeMarker = marker as! PlaceMarker
+		
+		if let infoView = UIView.viewFromNibName("MarkerInfoView") as? MarkerInfoView {
+			infoView.nameLabel.text = placeMarker.place.name
+			
+			if let photo = placeMarker.place.photo {
+				infoView.placePhoto.image = photo
+			} else {
+				infoView.placePhoto.image = UIImage(named: "generic")
+			}
+			
+			return infoView
+		} else {
+			return nil
+		}
+	}
+	
+	func didTapMyLocationButtonForMapView(mapView: GMSMapView) -> Bool {
+  mapView.selectedMarker = nil
+  return false
+	}
 }
 
 extension MainViewController: CLLocationManagerDelegate {
-
+	
 	// called with authorization is granted or revoked
 	func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
 		
-	// checks for location authorization
+		// checks for location authorization
 		if status == .AuthorizedWhenInUse {
 			
 			// updates live location
@@ -308,27 +310,27 @@ extension MainViewController: CLLocationManagerDelegate {
 	
 	// called when new location data is received
 	func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
+		
 		if let location = locations.last {
 			time = NSDate()
 			// center camera on user location
 			mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 14, bearing: 0, viewingAngle: 0)
 			//fetchLocations(location.coordinate)
-            
+			
 			// turns off location updates
 			// TODO: probably want to set this on a timer
 			locationManager.stopUpdatingLocation()
-            //print("Got IT")
-        }
-        
+			//print("Got IT")
+		}
+		
 	}
 }
 
 extension UIView {
-    class func viewFromNibName(nibNamed: String, bundle : NSBundle? = nil) -> UIView? {
-        return UINib(
-            nibName: nibNamed,
-            bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? UIView
-    }
+	class func viewFromNibName(nibNamed: String, bundle : NSBundle? = nil) -> UIView? {
+		return UINib(
+			nibName: nibNamed,
+			bundle: bundle
+			).instantiateWithOwner(nil, options: nil)[0] as? UIView
+	}
 }
