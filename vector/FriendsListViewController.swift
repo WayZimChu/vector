@@ -13,6 +13,7 @@ let userDidLogoutNotification = "userDidLogoutNotification"
 
 class FriendsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var users: [PFObject]?
+    var myOwnObject: PFObject? // all updates revolve around this object
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -68,6 +69,19 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         return cell
     }
     
+    @IBAction func addFriend(sender: AnyObject) {
+        let cell = sender.superview!!.superview as! UITableViewCell
+        let indexPath = tableView.indexPathForCell(cell)
+        let personToFriend = users![(indexPath?.row)!]
+        print(personToFriend)
+        
+        //This is used to update friends into own object
+        print(personToFriend["username"]!)
+        myOwnObject!.addUniqueObjectsFromArray(["\(personToFriend["username"]!)"], forKey:"friends")
+        myOwnObject!.saveInBackground()
+        personToFriend.addUniqueObjectsFromArray(["\(PFUser.currentUser()!.username!)"], forKey:"friends")
+    }
+    
     @IBAction func onLogout(sender: AnyObject) {
         print("Logging out user: \(PFUser.currentUser()!.username!)")
         PFUser.logOut()
@@ -94,7 +108,7 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
                 
                 if let objects = objects {
                     for object in objects {
-                        print(object.objectId)
+                       // print(object.objectId)
                         print(object)
                     }
                 }

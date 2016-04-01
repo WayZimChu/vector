@@ -58,10 +58,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
         })
-        
-        //This is used to update friends into own object
-        //myOwnObject!.addUniqueObjectsFromArray(["MachoMan", "TaylorSwift"], forKey:"friends")
-        //myOwnObject!.saveInBackground()
     }
 
 
@@ -241,6 +237,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         var user: [PFObject]?
         let query = PFQuery(className:"Profile")
         //query.whereKey("name", equalTo: "\(name)")
+        
+        //This query will check to see who has your name under friends and return those profile objects
         query.whereKey("friends",   containedIn: ["\((PFUser.currentUser()?.username!)!)"])
         query.orderByDescending("createdAt")
         //query.includeKey("username")
@@ -258,7 +256,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 if let objects = objects {
                     for object in objects {
                         //print(object.objectId)
-                        //print(object)
+                        print(object)
                     }
                 }
                 
@@ -275,16 +273,13 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
 	
-	/*
-	// MARK: - Navigation
-	
-	// In a storyboard-based application, you will often want to do a little preparation before navigation
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-	// Get the new view controller using segue.destinationViewController.
-	// Pass the selected object to the new view controller.
-	}
-	*/
-	
+        if segue.identifier == "toFriendView" {
+            let destinationNavigationController = segue.destinationViewController as! FriendsListViewController
+            destinationNavigationController.myOwnObject = self.myOwnObject!
+        }
+}
+
 	
 }
 
