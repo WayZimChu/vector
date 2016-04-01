@@ -22,8 +22,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	
 	let meetingPlaceTypes = ["bakery", "bar", "cafe", "grocery_or_supermarket", "restaurant"]
 	
-	
-	
 	let searchRadius: Double = 1000
 	
 	@IBOutlet weak var mapView: GMSMapView!
@@ -148,10 +146,22 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	
 	
 	
-	func fetchLocations(xy: CLLocationCoordinate2D) {
-		dataMachine.fetchPlacesNearCoordinate(xy, radius: searchRadius, types: meetingPlaceTypes){places in
+	func fetchLocations(coord: CLLocationCoordinate2D) {
+		dataMachine.fetchPlacesNearCoordinate(coord, radius: searchRadius, types: meetingPlaceTypes){places in
 			for place: GooglePlace in places {
 				let marker = PlaceMarker(place: place)
+//				var markerView: UIImageView!
+				
+//				let position = coord
+    marker.title = place.name
+				if let placeImage = UIImage(named: place.placeType)?.imageWithRenderingMode(.AlwaysTemplate) {
+					marker.icon = placeImage
+//					markerView!.image = marker.icon
+				} else {
+					marker.icon = UIImage(named: "Generic")
+//					markerView!.image = marker.icon
+				}
+		//    marker.tintColor = UIColor.redColor()
 				marker.map = self.mapView
 			}
 			
