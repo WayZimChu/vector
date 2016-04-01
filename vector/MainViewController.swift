@@ -293,7 +293,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 extension MainViewController: GMSMapViewDelegate {
 	func mapView(mapView: GMSMapView, markerInfoContents marker: GMSMarker) -> UIView? {
 		let placeMarker = marker as! PlaceMarker
-
+        
 		print("in mapView extension")
 		/*
 		
@@ -328,8 +328,8 @@ extension MainViewController: GMSMapViewDelegate {
 	}
 	
 	func didTapMyLocationButtonForMapView(mapView: GMSMapView) -> Bool {
-  mapView.selectedMarker = nil
-  return false
+            mapView.selectedMarker = nil
+            return false
 	}
 }
 
