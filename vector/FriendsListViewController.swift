@@ -79,7 +79,7 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         print(personToFriend["username"]!)
         myOwnObject!.addUniqueObjectsFromArray(["\(personToFriend["username"]!)"], forKey:"friends")
         myOwnObject!.saveInBackground()
-        personToFriend.addUniqueObjectsFromArray(["\(PFUser.currentUser()!.username!)"], forKey:"friends")
+        //personToFriend.addUniqueObjectsFromArray(["\(PFUser.currentUser()!.username!)"], forKey:"friends")
     }
     
     @IBAction func onLogout(sender: AnyObject) {
