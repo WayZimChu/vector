@@ -2,7 +2,7 @@
 
 Vector is an interface to find a place to meet between two points of location.
 
-Time spent: **12** mythical man hours spent in total
+Time spent: **17** mythical man hours spent in total
 
 ## User Stories
 

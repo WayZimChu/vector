@@ -77,6 +77,12 @@
                         <subviews>
                             <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="enO-mS-WJE" customClass="GMSMapView">
                                 <rect key="frame" x="0.0" y="64" width="375" height="356"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xJh-Yj-XTR" customClass="MarkerInfoView" customModule="vector" customModuleProvider="target">
+                                        <rect key="frame" x="123" y="36" width="128" height="128"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -98,13 +104,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="86.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z6P-TX-nwg">
-                                                    <rect key="frame" x="8" y="4" width="77" height="77"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="77" id="7lZ-fn-7ET"/>
-                                                        <constraint firstAttribute="height" constant="77" id="o0E-vB-SDU"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Firstname Lastname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6zR-JQ-pbH">
                                                     <rect key="frame" x="93" y="4" width="155" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -123,22 +122,33 @@
                                                         <constraint firstAttribute="width" constant="20" id="gVc-Rz-Z2p"/>
                                                     </constraints>
                                                 </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z6P-TX-nwg">
+                                                    <rect key="frame" x="8" y="4" width="77" height="77"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="77" id="7lZ-fn-7ET"/>
+                                                        <constraint firstAttribute="height" constant="77" id="o0E-vB-SDU"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="6zR-JQ-pbH" firstAttribute="leading" secondItem="4pP-MH-2hY" secondAttribute="leading" id="1CH-vj-XTk"/>
                                                 <constraint firstItem="Vys-hQ-6JI" firstAttribute="top" secondItem="qfD-gB-mtu" secondAttribute="topMargin" constant="-3" id="8Sy-zA-lBP"/>
+                                                <constraint firstItem="4pP-MH-2hY" firstAttribute="top" secondItem="6zR-JQ-pbH" secondAttribute="bottom" constant="7" id="9zE-y2-Sl4"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Vys-hQ-6JI" secondAttribute="trailing" constant="91" id="FB9-Pa-GGh"/>
-                                                <constraint firstItem="Z6P-TX-nwg" firstAttribute="centerY" secondItem="4pP-MH-2hY" secondAttribute="centerY" id="HDH-RS-mjz"/>
                                                 <constraint firstItem="Vys-hQ-6JI" firstAttribute="centerY" secondItem="6zR-JQ-pbH" secondAttribute="centerY" id="Iy0-ZV-VUW"/>
                                                 <constraint firstItem="Z6P-TX-nwg" firstAttribute="leading" secondItem="qfD-gB-mtu" secondAttribute="leadingMargin" id="LEN-Ra-RK8"/>
                                                 <constraint firstItem="Z6P-TX-nwg" firstAttribute="top" secondItem="6zR-JQ-pbH" secondAttribute="top" id="Sfg-zz-XFW"/>
                                                 <constraint firstItem="6zR-JQ-pbH" firstAttribute="bottom" secondItem="Vys-hQ-6JI" secondAttribute="bottom" id="WBI-TT-S2n"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="4pP-MH-2hY" secondAttribute="bottom" constant="25.5" id="YNj-gy-LMX"/>
-                                                <constraint firstItem="Z6P-TX-nwg" firstAttribute="centerY" secondItem="qfD-gB-mtu" secondAttribute="centerY" id="YrE-zE-ZdL"/>
+                                                <constraint firstItem="4pP-MH-2hY" firstAttribute="leading" secondItem="Z6P-TX-nwg" secondAttribute="trailing" constant="8" id="c93-li-KBD"/>
                                                 <constraint firstItem="6zR-JQ-pbH" firstAttribute="leading" secondItem="Z6P-TX-nwg" secondAttribute="trailing" constant="8" symbolic="YES" id="pBK-yf-l7w"/>
                                                 <constraint firstItem="Vys-hQ-6JI" firstAttribute="leading" secondItem="6zR-JQ-pbH" secondAttribute="trailing" constant="8" symbolic="YES" id="pph-UY-GaS"/>
                                                 <constraint firstItem="4pP-MH-2hY" firstAttribute="top" secondItem="6zR-JQ-pbH" secondAttribute="bottom" constant="7" id="zcM-hi-wpb"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="zcM-hi-wpb"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="distanceLabel" destination="4pP-MH-2hY" id="L16-Ac-zNf"/>
@@ -170,7 +180,7 @@
                     <navigationItem key="navigationItem" id="TYJ-tJ-PRg">
                         <barButtonItem key="leftBarButtonItem" title="Friends" id="huf-Cx-8kz">
                             <connections>
-                                <segue destination="klM-va-Qac" kind="show" id="aig-7a-SW3"/>
+                                <segue destination="klM-va-Qac" kind="show" identifier="toFriendView" id="aig-7a-SW3"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Calculate Point" id="uWp-Sc-jkf">
@@ -182,6 +192,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="mapView" destination="enO-mS-WJE" id="2X0-gD-IHI"/>
+                        <outlet property="markerInfoView" destination="xJh-Yj-XTR" id="OUe-HY-d3n"/>
                         <outlet property="tableView" destination="vBo-3K-HqR" id="czo-oQ-HGh"/>
                         <segue destination="Vcz-R1-Cp7" kind="show" identifier="calcPointSegue" id="Zsq-Ke-ggZ"/>
                     </connections>
@@ -483,6 +494,13 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tst-cA-avN">
                                                     <rect key="frame" x="256" y="5" width="20" height="20"/>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NCC-LY-1dp">
+                                                    <rect key="frame" x="281" y="34" width="75" height="30"/>
+                                                    <state key="normal" title="Add Friend"/>
+                                                    <connections>
+                                                        <action selector="addFriend:" destination="klM-va-Qac" eventType="touchUpInside" id="y8h-8m-6nc"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
@@ -589,6 +607,6 @@
         <image name="default-profile-pic" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="SQm-2q-r90"/>
+        <segue reference="noC-ed-15a"/>
     </inferredMetricsTieBreakers>
 </document>
