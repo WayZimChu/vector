@@ -146,18 +146,16 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		dataMachine.fetchPlacesNearCoordinate(coord, radius: searchRadius, types: meetingPlaceTypes){places in
 			for place: GooglePlace in places {
 				let marker = PlaceMarker(place: place)
-//				var markerView: UIImageView!
+				let markerView = MarkerInfoView()
 				
-//				let position = coord
-    marker.title = place.name
+				// marker icon control
+    marker.title = "💩 " + place.name + " 💩"
 				if let placeImage = UIImage(named: place.placeType)?.imageWithRenderingMode(.AlwaysTemplate) {
 					marker.icon = placeImage
-//					markerView!.image = marker.icon
 				} else {
 					marker.icon = UIImage(named: "Generic")
-//					markerView!.image = marker.icon
 				}
-		//    marker.tintColor = UIColor.redColor()
+				
 				marker.map = self.mapView
 			}
 			
@@ -286,14 +284,30 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 extension MainViewController: GMSMapViewDelegate {
 	func mapView(mapView: GMSMapView, markerInfoContents marker: GMSMarker) -> UIView? {
 		let placeMarker = marker as! PlaceMarker
+
+		print("in mapView extension")
+		/*
 		
+		// attempts at marker view
+		markerView.nameLabel.text = place.name
+		if let placePhoto = UIImage(named: place.photoReference!)?.imageWithRenderingMode(.AlwaysTemplate) {
+			print("found photo" + place.photoReference!)
+			markerView.image = placePhoto
+		} else {
+			print("looked for a photo")
+			markerView.image = nil
+		}
+		markerView.icon = UIImage(named: "unknown_travel")
+*/
 		if let infoView = UIView.viewFromNibName("MarkerInfoView") as? MarkerInfoView {
 			infoView.nameLabel.text = placeMarker.place.name
 			
 			if let photo = placeMarker.place.photo {
-				infoView.placePhoto.image = photo
+				print("found a photo " + placeMarker.place.photoReference!)
+				infoView.image = photo
 			} else {
-				infoView.placePhoto.image = UIImage(named: "generic")
+				print("this is not a photo " + (placeMarker.place.photoReference)!)
+				infoView.image = UIImage(named: "nothing")
 			}
 			
 			view.addSubview(infoView);
