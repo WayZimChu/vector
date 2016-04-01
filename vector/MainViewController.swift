@@ -103,7 +103,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	func recursiveUpdate()
 	{
 		sleep(10)
-		//print(self.myOwnObject?.objectId)
+		print(self.myOwnObject?.objectId)
 		Post.updateLocation((myOwnObject?.objectId!)!, long: (locationManager.location?.coordinate.longitude)!, lat: (locationManager.location?.coordinate.latitude)!)
 		sleep(30)
 		recursiveUpdate()
@@ -138,7 +138,15 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		return cell
 	}
 	
-	
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("Fetch locations called")
+        let otherUser = users![indexPath.row]
+        let myLocation = locationManager.location?.coordinate
+        let otherLocation = CLLocationCoordinate2DMake(otherUser["latitude"] as! Double, otherUser["longitude"] as! Double)
+        let midpoint = calculateMidpoint([myLocation!, otherLocation])
+        fetchLocations(midpoint)
+        mapView.animateToLocation(midpoint)
+    }
 	
 	
 	
@@ -271,12 +279,13 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
 	
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    {
         if segue.identifier == "toFriendView" {
             let destinationNavigationController = segue.destinationViewController as! FriendsListViewController
             destinationNavigationController.myOwnObject = self.myOwnObject!
         }
-}
+    }
 
 	
 }
