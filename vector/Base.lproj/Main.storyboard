@@ -170,7 +170,7 @@
                     <navigationItem key="navigationItem" id="TYJ-tJ-PRg">
                         <barButtonItem key="leftBarButtonItem" title="Friends" id="huf-Cx-8kz">
                             <connections>
-                                <segue destination="klM-va-Qac" kind="show" id="aig-7a-SW3"/>
+                                <segue destination="klM-va-Qac" kind="show" identifier="toFriendView" id="aig-7a-SW3"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Calculate Point" id="uWp-Sc-jkf">
@@ -483,6 +483,13 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tst-cA-avN">
                                                     <rect key="frame" x="256" y="5" width="20" height="20"/>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NCC-LY-1dp">
+                                                    <rect key="frame" x="281" y="34" width="75" height="30"/>
+                                                    <state key="normal" title="Add Friend"/>
+                                                    <connections>
+                                                        <action selector="addFriend:" destination="klM-va-Qac" eventType="touchUpInside" id="y8h-8m-6nc"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
