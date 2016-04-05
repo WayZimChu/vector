@@ -12,7 +12,7 @@ import CoreLocation
 import GoogleMaps
 import Parse
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
+class MainViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
 	var placeArray: GooglePlace?
 	var dataMachine = GoogleDataProvider()
 	var placesClient: GMSPlacesClient?
@@ -67,6 +67,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		super.viewDidLoad()
 		
 		// Do any additional setup after loading the view.
+        self.addSlideMenuButton()
 		tableView.delegate = self
 		tableView.dataSource = self
 		
@@ -82,7 +83,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
 		dispatch_async(dispatch_get_global_queue(priority, 0)) {
 			// do some task
-			self.recursiveUpdate()
+//			self.recursiveUpdate()
 			dispatch_async(dispatch_get_main_queue()) {
 				// update some UI
 			}
@@ -100,14 +101,14 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		// Dispose of any resources that can be recreated.
 	}
 	
-	func recursiveUpdate()
-	{
-		sleep(10)
-		print(self.myOwnObject?.objectId)
-		Post.updateLocation((myOwnObject?.objectId!)!, long: (locationManager.location?.coordinate.longitude)!, lat: (locationManager.location?.coordinate.latitude)!)
-		sleep(30)
-		recursiveUpdate()
-	}
+//	func recursiveUpdate()
+//	{
+//		sleep(10)
+//		print(self.myOwnObject?.objectId)
+//		Post.updateLocation((myOwnObject?.objectId!)!, long: (locationManager.location?.coordinate.longitude)!, lat: (locationManager.location?.coordinate.latitude)!)
+//		sleep(30)
+//		recursiveUpdate()
+//	}
 	
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if let users = users {
