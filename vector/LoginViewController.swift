@@ -25,10 +25,6 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    @IBAction func onFree(sender: AnyObject) {
-        performSegueWithIdentifier("free", sender: nil)
-    }
 
     @IBAction func onLogin(sender: AnyObject) {
         let username = usernameTextField.text ?? ""
@@ -37,7 +33,7 @@ class LoginViewController: UIViewController {
         PFUser.logInWithUsernameInBackground(username, password: password) { (user: PFUser?, error: NSError?) -> Void in
             if user != nil {
                 print("Logging in user: \(PFUser.currentUser()!.username!)")
-                self.performSegueWithIdentifier("loginSegue", sender: nil)
+                self.navigationController!.performSegueWithIdentifier("loginSegue", sender: nil)
             } else {
                 print("Username is required")
             }

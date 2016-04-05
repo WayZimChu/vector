@@ -55,10 +55,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     @IBAction func onSaveProfile(sender: AnyObject) {
-        let password = passwordTextField.text! ?? ""
-        let firstname = firstnameTextField.text! ?? ""
-        let lastname = lastnameTextField.text! ?? ""
-        let phonenum = phonenumTextField.text! ?? ""
+        let password: String? = passwordTextField.text
+        let firstname: String? = firstnameTextField.text
+        let lastname: String? = lastnameTextField.text
+        let phonenum: String? = phonenumTextField.text
         
         Post.updateProfile((myOwnObject?.objectId!)!, password: password, firstname: firstname, lastname: lastname, phonenum: phonenum, profileImage: profileImageView.image)
         

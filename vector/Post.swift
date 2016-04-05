@@ -94,20 +94,20 @@ class Post: NSObject {
                     print(error)
                 } else if let profileObject = profileObject {
                     
-                    // Let's optional chain the parameters and only update whatever is not nil
-                    if let password = password {
+                    // Only update whatever is not nil
+                    if password != nil {
                         profileObject["password"] = password
                     }
-                    if let firstname = firstname {
+                    if firstname != nil {
                         profileObject["firstname"] = firstname
                     }
-                    if let lastname = lastname {
+                    if lastname != nil {
                         profileObject["lastname"] = lastname
                     }
-                    if let phonenum = phonenum {
+                    if phonenum != nil {
                         profileObject["phonenum"] = phonenum
                     }
-                    if let profileImage = profileImage {
+                    if profileImage != nil {
                         profileObject["profilePic"] = Profile.getPFFileFromImage(profileImage) // PFFile column type
                     }
                     

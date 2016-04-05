@@ -42,13 +42,6 @@
                                     <segue destination="MW5-Gh-jTR" kind="presentation" id="ont-zx-bAy"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7zF-7j-cqg">
-                                <rect key="frame" x="128" y="67" width="111" height="30"/>
-                                <state key="normal" title="Segway for Free"/>
-                                <connections>
-                                    <action selector="onFree:" destination="bdx-go-1cA" eventType="touchUpInside" id="1AF-AA-OYX"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -768,6 +761,6 @@
         <image name="default-profile-pic" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="SQm-2q-r90"/>
+        <segue reference="noC-ed-15a"/>
     </inferredMetricsTieBreakers>
 </document>
