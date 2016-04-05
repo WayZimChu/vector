@@ -35,6 +35,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             break
         case 2:
             print("Profile\n", terminator: "")
+            self.performSegueWithIdentifier("updateProfileSegue", sender: nil)
             break
         default:
             print("default\n", terminator: "")

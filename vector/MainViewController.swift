@@ -79,7 +79,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		// fetchLocations()
 		print("%%%%% \((PFUser.currentUser()?.username!)!)")
 		loadOwnObject((PFUser.currentUser()?.username!)!)
-		
+
 		let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
 		dispatch_async(dispatch_get_global_queue(priority, 0)) {
 			// do some task
@@ -103,7 +103,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 	
 	func recursiveUpdate()
 	{
-		sleep(10)
+		sleep(600)
 		print(self.myOwnObject?.objectId)
 		Post.updateLocation((myOwnObject?.objectId!)!, long: (locationManager.location?.coordinate.longitude)!, lat: (locationManager.location?.coordinate.latitude)!)
 		sleep(30)
@@ -284,6 +284,10 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
     {
         if segue.identifier == "toFriendView" {
             let destinationNavigationController = segue.destinationViewController as! FriendsListViewController
+            destinationNavigationController.myOwnObject = self.myOwnObject!
+        } else if segue.identifier == "updateProfileSegue" {
+            let destinationNavigationController = segue.destinationViewController as! ProfileViewController
+            print("MY OWN OBJECT:::::: \(myOwnObject)")
             destinationNavigationController.myOwnObject = self.myOwnObject!
         }
     }

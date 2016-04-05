@@ -1,22 +1,27 @@
 //
-//  SignUpViewController.swift
+//  ProfileViewController.swift
 //  vector
 //
-//  Created by David Wayman on 3/22/16.
+//  Created by David Wayman on 4/5/16.
 //  Copyright © 2016 WayZimChu. All rights reserved.
 //
 
 import UIKit
 import Parse
 
-class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
-    @IBOutlet weak var usernameTextField: UITextField!
+class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var firstnameTextField: UITextField!
     @IBOutlet weak var lastnameTextField: UITextField!
     @IBOutlet weak var phonenumTextField: UITextField!
     @IBOutlet weak var profileImageView: UIImageView!
+    
+    var myOwnObject: PFObject? //All update functions revolve around this object.
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +30,23 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
         profileImageView.userInteractionEnabled = true
         profileImageView.addGestureRecognizer(tapGestureRecognizer)
+        
+        firstnameTextField.text = myOwnObject!["firstname"] as? String
+        lastnameTextField.text = myOwnObject!["lastname"] as? String
+        phonenumTextField.text = myOwnObject!["phonenum"] as? String
+        
+        if let profile = myOwnObject!.valueForKey("profilePic")! as? PFFile {
+            profile.getDataInBackgroundWithBlock({
+                (imageData: NSData?, error: NSError?) -> Void in
+                if (error == nil) {
+                    let image = UIImage(data:imageData!)
+                    self.profileImageView.image = image
+                    
+                    print("Profile Picture Loaded")
+                }
+            })
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,45 +54,15 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func onSignUp(sender: AnyObject) {
-        // TODO: Add firstname, lastname, phonenum to Parse backend
-        //       Also upload profile photo to Parse backend
-        
-        let username = usernameTextField.text! ?? ""
+    @IBAction func onSaveProfile(sender: AnyObject) {
         let password = passwordTextField.text! ?? ""
         let firstname = firstnameTextField.text! ?? ""
         let lastname = lastnameTextField.text! ?? ""
         let phonenum = phonenumTextField.text! ?? ""
         
-        if username != "" && password != "" &&
-           firstname != "" && lastname != "" && phonenum != "" {
-            // sign up user
-            let newUser = PFUser()
-            
-            newUser.username = username
-            newUser.password = password
-            
-            newUser.signUpInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-                if success {
-                    print("Yay created a user")
-                    let profilePic = self.profileImageView.image!
-                    let image = Profile.resize(profilePic, newSize: CGSize(width: 200, height: 200))
-                    
-                    Profile.postNewProfile(image, withFirstname: firstname, withLastname: lastname, withPhoneNum: phonenum) { (success: Bool, error: NSError?) -> Void in
-                        //self.dismissViewControllerAnimated(true, completion: nil)
-                        self.performSegueWithIdentifier("signUpComplete", sender: nil) // TODO: Change segue to actual segue
-                    }
-                } else {
-                    print(error?.localizedDescription)
-                    if error?.code == 202 {
-                        print("Username is taken")
-                    }
-                }
-            }
-        } else {
-            print("Please enter a username and password to sign up")
-        }
+        Post.updateProfile((myOwnObject?.objectId!)!, password: password, firstname: firstname, lastname: lastname, phonenum: phonenum, profileImage: profileImageView.image)
         
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     @IBAction func onTakePicture(sender: AnyObject) {

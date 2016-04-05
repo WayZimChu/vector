@@ -22,21 +22,21 @@ class Post: NSObject {
      - parameter caption: Caption text input by the user
      - parameter completion: Block to be executed after save operation is complete
      */
-    class func postUserImage(image: UIImage?, withCaption caption: String?, withCompletion completion: PFBooleanResultBlock?) {
-        // Create Parse object PFObject
-        let post = PFObject(className: "Post")
-        
-        // Add relevant fields to the object
-        post["media"] = getPFFileFromImage(image) // PFFile column type
-        post["author"] = PFUser.currentUser() // Pointer column type that points to PFUser
-        post["caption"] = caption
-        post["likesCount"] = 0
-        post["commentsCount"] = 0
-        post["name"] = PFUser.currentUser()?.username!
-        
-        // Save object (following function will save the object in Parse asynchronously)
-        post.saveInBackgroundWithBlock(completion)
-    }
+//    class func postUserImage(image: UIImage?, withCaption caption: String?, withCompletion completion: PFBooleanResultBlock?) {
+//        // Create Parse object PFObject
+//        let post = PFObject(className: "Post")
+//        
+//        // Add relevant fields to the object
+//        post["media"] = getPFFileFromImage(image) // PFFile column type
+//        post["author"] = PFUser.currentUser() // Pointer column type that points to PFUser
+//        post["caption"] = caption
+//        post["likesCount"] = 0
+//        post["commentsCount"] = 0
+//        post["name"] = PFUser.currentUser()?.username!
+//        
+//        // Save object (following function will save the object in Parse asynchronously)
+//        post.saveInBackgroundWithBlock(completion)
+//    }
     
     class func postUserProfile(profile: PFObject, withCompletion completion: PFBooleanResultBlock?) {
         profile.saveInBackgroundWithBlock(completion)
@@ -70,6 +70,7 @@ class Post: NSObject {
         UIGraphicsEndImageContext()
         return newImage
     }
+    
     class func updateLocation(ID: String, long: Double, lat: Double) {
         let query = PFQuery(className:"Profile")
         query.getObjectInBackgroundWithId("\(ID)") {
@@ -82,5 +83,36 @@ class Post: NSObject {
                 profileObject.saveInBackground()
             }
         }
+    }
+    
+    class func updateProfile(ID: String, password: String?, firstname: String?,
+        lastname: String?, phonenum: String?, profileImage: UIImage?) {
+            let query = PFQuery(className: "Profile")
+            query.getObjectInBackgroundWithId("\(ID)") {
+                (profileObject: PFObject?, error: NSError?) -> Void in
+                if error != nil {
+                    print(error)
+                } else if let profileObject = profileObject {
+                    
+                    // Let's optional chain the parameters and only update whatever is not nil
+                    if let password = password {
+                        profileObject["password"] = password
+                    }
+                    if let firstname = firstname {
+                        profileObject["firstname"] = firstname
+                    }
+                    if let lastname = lastname {
+                        profileObject["lastname"] = lastname
+                    }
+                    if let phonenum = phonenum {
+                        profileObject["phonenum"] = phonenum
+                    }
+                    if let profileImage = profileImage {
+                        profileObject["profilePic"] = Profile.getPFFileFromImage(profileImage) // PFFile column type
+                    }
+                    
+                    profileObject.saveInBackground()
+                }
+            }
     }
 }
