@@ -35,6 +35,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             break
         case 2:
             print("Profile\n", terminator: "")
+            self.performSegueWithIdentifier("updateProfileSegue", sender: nil)
             break
         default:
             print("default\n", terminator: "")
@@ -47,7 +48,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         btnShowMenu.frame = CGRectMake(0, 0, 30, 30)
         btnShowMenu.addTarget(self, action: "onSlideMenuButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
         let customBarItem = UIBarButtonItem(customView: btnShowMenu)
-        self.navigationItem.leftBarButtonItem = customBarItem;
+        self.navigationItem.leftBarButtonItem = customBarItem
     }
     
     func defaultMenuImage() -> UIImage {
@@ -75,7 +76,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             UIGraphicsEndImageContext()
         })
         
-        return defaultMenuImage;
+        return defaultMenuImage
     }
     
     func onSlideMenuButtonPressed(sender : UIButton){

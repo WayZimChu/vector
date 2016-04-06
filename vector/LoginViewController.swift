@@ -25,10 +25,6 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    @IBAction func onFree(sender: AnyObject) {
-        performSegueWithIdentifier("free", sender: nil)
-    }
 
     @IBAction func onLogin(sender: AnyObject) {
         let username = usernameTextField.text ?? ""
