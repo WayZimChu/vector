@@ -104,7 +104,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 	
 	func recursiveUpdate()
 	{
-		sleep(600)
+		sleep(10)
 		print(self.myOwnObject?.objectId)
 		Post.updateLocation((myOwnObject?.objectId!)!, long: (locationManager.location?.coordinate.longitude)!, lat: (locationManager.location?.coordinate.latitude)!)
 		sleep(30)
