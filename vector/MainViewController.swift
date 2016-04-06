@@ -70,7 +70,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         
 		tableView.delegate = self
 		tableView.dataSource = self
-		
+		mapView.delegate = self
 		locationManager.delegate = self
 		locationManager.requestWhenInUseAuthorization()
 		placesClient = GMSPlacesClient()
@@ -101,7 +101,10 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
-	
+    
+	/**
+     *  Recursive function is sent to background to update own location
+     */
 	func recursiveUpdate()
 	{
 		sleep(10)
@@ -159,7 +162,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 				let markerView = MarkerInfoView()
 				
 				// marker icon control
-    marker.title = "💩 " + place.name + " 💩"
+                    marker.title = place.name
 				if let placeImage = UIImage(named: place.placeType)?.imageWithRenderingMode(.AlwaysTemplate) {
 					marker.icon = placeImage
 				} else {
@@ -290,6 +293,8 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
             let destinationNavigationController = segue.destinationViewController as! ProfileViewController
             print("MY OWN OBJECT:::::: \(myOwnObject)")
             destinationNavigationController.myOwnObject = self.myOwnObject!
+        } else if segue.identifier == "toPlacesProfile" {
+            
         }
     }
 
@@ -297,7 +302,12 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 }
 
 extension MainViewController: GMSMapViewDelegate {
-	func mapView(mapView: GMSMapView, markerInfoContents marker: GMSMarker) -> UIView? {
+    func mapView(mapView: GMSMapView, didTapInfoWindowOfMarker marker: GMSMarker) {
+        print("tapped... nice")
+        self.performSegueWithIdentifier("toPlacesProfile", sender: marker)
+    }
+    
+  /*  func mapView(mapView: GMSMapView, markerInfoContents marker: GMSMarker) -> UIView? {
 		let placeMarker = marker as! PlaceMarker
         
 		print("in mapView extension")
@@ -331,7 +341,8 @@ extension MainViewController: GMSMapViewDelegate {
 		} else {
 			return nil
 		}
-	}
+
+	}// end markerInfoContents */
 	
 	func didTapMyLocationButtonForMapView(mapView: GMSMapView) -> Bool {
             mapView.selectedMarker = nil
