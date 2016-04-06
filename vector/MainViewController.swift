@@ -267,9 +267,6 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
                         print(object)
                     }
                 }
-                
-                
-                
             } else {
                 // Log details of the failure
                 print("Error: \(error!) \(error!.userInfo)")

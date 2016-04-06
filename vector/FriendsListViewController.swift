@@ -11,6 +11,7 @@ import Parse
 
 class FriendsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     var users: [PFObject]?
+    var friends: [PFObject]?
     var myOwnObject: PFObject? // all updates revolve around this object
     var searchActive: Bool = false
 
@@ -28,7 +29,7 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         self.tableView.reloadData()
     }
     override func viewWillAppear(animated: Bool) {
-        users = loadProfiles()
+        loadFriends()
         self.tableView.reloadData()
     }
 
@@ -38,17 +39,16 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let users = users {
-            return users.count
-        }
-        else {
+        if let friends = friends {
+            return friends.count
+        } else {
             return 0
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("MainViewCell", forIndexPath: indexPath) as! MainViewCell
-        let user = users![indexPath.row]
+        let user = friends![indexPath.row]
         cell.nameLabel.text = user["username"] as? String
         
         if let profile = user.valueForKey("profilePic")! as? PFFile {
@@ -132,6 +132,40 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         self.searchBar.endEditing(true)
     }
+    
+    /* MARK: - Load Friends
+     * loads all PFObjects that are your friends
+     */
+    func loadFriends() {
+        let query = PFQuery(className:"Profile")
+        
+        //This query will check to see who has your name under friends and return those profile objects
+        query.whereKey("friends",   containedIn: ["\((PFUser.currentUser()?.username!)!)"])
+        query.orderByDescending("createdAt")
+        query.limit = 50
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            self.friends = objects
+            self.tableView.reloadData()
+            if error == nil {
+                // The find succeeded.
+                print("Successfully retrieved \(objects!.count) Points In Time.")
+                self.friends = objects
+                self.tableView.reloadData()
+                
+                if let objects = objects {
+                    for object in objects {
+                        print(object)
+                    }
+                }
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+            }
+            self.tableView.reloadData()
+        }
+        self.tableView.reloadData()
+    }
     /*
     // MARK: - Navigation
 
@@ -143,3 +177,5 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
     */
 
 }
+
+
