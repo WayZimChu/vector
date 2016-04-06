@@ -9,15 +9,13 @@
 import UIKit
 import Parse
 
-class FriendsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class FriendsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     var users: [PFObject]?
     var myOwnObject: PFObject? // all updates revolve around this object
+    var searchActive: Bool = false
 
     @IBOutlet weak var tableView: UITableView!
-    
-    @IBAction func onAddFriend(sender: AnyObject) {
-        // MODALLY PRESENT ADD FRIEND VIEW CONTROLLER
-    }
+    @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +23,7 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
+        searchBar.delegate = self
         
         self.tableView.reloadData()
     }
@@ -116,6 +115,22 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         self.tableView.reloadData()
         return user
         
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        self.searchBar.endEditing(true)
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        self.searchBar.text = ""
+        searchActive = false
+        self.searchBar.endEditing(true)
+        self.tableView.reloadData()
+    }
+    
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        self.searchBar.endEditing(true)
     }
     /*
     // MARK: - Navigation
