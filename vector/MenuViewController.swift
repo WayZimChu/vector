@@ -17,7 +17,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var btnCloseMenuOverlay: UIButton!
     
-    var menuArray = ["Map View", "Friends", "Profile"]
+    var menuArray = ["Map View", "Friends", "Profile", "Logout"]
     var btnMenu: UIButton!
     var delegate: SlideMenuDelegate?
     
