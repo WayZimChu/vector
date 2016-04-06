@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Parse
+
+let userDidLogoutNotification = "userDidLogoutNotification"
 
 class BaseViewController: UIViewController, SlideMenuDelegate {
 
@@ -36,6 +39,12 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         case 2:
             print("Profile\n", terminator: "")
             self.performSegueWithIdentifier("updateProfileSegue", sender: nil)
+            break
+        case 3:
+            print("Logout\n", terminator: "")
+            print("Logging out user: \(PFUser.currentUser()!.username!)")
+            PFUser.logOut()
+            NSNotificationCenter.defaultCenter().postNotificationName(userDidLogoutNotification, object: nil)
             break
         default:
             print("default\n", terminator: "")

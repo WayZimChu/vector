@@ -9,8 +9,6 @@
 import UIKit
 import Parse
 
-let userDidLogoutNotification = "userDidLogoutNotification"
-
 class FriendsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var users: [PFObject]?
     var myOwnObject: PFObject? // all updates revolve around this object
@@ -80,12 +78,6 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         myOwnObject!.addUniqueObjectsFromArray(["\(personToFriend["username"]!)"], forKey:"friends")
         myOwnObject!.saveInBackground()
         //personToFriend.addUniqueObjectsFromArray(["\(PFUser.currentUser()!.username!)"], forKey:"friends")
-    }
-    
-    @IBAction func onLogout(sender: AnyObject) {
-        print("Logging out user: \(PFUser.currentUser()!.username!)")
-        PFUser.logOut()
-        NSNotificationCenter.defaultCenter().postNotificationName(userDidLogoutNotification, object: nil)
     }
 
     func loadProfiles() -> [PFObject]? {

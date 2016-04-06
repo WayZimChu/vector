@@ -29,7 +29,6 @@
 		81E0618A1C977E6D00D49DEE /* MainViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E061891C977E6D00D49DEE /* MainViewCell.swift */; };
 		81E0618C1C97827F00D49DEE /* LocationDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E0618B1C97827F00D49DEE /* LocationDetailsViewController.swift */; };
 		81E0618E1C9782F100D49DEE /* FriendsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E0618D1C9782F100D49DEE /* FriendsListViewController.swift */; };
-		81E061901C97851F00D49DEE /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E0618F1C97851F00D49DEE /* AddFriendViewController.swift */; };
 		FA77FEDE68D1EAFA444F85AF /* Pods_vector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B626361A8AB4BD210EF569DB /* Pods_vector.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,7 +58,6 @@
 		81E061891C977E6D00D49DEE /* MainViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewCell.swift; sourceTree = "<group>"; };
 		81E0618B1C97827F00D49DEE /* LocationDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDetailsViewController.swift; sourceTree = "<group>"; };
 		81E0618D1C9782F100D49DEE /* FriendsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsListViewController.swift; sourceTree = "<group>"; };
-		81E0618F1C97851F00D49DEE /* AddFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
 		9BC3A58281580CF8E1491224 /* Pods-vector.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vector.debug.xcconfig"; path = "Pods/Target Support Files/Pods-vector/Pods-vector.debug.xcconfig"; sourceTree = "<group>"; };
 		B626361A8AB4BD210EF569DB /* Pods_vector.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vector.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE8F6BA6E68A1C451CAEEB79 /* Pods-vector.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vector.release.xcconfig"; path = "Pods/Target Support Files/Pods-vector/Pods-vector.release.xcconfig"; sourceTree = "<group>"; };
@@ -150,7 +148,6 @@
 				81E061861C977D9F00D49DEE /* MainViewController.swift */,
 				81E0618B1C97827F00D49DEE /* LocationDetailsViewController.swift */,
 				81E0618D1C9782F100D49DEE /* FriendsListViewController.swift */,
-				81E0618F1C97851F00D49DEE /* AddFriendViewController.swift */,
 				8106E79F1CB38E5E00CCE68A /* BaseViewController.swift */,
 				8106E7A11CB38E9600CCE68A /* MenuViewController.swift */,
 				81776E811CB46CEB004CBAAB /* ProfileViewController.swift */,
@@ -293,7 +290,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7ACBA7581CA44495009D5A7F /* PlaceMarker.swift in Sources */,
-				81E061901C97851F00D49DEE /* AddFriendViewController.swift in Sources */,
 				81E0618A1C977E6D00D49DEE /* MainViewCell.swift in Sources */,
 				81E061851C97788400D49DEE /* LoginViewController.swift in Sources */,
 				813290801CA1E991004E3FFC /* Profile.swift in Sources */,
