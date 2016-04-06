@@ -32,10 +32,9 @@ class Post: NSObject {
                 (profileObject: PFObject?, error: NSError?) -> Void in
                 if error != nil {
                     print(error)
-                } else if let profileObject = profileObject {
-                    
+                } else if let profileObject = profileObject {                    
                     // Only update whatever is not nil
-                    if password != nil {
+                    if password != nil { // THIS PASSWORD THING IS WRONG!!!!!! NEEDS TO BE UPDATED...
                         profileObject["password"] = password
                     }
                     if firstname != nil {

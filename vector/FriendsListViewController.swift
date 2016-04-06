@@ -100,7 +100,7 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
      */
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         searchActive = true
-        searchUsers(searchText)
+        searchUsers(searchText.lowercaseString)
         
         print("FILTERED USERS: \(filteredUsers)")
         
@@ -126,7 +126,7 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
     func searchUsers(searchText: String) {
         var user: [PFObject]?
         let query = PFQuery(className: "Profile")
-        query.whereKey("username", containsString: searchText)
+        query.whereKey("lowercaseUsername", containsString: searchText)
         query.limit = 20
         query.findObjectsInBackgroundWithBlock {
             (objects: [PFObject]?, error: NSError?) -> Void in
