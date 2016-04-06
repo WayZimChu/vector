@@ -33,7 +33,7 @@ class LoginViewController: UIViewController {
         PFUser.logInWithUsernameInBackground(username, password: password) { (user: PFUser?, error: NSError?) -> Void in
             if user != nil {
                 print("Logging in user: \(PFUser.currentUser()!.username!)")
-                self.navigationController!.performSegueWithIdentifier("loginSegue", sender: nil)
+                self.performSegueWithIdentifier("loginSegue", sender: nil)
             } else {
                 print("Username is required")
             }

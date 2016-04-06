@@ -49,7 +49,7 @@
                     <connections>
                         <outlet property="passwordTextField" destination="otX-vv-ekN" id="fQw-7i-z2T"/>
                         <outlet property="usernameTextField" destination="JF7-hL-QhD" id="JBB-62-a8n"/>
-                        <segue destination="NW1-OY-OqV" kind="presentation" identifier="loginSegue" id="noC-ed-15a"/>
+                        <segue destination="NW1-OY-OqV" kind="showDetail" identifier="loginSegue" action="showViewController:sender:" id="noC-ed-15a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GY2-ZU-6gr" userLabel="First Responder" sceneMemberID="firstResponder"/>
