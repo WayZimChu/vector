@@ -67,7 +67,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		super.viewDidLoad()
 		
 		// Do any additional setup after loading the view.
-        self.addSlideMenuButton()
+        
 		tableView.delegate = self
 		tableView.dataSource = self
 		
@@ -91,6 +91,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 	}
 	
 	override func viewWillAppear(animated: Bool) {
+        self.addSlideMenuButton()
 		self.users = loadProfiles()
 		print("#### \(users)")
 		self.tableView.reloadData()
