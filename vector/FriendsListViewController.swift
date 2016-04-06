@@ -12,6 +12,7 @@ import Parse
 class FriendsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     var users: [PFObject]?
     var friends: [PFObject]?
+    var filteredUsers: [PFObject]?
     var myOwnObject: PFObject? // all updates revolve around this object
     var searchActive: Bool = false
 
@@ -39,16 +40,31 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let friends = friends {
-            return friends.count
+        if searchActive {
+            print("SEARCH IS ACTIVE")
+            if let filteredUsers = filteredUsers {
+                return filteredUsers.count
+            } else {
+                return 0
+            }
         } else {
-            return 0
+            print("SEARCH IS NOT ACTIVE")
+            if let friends = friends {
+                return friends.count
+            } else {
+                return 0
+            }
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("MainViewCell", forIndexPath: indexPath) as! MainViewCell
-        let user = friends![indexPath.row]
+        var data: [PFObject]?
+        
+        searchActive ? (data = filteredUsers) : (data = friends)
+        
+        let user = data![indexPath.row]
+        
         cell.nameLabel.text = user["username"] as? String
         
         if let profile = user.valueForKey("profilePic")! as? PFFile {
@@ -77,6 +93,59 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         myOwnObject!.addUniqueObjectsFromArray(["\(personToFriend["username"]!)"], forKey:"friends")
         myOwnObject!.saveInBackground()
         //personToFriend.addUniqueObjectsFromArray(["\(PFUser.currentUser()!.username!)"], forKey:"friends")
+    }
+    
+    /* MARK: - Search Bar Functions
+     *
+     */
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        searchActive = true
+        searchUsers(searchText)
+        
+        print("FILTERED USERS: \(filteredUsers)")
+        
+        self.tableView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        self.searchBar.endEditing(true)
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        self.searchBar.text = ""
+        searchActive = false
+        self.searchBar.endEditing(true)
+        self.tableView.reloadData()
+    }
+    
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        self.searchBar.endEditing(true)
+    }
+    
+    func searchUsers(searchText: String) {
+        var user: [PFObject]?
+        let query = PFQuery(className: "Profile")
+        query.whereKey("username", containsString: searchText)
+        query.limit = 20
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            user = objects
+            if error == nil {
+                // The find succeeded.
+                self.filteredUsers = objects
+                self.tableView.reloadData()
+                if let objects = objects {
+                    for object in objects {
+                        print("OBJECT: \(object)")
+                        self.tableView.reloadData()
+                    }
+                }
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+            }
+        }
     }
 
     func loadProfiles() -> [PFObject]? {
@@ -117,22 +186,6 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        self.searchBar.endEditing(true)
-    }
-    
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        self.searchBar.text = ""
-        searchActive = false
-        self.searchBar.endEditing(true)
-        self.tableView.reloadData()
-    }
-    
-    func dismissKeyboard() {
-        //Causes the view (or one of its embedded text fields) to resign the first responder status.
-        self.searchBar.endEditing(true)
-    }
-    
     /* MARK: - Load Friends
      * loads all PFObjects that are your friends
      */
@@ -166,6 +219,7 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         }
         self.tableView.reloadData()
     }
+    
     /*
     // MARK: - Navigation
 
