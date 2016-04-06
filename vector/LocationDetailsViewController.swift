@@ -9,7 +9,7 @@
 import UIKit
 import GoogleMaps
 
-class LocationDetailsViewController: UIViewController {
+class LocationDetailsViewController: UIViewController, GMSPanoramaViewDelegate {
 
     @IBOutlet weak var locationName: UILabel!
     @IBOutlet weak var locationCategory: UILabel!
@@ -26,13 +26,21 @@ class LocationDetailsViewController: UIViewController {
     @IBOutlet weak var phoneIcon: UIImageView!
     @IBOutlet weak var clockIcon: UIImageView!
     
-	@IBOutlet weak var mapView: GMSMapView!
+
+    @IBOutlet weak var panoV: GMSPanoramaView!
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        let panoView = GMSPanoramaView(frame: CGRectZero)
+        //panoView.delegate = self
+        panoV.moveNearCoordinate(CLLocationCoordinate2D(latitude: -33.732, longitude: 150.312))
         // Do any additional setup after loading the view.
+        //panoV.addSubview(panoView)
+        panoV.delegate = self
+
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

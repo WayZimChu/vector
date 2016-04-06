@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bdx-go-1cA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bdx-go-1cA">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -94,7 +94,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="87"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iO0-G0-TBH" id="qfD-gB-mtu">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="86"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="86.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Firstname Lastname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6zR-JQ-pbH">
@@ -182,7 +182,7 @@
                         <outlet property="mapView" destination="enO-mS-WJE" id="2X0-gD-IHI"/>
                         <outlet property="markerInfoView" destination="xJh-Yj-XTR" id="OUe-HY-d3n"/>
                         <outlet property="tableView" destination="vBo-3K-HqR" id="czo-oQ-HGh"/>
-                        <segue destination="Vcz-R1-Cp7" kind="show" identifier="calcPointSegue" id="Zsq-Ke-ggZ"/>
+                        <segue destination="Vcz-R1-Cp7" kind="show" identifier="toPlacesProfile" id="Zsq-Ke-ggZ"/>
                         <segue destination="klM-va-Qac" kind="show" identifier="toFriendView" id="V47-Uq-ftR"/>
                         <segue destination="QzZ-le-QxR" kind="show" identifier="updateProfileSegue" id="aFE-Dd-m5y"/>
                     </connections>
@@ -277,9 +277,9 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5SB-zh-fnn" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="64" width="375" height="292"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xbd-FX-Ahz" customClass="GMSPanoramaView">
+                                <rect key="frame" x="0.0" y="64" width="375" height="290"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -295,8 +295,8 @@
                         <outlet property="locationIcon" destination="5cQ-F9-ZmA" id="wJc-8F-gJW"/>
                         <outlet property="locationName" destination="zre-Oh-0Tj" id="y31-XN-g7L"/>
                         <outlet property="locationPhoneNum" destination="qkc-hn-hhd" id="SOb-ml-UeP"/>
-                        <outlet property="mapView" destination="5SB-zh-fnn" id="Evg-t8-2iS"/>
                         <outlet property="openForLabel" destination="PMI-JE-7SQ" id="t5i-Es-mRV"/>
+                        <outlet property="panoV" destination="xbd-FX-Ahz" id="is9-U8-JgF"/>
                         <outlet property="phoneIcon" destination="VQT-vG-tTZ" id="K4e-6K-iON"/>
                         <outlet property="thumbsDown" destination="wV8-vL-Myj" id="oGC-iK-HYZ"/>
                         <outlet property="thumbsUp" destination="b7Y-rV-s54" id="tfR-Dc-V3o"/>
@@ -474,7 +474,7 @@
                                         <rect key="frame" x="0.0" y="28" width="277" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jPJ-qM-6qk" id="Htt-vs-aXn">
-                                            <rect key="frame" x="0.0" y="0.0" width="277" height="61"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="277" height="61.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Menu Item" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3eD-Ci-1Ac">
@@ -522,7 +522,7 @@
                                         <rect key="frame" x="0.0" y="92" width="375" height="98"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hks-d9-0Kn" id="dRt-I2-fFb">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="97"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="97.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z5W-MZ-qcS">
