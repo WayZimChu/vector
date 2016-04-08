@@ -222,6 +222,9 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         self.tableView.reloadData()
     }
     
+    /* MARK: - Friend Request function
+     *
+     */
     @IBAction func onAddFriend(sender: AnyObject) {
         let cell = sender.superview!!.superview as! UITableViewCell
         let indexPath = tableView.indexPathForCell(cell)
