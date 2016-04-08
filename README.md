@@ -2,7 +2,7 @@
 
 Vector is an interface to find a place to meet between two points of location.
 
-Time spent: **17** mythical man hours spent in total
+Time spent: **27** mythical man hours spent in total
 
 ## User Stories
 
@@ -11,9 +11,9 @@ The following **required** functionality is completed:
 - [x] User can get current location
 - [x] User can get input a friend's location & get a midpoint
 - [x] User can get friends location from a list of friends
-- [ ] User can choose the type of meeting point (ex: bar, coffee shop, library).
+- [x] User can choose the type of meeting point (ex: bar, coffee shop, library).
 - [x] User can pull a list of businesses around a radius of the meeting point.
-- [ ] Users can access detailed view of midpoint location(s)
+- [x] Users can access detailed view of midpoint location(s)
 - [x] User account persists through app restarts
 
 The following **optional** features are implemented:
