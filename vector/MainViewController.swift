@@ -61,7 +61,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
     }
 
 
-	let locationManager = CLLocationManager()
+	var locationManager = CLLocationManager()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -93,7 +93,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 	override func viewWillAppear(animated: Bool) {
         self.addSlideMenuButton()
 		self.users = loadProfiles()
-		print("#### \(users)")
+//		print("#### \(users)")
 		self.tableView.reloadData()
 	}
 	
@@ -107,10 +107,16 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
      */
 	func recursiveUpdate()
 	{
-		sleep(10)
-		print(self.myOwnObject?.objectId)
-		Post.updateLocation((myOwnObject?.objectId!)!, long: (locationManager.location?.coordinate.longitude)!, lat: (locationManager.location?.coordinate.latitude)!)
-		sleep(30)
+//		print("in recursive")
+		NSThread.sleepForTimeInterval(10)
+		if let location = locationManager.location?.coordinate {
+		print("recursively updating: " + (self.myOwnObject?.objectId)!)
+		Post.updateLocation((myOwnObject?.objectId!)!, long: (location.longitude), lat: (location.latitude))
+		NSThread.sleepForTimeInterval(30)
+		} else {
+			print("recursion failed: could not find coordinates")
+			NSThread.sleepForTimeInterval(10)
+		}
 		recursiveUpdate()
 	}
 	
