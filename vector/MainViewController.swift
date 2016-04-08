@@ -12,7 +12,7 @@ import CoreLocation
 import GoogleMaps
 import Parse
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
+class MainViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
 	var placeArray: GooglePlace?
 	var dataMachine = GoogleDataProvider()
 	var placesClient: GMSPlacesClient?
@@ -25,14 +25,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	let searchRadius: Double = 1000
 	
 	@IBOutlet weak var mapView: GMSMapView!
-	
 	@IBOutlet weak var tableView: UITableView!
-	
 	@IBOutlet weak var markerInfoView: MarkerInfoView!
 	
-	@IBAction func onFriends(sender: AnyObject) {
-		// GO TO FRIENDS LIST VIEW CONTROLLER
-	}
+
 	@IBAction func onCalcPoint(sender: AnyObject) {
 		// GO TO LOCATION DETAILS VIEW
        //print((locationManager.location?.coordinate)!)
@@ -61,24 +57,22 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
 
-	let locationManager = CLLocationManager()
+	var locationManager = CLLocationManager()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		// Do any additional setup after loading the view.
+        
 		tableView.delegate = self
 		tableView.dataSource = self
-		
+		mapView.delegate = self
 		locationManager.delegate = self
 		locationManager.requestWhenInUseAuthorization()
 		placesClient = GMSPlacesClient()
-		self.tableView.reloadData()
 		//print(users)
 		// fetchLocations()
-		print("%%%%% \((PFUser.currentUser()?.username!)!)")
-		loadOwnObject((PFUser.currentUser()?.username!)!)
-		
+
 		let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
 		dispatch_async(dispatch_get_global_queue(priority, 0)) {
 			// do some task
@@ -87,25 +81,36 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 				// update some UI
 			}
 		}
-	}
+        print("#### \(users)")
+        self.tableView.reloadData()
+    }
 	
 	override func viewWillAppear(animated: Bool) {
-		self.users = loadProfiles()
-		print("#### \(users)")
-		self.tableView.reloadData()
+        self.addSlideMenuButton()
+        print("%%%%% \((PFUser.currentUser()?.username!)!)")
+        loadOwnObject((PFUser.currentUser()?.username!)!)
 	}
 	
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
-	
+    
+	/**
+     *  Recursive function is sent to background to update own location
+     */
 	func recursiveUpdate()
 	{
-		sleep(10)
-		print(self.myOwnObject?.objectId)
-		Post.updateLocation((myOwnObject?.objectId!)!, long: (locationManager.location?.coordinate.longitude)!, lat: (locationManager.location?.coordinate.latitude)!)
-		sleep(30)
+//		print("in recursive")
+		NSThread.sleepForTimeInterval(10)
+		if let location = locationManager.location?.coordinate {
+		print("recursively updating: " + (self.myOwnObject?.objectId)!)
+		Post.updateLocation((myOwnObject?.objectId!)!, long: (location.longitude), lat: (location.latitude))
+		NSThread.sleepForTimeInterval(30)
+		} else {
+			print("recursion failed: could not find coordinates")
+			NSThread.sleepForTimeInterval(10)
+		}
 		recursiveUpdate()
 	}
 	
@@ -121,8 +126,14 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("MainViewCell", forIndexPath: indexPath) as! MainViewCell
 		let user = users![indexPath.row]
+        
 		cell.nameLabel.text = user["username"] as? String
-		
+        let otherLocation = CLLocation(latitude: user["latitude"] as! Double, longitude: user["longitude"] as! Double)
+        var distance = locationManager.location!.distanceFromLocation(otherLocation)
+       print(distance)
+        distance = distance/1600
+        cell.distanceLabel.text = NSString(format: "%.2f miles away", distance) as String
+        
 		if let profile = user.valueForKey("profilePic")! as? PFFile {
 			profile.getDataInBackgroundWithBlock({
 				(imageData: NSData?, error: NSError?) -> Void in
@@ -157,7 +168,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 				let markerView = MarkerInfoView()
 				
 				// marker icon control
-    marker.title = "💩 " + place.name + " 💩"
+                    marker.title = place.name
 				if let placeImage = UIImage(named: place.placeType)?.imageWithRenderingMode(.AlwaysTemplate) {
 					marker.icon = placeImage
 				} else {
@@ -234,10 +245,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 //The find succeeded.
                 print("Successfully retrieved my own object \(user)")
                 self.myOwnObject = user
+                self.users = self.loadFriends()
             }
         }
     }
     
+    /*
     func loadProfiles() -> [PFObject]? {
         
         var user: [PFObject]?
@@ -265,9 +278,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         print(object)
                     }
                 }
-                
-                
-                
             } else {
                 // Log details of the failure
                 print("Error: \(error!) \(error!.userInfo)")
@@ -278,12 +288,59 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return user
         
     }
-	
+	*/
+    
+    /* MARK: - Load Friends
+    * loads all PFObjects that are your friends
+    */
+    func loadFriends() -> [PFObject]? {
+        var friends: [PFObject]?
+        let friendUserNames = myOwnObject!.valueForKey("friends") as? [String]
+        
+        let query = PFQuery(className: "Profile")
+        
+        query.whereKey("lowercaseUsername", containedIn: friendUserNames!)
+        query.orderByAscending("lowercaseUsername")
+        query.limit = 50
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            friends = objects
+            if error == nil {
+                // The find succeeded!
+                print("FRIENDS::: Successfully retrieved \(objects!.count) Points in time.")
+                friends = objects
+                self.users = friends
+                self.tableView.reloadData()
+                
+                if let objects = objects {
+                    for object in objects {
+                        print(object)
+                    }
+                }
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+            }
+        }
+        
+        return friends
+    }
+    
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
     {
         if segue.identifier == "toFriendView" {
             let destinationNavigationController = segue.destinationViewController as! FriendsListViewController
             destinationNavigationController.myOwnObject = self.myOwnObject!
+        } else if segue.identifier == "updateProfileSegue" {
+            let destinationNavigationController = segue.destinationViewController as! ProfileViewController
+            print("MY OWN OBJECT:::::: \(myOwnObject)")
+            destinationNavigationController.myOwnObject = self.myOwnObject!
+        } else if segue.identifier == "toPlacesProfile" {
+            let marker = sender as! PlaceMarker
+            let destinationNavigationController = segue.destinationViewController as! LocationDetailsViewController
+            destinationNavigationController.placeHolder = marker.place
+            print("place sent to Location View controller")
+            print(marker.place.name)
         }
     }
 
@@ -291,45 +348,15 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 }
 
 extension MainViewController: GMSMapViewDelegate {
-	func mapView(mapView: GMSMapView, markerInfoContents marker: GMSMarker) -> UIView? {
-		let placeMarker = marker as! PlaceMarker
-
-		print("in mapView extension")
-		/*
-		
-		// attempts at marker view
-		markerView.nameLabel.text = place.name
-		if let placePhoto = UIImage(named: place.photoReference!)?.imageWithRenderingMode(.AlwaysTemplate) {
-			print("found photo" + place.photoReference!)
-			markerView.image = placePhoto
-		} else {
-			print("looked for a photo")
-			markerView.image = nil
-		}
-		markerView.icon = UIImage(named: "unknown_travel")
-*/
-		if let infoView = UIView.viewFromNibName("MarkerInfoView") as? MarkerInfoView {
-			infoView.nameLabel.text = placeMarker.place.name
-			
-			if let photo = placeMarker.place.photo {
-				print("found a photo " + placeMarker.place.photoReference!)
-				infoView.image = photo
-			} else {
-				print("this is not a photo " + (placeMarker.place.photoReference)!)
-				infoView.image = UIImage(named: "nothing")
-			}
-			
-			view.addSubview(infoView);
-			
-			return infoView
-		} else {
-			return nil
-		}
-	}
+    func mapView(mapView: GMSMapView, didTapInfoWindowOfMarker marker: GMSMarker) {
+        print("tapped... nice")
+        self.performSegueWithIdentifier("toPlacesProfile", sender: marker)
+    }
+    
 	
 	func didTapMyLocationButtonForMapView(mapView: GMSMapView) -> Bool {
-  mapView.selectedMarker = nil
-  return false
+            mapView.selectedMarker = nil
+            return false
 	}
 }
 

@@ -36,6 +36,7 @@ class Profile: NSObject {
         
         // Add relevant fields to the object
         profile["username"] = PFUser.currentUser()?.username!
+        profile["lowercaseUsername"] = PFUser.currentUser()?.username!.lowercaseString
         profile["firstname"] = firstname
         profile["lastname"] = lastname
         profile["phonenum"] = phonenum

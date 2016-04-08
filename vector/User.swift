@@ -13,6 +13,7 @@ import Parse
 class User: NSObject {
     var owner: PFUser?
     var userName: String?
+    var lowercaseUserName: String?
     var firstname: String?
     var lastname: String?
     var profilePicture: UIImage?
@@ -24,8 +25,18 @@ class User: NSObject {
     var friendRequest: [String]?
     var friendAdd: [String]?
 
-    override init() {
-        super.init()
+    init(dictionary: NSDictionary) {
+        userName = dictionary["username"] as? String
+        lowercaseUserName = dictionary["lowercaseUsername"] as? String
+        firstname = dictionary["firstname"] as? String
+        lastname = dictionary["lastname"] as? String
+        phone = dictionary["phonenum"] as? String
+        latitude = dictionary["latitude"] as? Double
+        longitude = dictionary["longitude"] as? Double
+        destination = dictionary["destination"] as? String
+        friends = dictionary["friends"] as? [String]
+        friendRequest = dictionary["friendRequest"] as? [String]
+        friendAdd = dictionary["friendAdd"] as? [String]
     }
     
     

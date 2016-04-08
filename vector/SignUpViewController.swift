@@ -97,8 +97,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         self.dismissViewControllerAnimated(true, completion:  nil)
     }
     
-    func imageTapped(img: AnyObject)
-    {
+    func imageTapped(img: AnyObject) {
         print("Profile pic image tapped")
         // TODO: Animate Take Picture, Choose from Library, and Cancel buttons
         //       To slide up on screen. Make sure to dismiss keyboard too.

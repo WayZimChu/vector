@@ -17,12 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var storyboard = UIStoryboard(name: "Main", bundle: nil)
 
-    let googleMapsApiKey = "AIzaSyCnIoj_O7MX-MKUI7kGiBuNvmfqt1UtCGo"
+    let googleMapsApiKey = "AIzaSyCMUQTikFRUsS_sudeA_rkaOfM9Vx8AExw"
     let parseApplicationID = "vector"
     let parseBackendKey = "sdf978ys3oh109sdfp939psg9jf803hldf394ls0df3l20sfd9uw"
     let parseServer = "http://mighty-springs-90101.herokuapp.com/parse"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        sleep(2)
         UIImageView.appearance().layer.cornerRadius = 4
         // Override point for customization after application launch.
         GMSServices.provideAPIKey(googleMapsApiKey)
