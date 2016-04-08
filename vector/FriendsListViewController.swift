@@ -10,7 +10,7 @@ import UIKit
 import Parse
 
 class FriendsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
-    var users: [PFObject]?
+    var allUsers: [PFObject]?
     var friends: [PFObject]?
     var filteredUsers: [PFObject]?
     var myOwnObject: PFObject? // all updates revolve around this object
@@ -27,10 +27,15 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         tableView.dataSource = self
         searchBar.delegate = self
         
+        checkFriendStatus()
+        
         self.tableView.reloadData()
     }
+    
     override func viewWillAppear(animated: Bool) {
         loadFriends()
+        self.allUsers = loadProfiles()
+        checkFriendStatus()
         self.tableView.reloadData()
     }
 
@@ -79,21 +84,17 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
             })
         }
         
+        // Check if person is not a friend. If so then:
+//        cell.addFriendButton.hidden = false
+//        cell.removeFriendButton.hidden = true
+        /* ELSE:
+        cell.addFriendButton.hidden = true
+        cell.removeFriendButton.hidden = false
+        */
+        
         return cell
     }
     
-    @IBAction func addFriend(sender: AnyObject) {
-        let cell = sender.superview!!.superview as! UITableViewCell
-        let indexPath = tableView.indexPathForCell(cell)
-        let personToFriend = users![(indexPath?.row)!]
-        print(personToFriend)
-        
-        //This is used to update friends into own object
-        print(personToFriend["username"]!)
-        myOwnObject!.addUniqueObjectsFromArray(["\(personToFriend["username"]!)"], forKey:"friends")
-        myOwnObject!.saveInBackground()
-        //personToFriend.addUniqueObjectsFromArray(["\(PFUser.currentUser()!.username!)"], forKey:"friends")
-    }
     
     /* MARK: - Search Bar Functions
      *
@@ -162,14 +163,14 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
             self.tableView.reloadData()
             if error == nil {
                 // The find succeeded.
-                print("Successfully retrieved \(objects!.count) Points In Time.")
-                self.users = objects
+                //print("Successfully retrieved \(objects!.count) Points In Time.")
+                self.allUsers = objects
                 self.tableView.reloadData()
                 
                 if let objects = objects {
                     for object in objects {
                        // print(object.objectId)
-                        print(object)
+                        //print(object)
                     }
                 }
                 
@@ -190,19 +191,21 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
      * loads all PFObjects that are your friends
      */
     func loadFriends() {
-        let query = PFQuery(className:"Profile")
+        let friendUserNames = myOwnObject!.valueForKey("friends") as? [String]
+        print("FRIEND USER NAMES:::::: \(friendUserNames!)")
         
-        //This query will check to see who has your name under friends and return those profile objects
-        query.whereKey("friends",   containedIn: ["\((PFUser.currentUser()?.username!)!)"])
-        query.orderByDescending("createdAt")
+        let query = PFQuery(className: "Profile")
+        
+        query.whereKey("lowercaseUsername", containedIn: friendUserNames!)
+        query.orderByAscending("lowercaseUsername")
         query.limit = 50
         query.findObjectsInBackgroundWithBlock {
             (objects: [PFObject]?, error: NSError?) -> Void in
             self.friends = objects
             self.tableView.reloadData()
             if error == nil {
-                // The find succeeded.
-                print("Successfully retrieved \(objects!.count) Points In Time.")
+                // The find succeeded!
+                print("FRIENDS::: Successfully retrieved \(objects!.count) Points in time.")
                 self.friends = objects
                 self.tableView.reloadData()
                 
@@ -215,10 +218,94 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
                 // Log details of the failure
                 print("Error: \(error!) \(error!.userInfo)")
             }
-            self.tableView.reloadData()
         }
         self.tableView.reloadData()
     }
+    
+    @IBAction func onAddFriend(sender: AnyObject) {
+        let cell = sender.superview!!.superview as! UITableViewCell
+        let indexPath = tableView.indexPathForCell(cell)
+        
+        var data: [PFObject]?
+        
+        searchActive ? (data = filteredUsers) : (data = friends)
+        
+        let personToFriend = data![(indexPath?.row)!]
+        print(personToFriend)
+        
+        //This is used to update friends into PFObjects
+        print(personToFriend["lowercaseUsername"]!)
+        myOwnObject!.addUniqueObjectsFromArray(["\(personToFriend["lowercaseUsername"]!)"], forKey:"friendAdd")
+        myOwnObject!.saveInBackground()
+        personToFriend.addUniqueObjectsFromArray(["\(myOwnObject!["lowercaseUsername"])"], forKey: "friendRequest")
+        personToFriend.saveInBackground()
+        
+        checkFriendStatus()
+        //personToFriend.addUniqueObjectsFromArray(["\(PFUser.currentUser()!.username!)"], forKey:"friends")
+    }
+    
+    /* MARK: - Helper Function to check friendAdd and friendRequest
+     *         Moves username over if both are the same so a user can have a friend
+     */
+    func checkFriendStatus() {
+        let friendAdds = myOwnObject!.valueForKey("friendAdd") as? [String]
+        let friendRequests = myOwnObject!.valueForKey("friendRequest") as? [String]
+        var friendRequestsCount: Int
+        var friendAddsCount: Int
+        
+        // Optional chain, to safely unwrap number of friend requests / friend counts
+        if let freqCount = friendRequests?.count {
+            friendRequestsCount = freqCount
+        } else {
+            friendRequestsCount = 0
+        }
+        
+        if let fradCount = friendAdds?.count {
+            friendAddsCount = fradCount
+        } else {
+            friendAddsCount = 0
+        }
+        
+        // Search for same username in each friendAdds and friendRequests
+        for (var i = 0; i < friendRequestsCount; i++) {
+            for (var j = 0; j < friendAddsCount; j++) {
+                if friendRequests![i] == friendAdds![j] {
+                    // YAY, found a friend
+                    myOwnObject!.removeObjectsInArray(["\(friendRequests![i])"], forKey: "friendRequest")
+                    myOwnObject!.removeObjectsInArray(["\(friendAdds![j])"], forKey: "friendAdd")
+                    myOwnObject!.addUniqueObjectsFromArray(["\(friendRequests![i])"], forKey: "friends")
+                    myOwnObject!.saveInBackground()
+                }
+            }
+        }
+        
+        print("FRIENDS::::: \(friends)")
+    }
+    
+    /* MARK: - Add Friend
+     *
+     */
+//    func addFriendClicked(friendsCell: FriendsViewCell) {
+//        let person = friendsCell.person! as User
+//        
+//        let cell = sender.superview!!.superview as! UITableViewCell
+//        let indexPath = tableView.indexPathForCell(cell)
+//        let personToFriend = allUsers![(indexPath?.row)!]
+//        print(personToFriend)
+//        
+//        //This is used to update friends into own object
+//        print(personToFriend["username"]!)
+//        myOwnObject!.addUniqueObjectsFromArray(["\(personToFriend["username"]!)"], forKey:"friends")
+//        myOwnObject!.saveInBackground()
+//        //personToFriend.addUniqueObjectsFromArray(["\(PFUser.currentUser()!.username!)"], forKey:"friends")
+//    }
+    
+    /* MARK: - Remove Friend
+    *
+    */
+//    func removeFriendClicked(friendsCell: FriendsViewCell) {
+//        // TO DO:
+//    }
     
     /*
     // MARK: - Navigation

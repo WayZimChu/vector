@@ -25,14 +25,10 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 	let searchRadius: Double = 1000
 	
 	@IBOutlet weak var mapView: GMSMapView!
-	
 	@IBOutlet weak var tableView: UITableView!
-	
 	@IBOutlet weak var markerInfoView: MarkerInfoView!
 	
-	@IBAction func onFriends(sender: AnyObject) {
-		// GO TO FRIENDS LIST VIEW CONTROLLER
-	}
+
 	@IBAction func onCalcPoint(sender: AnyObject) {
 		// GO TO LOCATION DETAILS VIEW
        //print((locationManager.location?.coordinate)!)
@@ -74,11 +70,8 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		locationManager.delegate = self
 		locationManager.requestWhenInUseAuthorization()
 		placesClient = GMSPlacesClient()
-		self.tableView.reloadData()
 		//print(users)
 		// fetchLocations()
-		print("%%%%% \((PFUser.currentUser()?.username!)!)")
-		loadOwnObject((PFUser.currentUser()?.username!)!)
 
 		let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
 		dispatch_async(dispatch_get_global_queue(priority, 0)) {
@@ -88,13 +81,14 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 				// update some UI
 			}
 		}
-	}
+        print("#### \(users)")
+        self.tableView.reloadData()
+    }
 	
 	override func viewWillAppear(animated: Bool) {
         self.addSlideMenuButton()
-		self.users = loadProfiles()
-		print("#### \(users)")
-		self.tableView.reloadData()
+        print("%%%%% \((PFUser.currentUser()?.username!)!)")
+        loadOwnObject((PFUser.currentUser()?.username!)!)
 	}
 	
 	override func didReceiveMemoryWarning() {
@@ -126,6 +120,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("MainViewCell", forIndexPath: indexPath) as! MainViewCell
 		let user = users![indexPath.row]
+        
 		cell.nameLabel.text = user["username"] as? String
 		
 		if let profile = user.valueForKey("profilePic")! as? PFFile {
@@ -239,10 +234,12 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
                 //The find succeeded.
                 print("Successfully retrieved my own object \(user)")
                 self.myOwnObject = user
+                self.users = self.loadFriends()
             }
         }
     }
     
+    /*
     func loadProfiles() -> [PFObject]? {
         
         var user: [PFObject]?
@@ -280,7 +277,44 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         return user
         
     }
-	
+	*/
+    
+    /* MARK: - Load Friends
+    * loads all PFObjects that are your friends
+    */
+    func loadFriends() -> [PFObject]? {
+        var friends: [PFObject]?
+        let friendUserNames = myOwnObject!.valueForKey("friends") as? [String]
+        
+        let query = PFQuery(className: "Profile")
+        
+        query.whereKey("lowercaseUsername", containedIn: friendUserNames!)
+        query.orderByAscending("lowercaseUsername")
+        query.limit = 50
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            friends = objects
+            if error == nil {
+                // The find succeeded!
+                print("FRIENDS::: Successfully retrieved \(objects!.count) Points in time.")
+                friends = objects
+                self.users = friends
+                self.tableView.reloadData()
+                
+                if let objects = objects {
+                    for object in objects {
+                        print(object)
+                    }
+                }
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+            }
+        }
+        
+        return friends
+    }
+    
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
     {
         if segue.identifier == "toFriendView" {
