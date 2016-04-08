@@ -26,7 +26,7 @@ class Post: NSObject {
     }
     
     class func updateProfile(ID: String, password: String?, firstname: String?,
-        lastname: String?, phonenum: String?, profileImage: UIImage?) {
+        lastname: String?, phonenum: String?, profileImage: UIImage?, lowercaseName: String?) {
             let query = PFQuery(className: "Profile")
             query.getObjectInBackgroundWithId("\(ID)") {
                 (profileObject: PFObject?, error: NSError?) -> Void in
@@ -49,6 +49,10 @@ class Post: NSObject {
                     if profileImage != nil {
                         profileObject["profilePic"] = Profile.getPFFileFromImage(profileImage) // PFFile column type
                     }
+                    if lowercaseName != nil {
+                        profileObject["lowercaseUsername"] = lowercaseName
+                    }
+                    
                     
                     profileObject.saveInBackground()
                 }

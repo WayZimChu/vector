@@ -60,7 +60,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         let lastname: String? = lastnameTextField.text
         let phonenum: String? = phonenumTextField.text
         
-        Post.updateProfile((myOwnObject?.objectId!)!, password: password, firstname: firstname, lastname: lastname, phonenum: phonenum, profileImage: profileImageView.image)
+        Post.updateProfile((myOwnObject?.objectId!)!, password: password, firstname: firstname, lastname: lastname, phonenum: phonenum, profileImage: profileImageView.image, lowercaseName: PFUser.currentUser()?.username?.lowercaseString)
         
         self.navigationController?.popViewControllerAnimated(true)
     }
