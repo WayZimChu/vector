@@ -34,15 +34,19 @@ class GooglePlace {
   let address: String
   let coordinate: CLLocationCoordinate2D
   let placeType: String
+  let phoneNum: String
+  let rating: String
   var photoReference: String?
   var photo: UIImage?
   
   init(dictionary:[String : AnyObject], acceptedTypes: [String])
   {
     let json = JSON(dictionary)
+    print(json)
+    rating = json["rating"].stringValue
     name = json["name"].stringValue
-    address = json["vicinity"].stringValue
-    
+    address = json["formatted_address"].stringValue
+    phoneNum = json["formatted_phone_number"].stringValue
     let lat = json["geometry"]["location"]["lat"].doubleValue as CLLocationDegrees
     let lng = json["geometry"]["location"]["lng"].doubleValue as CLLocationDegrees
     coordinate = CLLocationCoordinate2DMake(lat, lng)

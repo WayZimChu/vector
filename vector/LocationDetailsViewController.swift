@@ -28,17 +28,20 @@ class LocationDetailsViewController: UIViewController, GMSPanoramaViewDelegate {
     
 
     @IBOutlet weak var panoV: GMSPanoramaView!
+    
+    var placeHolder: GooglePlace!
 	
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let panoView = GMSPanoramaView(frame: CGRectZero)
-        //panoView.delegate = self
-        panoV.moveNearCoordinate(CLLocationCoordinate2D(latitude: -33.732, longitude: 150.312))
-        // Do any additional setup after loading the view.
-        //panoV.addSubview(panoView)
+        panoV.moveNearCoordinate(placeHolder.coordinate)
         panoV.delegate = self
-
+        
+        locationName.text = placeHolder.name
+        locationAddress.text = placeHolder.address
+        locationPhoneNum.text = placeHolder.phoneNum
+        
+        
     }
     
 

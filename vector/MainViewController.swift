@@ -127,7 +127,12 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		let cell = tableView.dequeueReusableCellWithIdentifier("MainViewCell", forIndexPath: indexPath) as! MainViewCell
 		let user = users![indexPath.row]
 		cell.nameLabel.text = user["username"] as? String
-		
+        let otherLocation = CLLocation(latitude: user["latitude"] as! Double, longitude: user["longitude"] as! Double)
+        var distance = locationManager.location!.distanceFromLocation(otherLocation)
+       print(distance)
+        distance = distance/1600
+        cell.distanceLabel.text = NSString(format: "%.2f miles away", distance) as String
+        
 		if let profile = user.valueForKey("profilePic")! as? PFFile {
 			profile.getDataInBackgroundWithBlock({
 				(imageData: NSData?, error: NSError?) -> Void in
@@ -291,7 +296,11 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
             print("MY OWN OBJECT:::::: \(myOwnObject)")
             destinationNavigationController.myOwnObject = self.myOwnObject!
         } else if segue.identifier == "toPlacesProfile" {
-            
+            let marker = sender as! PlaceMarker
+            let destinationNavigationController = segue.destinationViewController as! LocationDetailsViewController
+            destinationNavigationController.placeHolder = marker.place
+            print("place sent to Location View controller")
+            print(marker.place.name)
         }
     }
 
@@ -304,42 +313,6 @@ extension MainViewController: GMSMapViewDelegate {
         self.performSegueWithIdentifier("toPlacesProfile", sender: marker)
     }
     
-  /*  func mapView(mapView: GMSMapView, markerInfoContents marker: GMSMarker) -> UIView? {
-		let placeMarker = marker as! PlaceMarker
-        
-		print("in mapView extension")
-		/*
-		
-		// attempts at marker view
-		markerView.nameLabel.text = place.name
-		if let placePhoto = UIImage(named: place.photoReference!)?.imageWithRenderingMode(.AlwaysTemplate) {
-			print("found photo" + place.photoReference!)
-			markerView.image = placePhoto
-		} else {
-			print("looked for a photo")
-			markerView.image = nil
-		}
-		markerView.icon = UIImage(named: "unknown_travel")
-*/
-		if let infoView = UIView.viewFromNibName("MarkerInfoView") as? MarkerInfoView {
-			infoView.nameLabel.text = placeMarker.place.name
-			
-			if let photo = placeMarker.place.photo {
-				print("found a photo " + placeMarker.place.photoReference!)
-				infoView.image = photo
-			} else {
-				print("this is not a photo " + (placeMarker.place.photoReference)!)
-				infoView.image = UIImage(named: "nothing")
-			}
-			
-			view.addSubview(infoView);
-			
-			return infoView
-		} else {
-			return nil
-		}
-
-	}// end markerInfoContents */
 	
 	func didTapMyLocationButtonForMapView(mapView: GMSMapView) -> Bool {
             mapView.selectedMarker = nil
