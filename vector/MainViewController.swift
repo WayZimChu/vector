@@ -81,7 +81,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 				// update some UI
 			}
 		}
-        print("#### \(users)")
+        //print("#### \(users)")
         self.tableView.reloadData()
     }
 	
@@ -141,7 +141,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 					let image = UIImage(data:imageData!)
 					cell.profileImage.image = image
 					
-					print("Profile Picture Loaded")
+					//print("Profile Picture Loaded")
 				}
 			})
 		}
@@ -307,14 +307,14 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
             friends = objects
             if error == nil {
                 // The find succeeded!
-                print("FRIENDS::: Successfully retrieved \(objects!.count) Points in time.")
+                print("FRIENDS::: Successfully retrieved \(objects!.count)")
                 friends = objects
                 self.users = friends
                 self.tableView.reloadData()
                 
                 if let objects = objects {
                     for object in objects {
-                        print(object)
+                       // print(object)
                     }
                 }
             } else {
@@ -341,6 +341,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
             destinationNavigationController.placeHolder = marker.place
             print("place sent to Location View controller")
             print(marker.place.name)
+            destinationNavigationController.myObject = myOwnObject
         }
     }
 

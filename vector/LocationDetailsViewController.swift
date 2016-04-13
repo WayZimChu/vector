@@ -8,6 +8,7 @@
 
 import UIKit
 import GoogleMaps
+import Parse
 
 class LocationDetailsViewController: UIViewController, GMSPanoramaViewDelegate {
 
@@ -30,6 +31,8 @@ class LocationDetailsViewController: UIViewController, GMSPanoramaViewDelegate {
     @IBOutlet weak var panoV: GMSPanoramaView!
     
     var placeHolder: GooglePlace!
+    var myObject: PFObject?
+    var dataMachine: GoogleDataProvider!
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +47,18 @@ class LocationDetailsViewController: UIViewController, GMSPanoramaViewDelegate {
         
     }
     
+    @IBAction func vectorMe(sender: AnyObject) {
+        print(myObject)
+        print(placeHolder)
+        dataMachine = GoogleDataProvider()
+        let a = myObject!.valueForKey("latitude") as! Double
+        let b = myObject!.valueForKey("longitude") as! Double
+        let c = placeHolder.coordinate.latitude
+        let d = placeHolder.coordinate.longitude
+        dataMachine?.fetchDirection(a,myLong: b,theirLat: c,theirLong: d)
+
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

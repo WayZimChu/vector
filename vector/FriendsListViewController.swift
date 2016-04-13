@@ -138,7 +138,7 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
                 self.tableView.reloadData()
                 if let objects = objects {
                     for object in objects {
-                        print("OBJECT: \(object)")
+                        //print("OBJECT: \(object)")
                         self.tableView.reloadData()
                     }
                 }
@@ -211,7 +211,7 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
                 
                 if let objects = objects {
                     for object in objects {
-                        print(object)
+                        //print(object)
                     }
                 }
             } else {
@@ -234,10 +234,10 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         searchActive ? (data = filteredUsers) : (data = friends)
         
         let personToFriend = data![(indexPath?.row)!]
-        print(personToFriend)
+        //print(personToFriend)
         
         //This is used to update friends into PFObjects
-        print(personToFriend["lowercaseUsername"]!)
+        //print(personToFriend["lowercaseUsername"]!)
         myOwnObject!.addUniqueObjectsFromArray(["\(personToFriend["lowercaseUsername"]!)"], forKey:"friendAdd")
         myOwnObject!.saveInBackground()
         personToFriend.addUniqueObjectsFromArray(["\(myOwnObject!["lowercaseUsername"])"], forKey: "friendRequest")
