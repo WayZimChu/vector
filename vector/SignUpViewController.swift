@@ -73,7 +73,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         
     }
     
-    @IBAction func onTakePicture(sender: AnyObject) {
+    func onTakePicture() {
         let vc = UIImagePickerController()
         vc.delegate = self
         vc.allowsEditing = true
@@ -82,7 +82,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         self.presentViewController(vc, animated: true, completion: nil)
     }
     
-    @IBAction func onChooseFromLib(sender: AnyObject) {
+    func onChooseFromLib() {
         let vc = UIImagePickerController()
         vc.delegate = self
         vc.allowsEditing = true
@@ -103,6 +103,33 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         //       To slide up on screen. Make sure to dismiss keyboard too.
         
         view.endEditing(true) // Gets rid of keyboard
+        
+        openActionSheet()
+    }
+    
+    func openActionSheet() {
+        // UIAlertController Action Sheet
+        let alertController = UIAlertController(title: nil, message: "Set Profile Picture", preferredStyle: .ActionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            // ...
+        }
+        
+        let choosePicAction = UIAlertAction(title: "Choose From Library", style: .Default) { (action) in
+            self.onChooseFromLib()
+        }
+        
+        let takePicAction = UIAlertAction(title: "Take Picture", style: .Default) { (action) in
+            self.onTakePicture()
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(choosePicAction)
+        alertController.addAction(takePicAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            // ...
+        }
     }
     
     func imagePickerController(picker: UIImagePickerController,

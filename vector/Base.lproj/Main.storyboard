@@ -398,27 +398,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NJN-4G-iq7">
-                                <rect key="frame" x="144" y="465" width="85" height="30"/>
-                                <state key="normal" title="Take Picture"/>
-                                <connections>
-                                    <action selector="onTakePicture:" destination="oNE-h8-qmo" eventType="touchUpInside" id="CqO-4K-Moz"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x7P-MA-B4o">
-                                <rect key="frame" x="115" y="498" width="144" height="30"/>
-                                <state key="normal" title="Choose From Library"/>
-                                <connections>
-                                    <action selector="onChooseFromLib:" destination="oNE-h8-qmo" eventType="touchUpInside" id="nRx-mt-k85"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZII-Rc-Bfz">
-                                <rect key="frame" x="162" y="581" width="48" height="30"/>
-                                <state key="normal" title="Cancel"/>
-                                <connections>
-                                    <action selector="onProfilePicCancel:" destination="oNE-h8-qmo" eventType="touchUpInside" id="vbT-rI-8uS"/>
-                                </connections>
-                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wEz-Rs-MI9">
                                 <rect key="frame" x="80" y="367" width="215" height="30"/>
                                 <constraints>
@@ -466,7 +445,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="New Account" id="SQg-Nt-rUp">
-                        <barButtonItem key="backBarButtonItem" title="Cancel" id="8Th-GI-XkQ">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="8Th-GI-XkQ">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Sign Up" id="Fb1-rU-HgD">
