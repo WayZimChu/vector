@@ -37,8 +37,9 @@ class GoogleDataProvider {
   var session: NSURLSession {
     return NSURLSession.sharedSession()
   }
+  weak var delegate : LocationDetailsViewControllerDelegate!
     
-    func fetchDirection(myLat: Double, myLong: Double, theirLat: Double, theirLong: Double) -> ()
+    func fetchDirection(myLat: Double, myLong: Double, theirLat: Double, theirLong: Double, completion: ((String) -> Void )) -> ()
   {
     
     var urlString = "http://localhost:10000/maps/api/directions/json?origin=\(myLat),\(myLong)&destination=\(theirLat),\(theirLong)&key=\(apiKey)"
@@ -47,10 +48,12 @@ class GoogleDataProvider {
     if let task = directionsTask where task.taskIdentifier > 0 && task.state == .Running {
         task.cancel()
     }
-    
+   
     UIApplication.sharedApplication().networkActivityIndicatorVisible = true
     let request = NSURLRequest(URL: NSURL(string:urlString)!)
     let session = NSURLSession.sharedSession()
+    var g = ""
+    var f = NSDictionary()
     session.dataTaskWithRequest(request,
         completionHandler: {(data: NSData?, response: NSURLResponse?, error: NSError?) in
             
@@ -61,11 +64,16 @@ class GoogleDataProvider {
                 
                 let routes = object["routes"] as! [NSDictionary]
                 for route in routes {
-                    print(route["summary"])
+                     g = ((route["overview_polyline"]!["points"]!)!) as! String
+                    print(g)
+                    //self.delegate.vectored(self, encodedPolyline: g)
+
+                    
+
                 }
                 dispatch_async(dispatch_get_main_queue()) {
-                    //update your UI here
-                }
+                   completion(g)
+                    }
             }
             else {
                 print("Direction API error")
@@ -73,7 +81,7 @@ class GoogleDataProvider {
             }
             
     }).resume()
-    }
+  }
   
   func fetchPlacesNearCoordinate(coordinate: CLLocationCoordinate2D, radius: Double, types:[String], completion: (([GooglePlace]) -> Void)) -> ()
   {
