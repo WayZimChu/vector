@@ -15,6 +15,8 @@ class LoginViewController: VideoSplashViewController {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    @IBOutlet weak var loginButtonView: UIView!
+    @IBOutlet weak var signUpButtonView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +34,14 @@ class LoginViewController: VideoSplashViewController {
         self.restartForeground = true
 
         // Do any additional setup after loading the view.
-        displayKeyboard()
+        
+        // Round the edges of the buttons
+        loginButtonView.layer.cornerRadius = 3
+        loginButtonView.clipsToBounds = true
+        signUpButtonView.layer.cornerRadius = 3
+        signUpButtonView.clipsToBounds = true
+        
+        //displayKeyboard()
     }
 
     override func didReceiveMemoryWarning() {

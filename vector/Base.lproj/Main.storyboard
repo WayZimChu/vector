@@ -18,32 +18,42 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="otX-vv-ekN">
-                                <rect key="frame" x="64" y="247" width="247" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.59999999999999998" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="otX-vv-ekN">
+                                <rect key="frame" x="64" y="213" width="247" height="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eLS-2Y-UCF">
-                                <rect key="frame" x="160" y="319" width="55" height="30"/>
-                                <state key="normal" title="Sign Up"/>
-                                <connections>
-                                    <segue destination="MW5-Gh-jTR" kind="presentation" id="ont-zx-bAy"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="JF7-hL-QhD">
-                                <rect key="frame" x="64" y="214" width="247" height="19"/>
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.59999999999999998" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="JF7-hL-QhD">
+                                <rect key="frame" x="64" y="180" width="247" height="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cDc-mc-5sa">
+                                <rect key="frame" x="20" y="594" width="335" height="53"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eLS-2Y-UCF">
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="53"/>
+                                        <state key="normal" title="Sign Up">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="MW5-Gh-jTR" kind="presentation" id="ont-zx-bAy"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.32549019610000002" green="0.78823529410000004" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rMC-Vu-4fv">
-                                <rect key="frame" x="10" y="583" width="240" height="76"/>
+                                <rect key="frame" x="20" y="533" width="335" height="53"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Chl-2j-RMq">
-                                        <rect key="frame" x="97" y="23" width="46" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="53"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <state key="normal" title="Log In"/>
+                                        <state key="normal" title="Log In">
+                                            <color key="titleColor" red="0.32549019610000002" green="0.78823529410000004" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="onLogin:" destination="bdx-go-1cA" eventType="touchUpInside" id="l6o-m4-hoD"/>
                                         </connections>
@@ -52,22 +62,13 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.27450980392156865" green="0.74509803921568629" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="JF7-hL-QhD" secondAttribute="trailing" constant="64" id="0Pq-q6-ZHu"/>
-                            <constraint firstItem="otX-vv-ekN" firstAttribute="top" secondItem="JF7-hL-QhD" secondAttribute="bottom" constant="14" id="AGJ-R9-RsF"/>
-                            <constraint firstItem="otX-vv-ekN" firstAttribute="centerX" secondItem="RRy-Ik-WJY" secondAttribute="centerX" id="Fgv-6U-bnl"/>
-                            <constraint firstItem="otX-vv-ekN" firstAttribute="leading" secondItem="RRy-Ik-WJY" secondAttribute="leading" constant="64" id="Go5-91-WRp"/>
-                            <constraint firstItem="eLS-2Y-UCF" firstAttribute="centerY" secondItem="RRy-Ik-WJY" secondAttribute="centerY" id="KkR-zF-xYo"/>
-                            <constraint firstItem="JF7-hL-QhD" firstAttribute="centerX" secondItem="RRy-Ik-WJY" secondAttribute="centerX" id="ayD-vw-QDe"/>
-                            <constraint firstAttribute="trailing" secondItem="otX-vv-ekN" secondAttribute="trailing" constant="64" id="d1f-D2-mV1"/>
-                            <constraint firstItem="eLS-2Y-UCF" firstAttribute="centerX" secondItem="RRy-Ik-WJY" secondAttribute="centerX" id="nQN-P5-g0e"/>
-                            <constraint firstItem="JF7-hL-QhD" firstAttribute="leading" secondItem="RRy-Ik-WJY" secondAttribute="leading" constant="64" id="uLp-Cd-aN6"/>
-                        </constraints>
+                        <color key="backgroundColor" red="0.37647058820000001" green="0.40784313729999999" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="loginButtonView" destination="rMC-Vu-4fv" id="BNh-Ee-6Sz"/>
                         <outlet property="passwordTextField" destination="otX-vv-ekN" id="fQw-7i-z2T"/>
+                        <outlet property="signUpButtonView" destination="cDc-mc-5sa" id="3Mu-vr-pB5"/>
                         <outlet property="usernameTextField" destination="JF7-hL-QhD" id="JBB-62-a8n"/>
                         <segue destination="NW1-OY-OqV" kind="showDetail" identifier="loginSegue" action="showViewController:sender:" id="noC-ed-15a"/>
                     </connections>
@@ -734,6 +735,6 @@
         <image name="default-profile-pic" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="SQm-2q-r90"/>
+        <segue reference="noC-ed-15a"/>
     </inferredMetricsTieBreakers>
 </document>
