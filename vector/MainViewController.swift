@@ -103,10 +103,22 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
     func vectored(controller: LocationDetailsViewController, encodedPolyline: String) {
         navigationController?.popToViewController(self, animated: true)
         print("got the encoded polyline back: \(encodedPolyline)")
+        //clear the map of extraneous information
+        //mapView.clear()
+        //create a GMSPath from the encoded polyline taken from GoogleDirections API
         let path = GMSPath(fromEncodedPath: encodedPolyline)
+        //create a bounds for the camera to zoom to
+        let coordinateBounds = GMSCoordinateBounds(path: path!)
+        //create a cameraUpdate object for moving the camera
+        let cameraUpdate = GMSCameraUpdate.fitBounds(coordinateBounds)
+        //move camera to bounds
+        mapView.moveCamera(cameraUpdate)
+        //create polyline
         polyline = GMSPolyline(path: path)
+        polyline?.strokeColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
+        polyline?.strokeWidth = 5
+        //put polyline on map
         polyline?.map = mapView
-        
     }
     
     
@@ -170,6 +182,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 	
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("Fetch locations called")
+        mapView.clear()
         let otherUser = users![indexPath.row]
         let myLocation = locationManager.location?.coordinate
         let otherLocation = CLLocationCoordinate2DMake(otherUser["latitude"] as! Double, otherUser["longitude"] as! Double)
