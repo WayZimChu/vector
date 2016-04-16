@@ -263,7 +263,7 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
      *
      */
     @IBAction func onAddFriend(sender: AnyObject) {
-        let cell = sender.superview!!.superview as! UITableViewCell
+        let cell = sender.superview!?.superview!.superview as! UITableViewCell
         let indexPath = tableView.indexPathForCell(cell)
         
         var data: [PFObject]?
