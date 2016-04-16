@@ -23,7 +23,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
     
 	let meetingPlaceTypes = ["bakery", "bar", "cafe", "grocery_or_supermarket", "restaurant"]
 	
-	let searchRadius: Double = 1000
+	let searchRadius: Double = 1500
 	
 	@IBOutlet weak var mapView: GMSMapView!
 	@IBOutlet weak var tableView: UITableView!
@@ -44,7 +44,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		placesClient = GMSPlacesClient()
 		//print(users)
 		// fetchLocations()
-
+        
 		let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
 		dispatch_async(dispatch_get_global_queue(priority, 0)) {
 			// do some task
@@ -81,9 +81,10 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         //create a bounds for the camera to zoom to
         let coordinateBounds = GMSCoordinateBounds(path: path!)
         //create a cameraUpdate object for moving the camera
-        let cameraUpdate = GMSCameraUpdate.fitBounds(coordinateBounds)
+        let cameraUpdate = GMSCameraUpdate.fitBounds(coordinateBounds, withPadding: 80.0)
         //move camera to bounds
         mapView.moveCamera(cameraUpdate)
+        
         //create polyline
         polyline = GMSPolyline(path: path)
         polyline?.strokeColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
@@ -169,7 +170,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 			for place: GooglePlace in places {
 				let marker = PlaceMarker(place: place)
 				let markerView = MarkerInfoView()
-				
+				//print("places \(places.count)")
 				// marker icon control
                     marker.title = place.name
 				if let placeImage = UIImage(named: place.placeType)?.imageWithRenderingMode(.AlwaysTemplate) {
@@ -392,6 +393,7 @@ extension MainViewController: GMSMapViewDelegate {
 	
 	func didTapMyLocationButtonForMapView(mapView: GMSMapView) -> Bool {
             mapView.selectedMarker = nil
+            mapView.camera = GMSCameraPosition(target: locationManager.location!.coordinate, zoom: 13, bearing: 0, viewingAngle: 0)
             return false
 	}
 }
@@ -419,7 +421,7 @@ extension MainViewController: CLLocationManagerDelegate {
 		if let location = locations.last {
 			time = NSDate()
 			// center camera on user location
-			mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 14, bearing: 0, viewingAngle: 0)
+			mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 13, bearing: 0, viewingAngle: 0)
 			//fetchLocations(location.coordinate)
 			
 			// turns off location updates
