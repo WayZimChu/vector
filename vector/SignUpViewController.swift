@@ -25,6 +25,11 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
         profileImageView.userInteractionEnabled = true
         profileImageView.addGestureRecognizer(tapGestureRecognizer)
+        
+        // Make profile picture circular
+        profileImageView.layer.masksToBounds = false
+        profileImageView.layer.cornerRadius = profileImageView.frame.height/2
+        profileImageView.clipsToBounds = true
     }
 
     override func didReceiveMemoryWarning() {

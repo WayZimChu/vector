@@ -561,28 +561,24 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="3 miles away" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NcP-OE-C8G">
-                                                    <rect key="frame" x="93" y="32" width="98" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tst-cA-avN">
-                                                    <rect key="frame" x="256" y="5" width="20" height="20"/>
-                                                </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NCC-LY-1dp">
-                                                    <rect key="frame" x="281" y="34" width="75" height="30"/>
-                                                    <state key="normal" title="Add Friend"/>
-                                                    <connections>
-                                                        <action selector="onAddFriend:" destination="klM-va-Qac" eventType="touchUpInside" id="kyq-RN-UEU"/>
-                                                    </connections>
-                                                </button>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OAc-Th-IcP">
+                                                    <rect key="frame" x="277" y="34" width="90" height="30"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NCC-LY-1dp">
+                                                            <rect key="frame" x="8" y="0.0" width="75" height="30"/>
+                                                            <state key="normal" title="Add Friend"/>
+                                                            <connections>
+                                                                <action selector="onAddFriend:" destination="klM-va-Qac" eventType="touchUpInside" id="kyq-RN-UEU"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="distanceLabel" destination="NcP-OE-C8G" id="w5i-EL-prz"/>
+                                            <outlet property="addFriendView" destination="OAc-Th-IcP" id="UMa-sp-zbH"/>
                                             <outlet property="nameLabel" destination="q3W-xy-fZX" id="c7y-E5-afy"/>
-                                            <outlet property="onlineStatusImage" destination="Tst-cA-avN" id="Bor-yY-Ydt"/>
                                             <outlet property="profileImage" destination="Z5W-MZ-qcS" id="UDI-EB-y0Z"/>
                                         </connections>
                                     </tableViewCell>
@@ -591,7 +587,7 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nPw-uD-BPj">
                                 <rect key="frame" x="0.0" y="64" width="375" height="44"/>
                                 <subviews>
-                                    <searchBar contentMode="redraw" fixedFrame="YES" text="Search for friends!" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vT9-ru-oY2">
+                                    <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Search for friends!" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vT9-ru-oY2">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <color key="tintColor" red="0.0" green="0.2613261093" blue="0.46052631579999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="barTintColor" red="0.042302643924087432" green="0.84976750027019587" blue="0.86118209362030029" alpha="1" colorSpace="calibratedRGB"/>
