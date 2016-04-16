@@ -12,14 +12,15 @@ import CoreLocation
 import GoogleMaps
 import Parse
 
-class MainViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
+class MainViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, LocationDetailsViewControllerDelegate {
 	var placeArray: GooglePlace?
 	var dataMachine = GoogleDataProvider()
 	var placesClient: GMSPlacesClient?
 	var time: NSDate?
 	var users: [PFObject]?
 	var myOwnObject: PFObject? //All update functions revolve around this object.
-	
+    var polyline: GMSPolyline?
+    
 	let meetingPlaceTypes = ["bakery", "bar", "cafe", "grocery_or_supermarket", "restaurant"]
 	
 	let searchRadius: Double = 1000
@@ -95,6 +96,19 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
+    
+    /**
+     *  Protocol method for receiving encoded poly line from details view
+     */
+    func vectored(controller: LocationDetailsViewController, encodedPolyline: String) {
+        navigationController?.popToViewController(self, animated: true)
+        print("got the encoded polyline back: \(encodedPolyline)")
+        let path = GMSPath(fromEncodedPath: encodedPolyline)
+        polyline = GMSPolyline(path: path)
+        polyline?.map = mapView
+        
+    }
+    
     
 	/**
      *  Recursive function is sent to background to update own location
@@ -342,6 +356,8 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
             print("place sent to Location View controller")
             print(marker.place.name)
             destinationNavigationController.myObject = myOwnObject
+            var sentView = segue.destinationViewController as! LocationDetailsViewController
+            sentView.delegate = self
         }
     }
 
