@@ -102,6 +102,11 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         self.dismissViewControllerAnimated(true, completion:  nil)
     }
     
+    
+    @IBAction func onCancelButton(sender: AnyObject) {
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     func imageTapped(img: AnyObject) {
         print("Profile pic image tapped")
         // TODO: Animate Take Picture, Choose from Library, and Cancel buttons
@@ -117,7 +122,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         let alertController = UIAlertController(title: nil, message: "Set Profile Picture", preferredStyle: .ActionSheet)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-            // ...
+            // Dismiss actionsheet
         }
         
         let choosePicAction = UIAlertAction(title: "Choose From Library", style: .Default) { (action) in
@@ -133,7 +138,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         alertController.addAction(takePicAction)
         
         self.presentViewController(alertController, animated: true) {
-            // ...
+            // Presents action sheet
         }
     }
     

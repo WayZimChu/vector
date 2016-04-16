@@ -28,35 +28,6 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 	@IBOutlet weak var mapView: GMSMapView!
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var markerInfoView: MarkerInfoView!
-	
-
-	@IBAction func onCalcPoint(sender: AnyObject) {
-		// GO TO LOCATION DETAILS VIEW
-       //print((locationManager.location?.coordinate)!)
-        self.tableView.reloadData();
-        fetchLocations((locationManager.location?.coordinate)!)
-        placesClient?.currentPlaceWithCallback({
-            (placeLikelihoodList: GMSPlaceLikelihoodList?, error: NSError?) -> Void in
-            if let error = error {
-                print("Pick Place error: \(error.localizedDescription)")
-                return
-            }
-            
-         //   self.nameLabel.text = "No current place"
-           // self.addressLabel.text = ""
-            
-            if let placeLikelihoodList = placeLikelihoodList {
-                let place = placeLikelihoodList.likelihoods.first?.place
-                if let place = place {
-                  //  self.nameLabel.text = place.name
-                   // self.addressLabel.text = place.formattedAddress!.componentsSeparatedByString(", ")
-                       // .joinWithSeparator("\n")
-                    print("\(place.name) \(place.formattedAddress!.componentsSeparatedByString(", ").joinWithSeparator("\n"))")
-                }
-            }
-        })
-    }
-
 
 	var locationManager = CLLocationManager()
 	
@@ -358,8 +329,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         return friends
     }
     
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
-    {
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "toFriendView" {
             let destinationNavigationController = segue.destinationViewController as! FriendsListViewController
             destinationNavigationController.myOwnObject = self.myOwnObject!
@@ -378,7 +348,38 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
             sentView.delegate = self
         }
     }
+    
+    /*
+        MARK: - Old function for testing
+        Calculates a midpoint
 
+    @IBAction func onCalcPoint(sender: AnyObject) {
+        // GO TO LOCATION DETAILS VIEW
+        //print((locationManager.location?.coordinate)!)
+        self.tableView.reloadData();
+        fetchLocations((locationManager.location?.coordinate)!)
+        placesClient?.currentPlaceWithCallback({
+            (placeLikelihoodList: GMSPlaceLikelihoodList?, error: NSError?) -> Void in
+            if let error = error {
+                print("Pick Place error: \(error.localizedDescription)")
+                return
+            }
+            
+            //   self.nameLabel.text = "No current place"
+            // self.addressLabel.text = ""
+            
+            if let placeLikelihoodList = placeLikelihoodList {
+                let place = placeLikelihoodList.likelihoods.first?.place
+                if let place = place {
+                    //  self.nameLabel.text = place.name
+                    // self.addressLabel.text = place.formattedAddress!.componentsSeparatedByString(", ")
+                    // .joinWithSeparator("\n")
+                    print("\(place.name) \(place.formattedAddress!.componentsSeparatedByString(", ").joinWithSeparator("\n"))")
+                }
+            }
+        })
+    }
+    */
 	
 }
 

@@ -42,11 +42,15 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                     let image = UIImage(data:imageData!)
                     self.profileImageView.image = image
                     
+                    // Make profile picture circular
+                    self.profileImageView.layer.masksToBounds = false
+                    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.height/2
+                    self.profileImageView.clipsToBounds = true
+                    
                     print("Profile Picture Loaded")
                 }
             })
         }
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,17 +59,16 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     @IBAction func onSaveProfile(sender: AnyObject) {
-        let password: String? = passwordTextField.text
         let firstname: String? = firstnameTextField.text
         let lastname: String? = lastnameTextField.text
         let phonenum: String? = phonenumTextField.text
-        
-        Post.updateProfile((myOwnObject?.objectId!)!, password: password, firstname: firstname, lastname: lastname, phonenum: phonenum, profileImage: profileImageView.image, lowercaseName: PFUser.currentUser()?.username?.lowercaseString)
+                
+        Post.updateProfile((myOwnObject?.objectId!)!, firstname: firstname, lastname: lastname, phonenum: phonenum, profileImage: profileImageView.image, lowercaseName: PFUser.currentUser()?.username?.lowercaseString)
         
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func onTakePicture(sender: AnyObject) {
+    func onTakePicture() {
         let vc = UIImagePickerController()
         vc.delegate = self
         vc.allowsEditing = true
@@ -74,7 +77,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         self.presentViewController(vc, animated: true, completion: nil)
     }
     
-    @IBAction func onChooseFromLib(sender: AnyObject) {
+    func onChooseFromLib() {
         let vc = UIImagePickerController()
         vc.delegate = self
         vc.allowsEditing = true
@@ -90,9 +93,32 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     func imageTapped(img: AnyObject) {
-        print("Profile pic image tapped")
-        // TODO: Animate Take Picture, Choose from Library, and Cancel buttons
-        //       To slide up on screen. Make sure to dismiss keyboard too.
+        openActionSheet()
+    }
+    
+    func openActionSheet() {
+        // UIAlertController Action Sheet
+        let alertController = UIAlertController(title: nil, message: "Set Profile Picture", preferredStyle: .ActionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            // Dismiss actionsheet
+        }
+        
+        let choosePicAction = UIAlertAction(title: "Choose From Library", style: .Default) { (action) in
+            self.onChooseFromLib()
+        }
+        
+        let takePicAction = UIAlertAction(title: "Take Picture", style: .Default) { (action) in
+            self.onTakePicture()
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(choosePicAction)
+        alertController.addAction(takePicAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            // Presents action sheet
+        }
     }
     
     func imagePickerController(picker: UIImagePickerController,

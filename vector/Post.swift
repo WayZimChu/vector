@@ -25,7 +25,7 @@ class Post: NSObject {
         }
     }
     
-    class func updateProfile(ID: String, password: String?, firstname: String?,
+    class func updateProfile(ID: String, firstname: String?,
         lastname: String?, phonenum: String?, profileImage: UIImage?, lowercaseName: String?) {
             let query = PFQuery(className: "Profile")
             query.getObjectInBackgroundWithId("\(ID)") {
@@ -34,25 +34,21 @@ class Post: NSObject {
                     print(error)
                 } else if let profileObject = profileObject {                    
                     // Only update whatever is not nil
-                    if password != nil { // THIS PASSWORD THING IS WRONG!!!!!! NEEDS TO BE UPDATED...
-                        profileObject["password"] = password
-                    }
                     if firstname != nil {
-                        profileObject["firstname"] = firstname
+                        profileObject["firstname"] = firstname!
                     }
                     if lastname != nil {
-                        profileObject["lastname"] = lastname
+                        profileObject["lastname"] = lastname!
                     }
                     if phonenum != nil {
-                        profileObject["phonenum"] = phonenum
+                        profileObject["phonenum"] = phonenum!
                     }
                     if profileImage != nil {
-                        profileObject["profilePic"] = Profile.getPFFileFromImage(profileImage) // PFFile column type
+                        profileObject["profilePic"] = Profile.getPFFileFromImage(profileImage!) // PFFile column type
                     }
                     if lowercaseName != nil {
                         profileObject["lowercaseUsername"] = lowercaseName
                     }
-                    
                     
                     profileObject.saveInBackground()
                 }
