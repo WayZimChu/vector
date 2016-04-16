@@ -8,6 +8,11 @@
 
 import UIKit
 import GoogleMaps
+import Parse
+
+protocol LocationDetailsViewControllerDelegate : class {
+    func vectored(controller: LocationDetailsViewController, encodedPolyline: String)
+}
 
 class LocationDetailsViewController: UIViewController, GMSPanoramaViewDelegate {
 
@@ -30,6 +35,10 @@ class LocationDetailsViewController: UIViewController, GMSPanoramaViewDelegate {
     @IBOutlet weak var panoV: GMSPanoramaView!
     
     var placeHolder: GooglePlace!
+    var myObject: PFObject?
+    var dataMachine: GoogleDataProvider!
+    weak var delegate : LocationDetailsViewControllerDelegate!
+    var m = ""
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,25 +49,45 @@ class LocationDetailsViewController: UIViewController, GMSPanoramaViewDelegate {
         locationName.text = placeHolder.name
         locationAddress.text = placeHolder.address
         locationPhoneNum.text = placeHolder.phoneNum
-        
-        
+        dataMachine = GoogleDataProvider()
+        let a = myObject!.valueForKey("latitude") as! Double
+        let b = myObject!.valueForKey("longitude") as! Double
+        let c = placeHolder.coordinate.latitude
+        let d = placeHolder.coordinate.longitude
+
+        self.dataMachine?.fetchDirection(a,myLong: b,theirLat: c,theirLong: d){
+            g in
+            print("inside locations view from closure \(g)")
+            self.m = g
+        }
+
+
     }
     
+    @IBAction func vectorMe(sender: AnyObject) {
+        print(myObject)
+        print(placeHolder)
+
+        
+        print("this is g: \(m)")
+        delegate.vectored(self, encodedPolyline: m)
+        
+
+        
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
     }
-    */
+
 
 }

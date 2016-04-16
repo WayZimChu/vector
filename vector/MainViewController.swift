@@ -12,50 +12,22 @@ import CoreLocation
 import GoogleMaps
 import Parse
 
-class MainViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
+class MainViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, LocationDetailsViewControllerDelegate {
 	var placeArray: GooglePlace?
 	var dataMachine = GoogleDataProvider()
 	var placesClient: GMSPlacesClient?
 	var time: NSDate?
 	var users: [PFObject]?
 	var myOwnObject: PFObject? //All update functions revolve around this object.
-	
+    var polyline: GMSPolyline?
+    
 	let meetingPlaceTypes = ["bakery", "bar", "cafe", "grocery_or_supermarket", "restaurant"]
 	
-	let searchRadius: Double = 1000
+	let searchRadius: Double = 1500
 	
 	@IBOutlet weak var mapView: GMSMapView!
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var markerInfoView: MarkerInfoView!
-	
-
-	@IBAction func onCalcPoint(sender: AnyObject) {
-		// GO TO LOCATION DETAILS VIEW
-       //print((locationManager.location?.coordinate)!)
-        self.tableView.reloadData();
-        fetchLocations((locationManager.location?.coordinate)!)
-        placesClient?.currentPlaceWithCallback({
-            (placeLikelihoodList: GMSPlaceLikelihoodList?, error: NSError?) -> Void in
-            if let error = error {
-                print("Pick Place error: \(error.localizedDescription)")
-                return
-            }
-            
-         //   self.nameLabel.text = "No current place"
-           // self.addressLabel.text = ""
-            
-            if let placeLikelihoodList = placeLikelihoodList {
-                let place = placeLikelihoodList.likelihoods.first?.place
-                if let place = place {
-                  //  self.nameLabel.text = place.name
-                   // self.addressLabel.text = place.formattedAddress!.componentsSeparatedByString(", ")
-                       // .joinWithSeparator("\n")
-                    print("\(place.name) \(place.formattedAddress!.componentsSeparatedByString(", ").joinWithSeparator("\n"))")
-                }
-            }
-        })
-    }
-
 
 	var locationManager = CLLocationManager()
 	
@@ -72,7 +44,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		placesClient = GMSPlacesClient()
 		//print(users)
 		// fetchLocations()
-
+        
 		let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
 		dispatch_async(dispatch_get_global_queue(priority, 0)) {
 			// do some task
@@ -81,7 +53,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 				// update some UI
 			}
 		}
-        print("#### \(users)")
+        //print("#### \(users)")
         self.tableView.reloadData()
     }
 	
@@ -95,6 +67,32 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
+    
+    /**
+     *  Protocol method for receiving encoded poly line from details view
+     */
+    func vectored(controller: LocationDetailsViewController, encodedPolyline: String) {
+        navigationController?.popToViewController(self, animated: true)
+        print("got the encoded polyline back: \(encodedPolyline)")
+        //clear the map of extraneous information
+        //mapView.clear()
+        //create a GMSPath from the encoded polyline taken from GoogleDirections API
+        let path = GMSPath(fromEncodedPath: encodedPolyline)
+        //create a bounds for the camera to zoom to
+        let coordinateBounds = GMSCoordinateBounds(path: path!)
+        //create a cameraUpdate object for moving the camera
+        let cameraUpdate = GMSCameraUpdate.fitBounds(coordinateBounds, withPadding: 80.0)
+        //move camera to bounds
+        mapView.moveCamera(cameraUpdate)
+        
+        //create polyline
+        polyline = GMSPolyline(path: path)
+        polyline?.strokeColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
+        polyline?.strokeWidth = 5
+        //put polyline on map
+        polyline?.map = mapView
+    }
+    
     
 	/**
      *  Recursive function is sent to background to update own location
@@ -130,8 +128,8 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		cell.nameLabel.text = user["username"] as? String
         let otherLocation = CLLocation(latitude: user["latitude"] as! Double, longitude: user["longitude"] as! Double)
         var distance = locationManager.location!.distanceFromLocation(otherLocation)
-       print(distance)
-        distance = distance/1600
+        print(distance)
+        distance = distance/1600 // 1600 because it's in meters
         cell.distanceLabel.text = NSString(format: "%.2f miles away", distance) as String
         
 		if let profile = user.valueForKey("profilePic")! as? PFFile {
@@ -140,8 +138,13 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 				if (error == nil) {
 					let image = UIImage(data:imageData!)
 					cell.profileImage.image = image
+                    
+                    // Make profile picture circular
+                    cell.profileImage.layer.masksToBounds = false
+                    cell.profileImage.layer.cornerRadius = cell.profileImage.frame.height/2
+                    cell.profileImage.clipsToBounds = true
 					
-					print("Profile Picture Loaded")
+					//print("Profile Picture Loaded")
 				}
 			})
 		}
@@ -151,6 +154,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 	
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("Fetch locations called")
+        mapView.clear()
         let otherUser = users![indexPath.row]
         let myLocation = locationManager.location?.coordinate
         let otherLocation = CLLocationCoordinate2DMake(otherUser["latitude"] as! Double, otherUser["longitude"] as! Double)
@@ -159,14 +163,36 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         mapView.animateToLocation(midpoint)
     }
 	
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        //1. Setup the CATransform3D structure
+        var rotation = CATransform3D()
+        rotation = CATransform3DMakeRotation( CGFloat((90.0*M_PI)/180.0), 0.0, 0.7, 0.4);
+        rotation.m34 = (1.0 / (-600))
+        
+        //2. Define the initial state (Before the animation)
+        cell.layer.shadowColor = UIColor.blackColor().CGColor
+        cell.layer.shadowOffset = CGSizeMake(10, 10);
+        cell.alpha = 0;
+        
+        cell.layer.transform = rotation;
+        cell.layer.anchorPoint = CGPointMake(0, 0.5);
+        
+        //3. Define the final state (After the animation) and commit the animation
+        UIView.beginAnimations("rotation", context: nil)
+        UIView.setAnimationDuration(0.8)
+        cell.layer.transform = CATransform3DIdentity;
+        cell.alpha = 1;
+        cell.layer.shadowOffset = CGSizeMake(0, 0);
+        UIView.commitAnimations()
+    }
 	
-	
+    
 	func fetchLocations(coord: CLLocationCoordinate2D) {
 		dataMachine.fetchPlacesNearCoordinate(coord, radius: searchRadius, types: meetingPlaceTypes){places in
 			for place: GooglePlace in places {
 				let marker = PlaceMarker(place: place)
 				let markerView = MarkerInfoView()
-				
+				//print("places \(places.count)")
 				// marker icon control
                     marker.title = place.name
 				if let placeImage = UIImage(named: place.placeType)?.imageWithRenderingMode(.AlwaysTemplate) {
@@ -307,14 +333,14 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
             friends = objects
             if error == nil {
                 // The find succeeded!
-                print("FRIENDS::: Successfully retrieved \(objects!.count) Points in time.")
+                print("FRIENDS::: Successfully retrieved \(objects!.count)")
                 friends = objects
                 self.users = friends
                 self.tableView.reloadData()
                 
                 if let objects = objects {
                     for object in objects {
-                        print(object)
+                       // print(object)
                     }
                 }
             } else {
@@ -326,8 +352,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         return friends
     }
     
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
-    {
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "toFriendView" {
             let destinationNavigationController = segue.destinationViewController as! FriendsListViewController
             destinationNavigationController.myOwnObject = self.myOwnObject!
@@ -341,9 +366,43 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
             destinationNavigationController.placeHolder = marker.place
             print("place sent to Location View controller")
             print(marker.place.name)
+            destinationNavigationController.myObject = myOwnObject
+            var sentView = segue.destinationViewController as! LocationDetailsViewController
+            sentView.delegate = self
         }
     }
+    
+    /*
+        MARK: - Old function for testing
+        Calculates a midpoint
 
+    @IBAction func onCalcPoint(sender: AnyObject) {
+        // GO TO LOCATION DETAILS VIEW
+        //print((locationManager.location?.coordinate)!)
+        self.tableView.reloadData();
+        fetchLocations((locationManager.location?.coordinate)!)
+        placesClient?.currentPlaceWithCallback({
+            (placeLikelihoodList: GMSPlaceLikelihoodList?, error: NSError?) -> Void in
+            if let error = error {
+                print("Pick Place error: \(error.localizedDescription)")
+                return
+            }
+            
+            //   self.nameLabel.text = "No current place"
+            // self.addressLabel.text = ""
+            
+            if let placeLikelihoodList = placeLikelihoodList {
+                let place = placeLikelihoodList.likelihoods.first?.place
+                if let place = place {
+                    //  self.nameLabel.text = place.name
+                    // self.addressLabel.text = place.formattedAddress!.componentsSeparatedByString(", ")
+                    // .joinWithSeparator("\n")
+                    print("\(place.name) \(place.formattedAddress!.componentsSeparatedByString(", ").joinWithSeparator("\n"))")
+                }
+            }
+        })
+    }
+    */
 	
 }
 
@@ -356,6 +415,7 @@ extension MainViewController: GMSMapViewDelegate {
 	
 	func didTapMyLocationButtonForMapView(mapView: GMSMapView) -> Bool {
             mapView.selectedMarker = nil
+            mapView.camera = GMSCameraPosition(target: locationManager.location!.coordinate, zoom: 13, bearing: 0, viewingAngle: 0)
             return false
 	}
 }
@@ -383,7 +443,7 @@ extension MainViewController: CLLocationManagerDelegate {
 		if let location = locations.last {
 			time = NSDate()
 			// center camera on user location
-			mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 14, bearing: 0, viewingAngle: 0)
+			mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 13, bearing: 0, viewingAngle: 0)
 			//fetchLocations(location.coordinate)
 			
 			// turns off location updates

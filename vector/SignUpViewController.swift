@@ -8,8 +8,9 @@
 
 import UIKit
 import Parse
+import VideoSplashKit
 
-class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SignUpViewController: VideoSplashViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -25,6 +26,24 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
         profileImageView.userInteractionEnabled = true
         profileImageView.addGestureRecognizer(tapGestureRecognizer)
+        
+        // Make profile picture circular
+        profileImageView.layer.masksToBounds = false
+        profileImageView.layer.cornerRadius = profileImageView.frame.height/2
+        profileImageView.clipsToBounds = true
+        
+        let url = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("david", ofType: "mp4")!)
+        
+        self.videoFrame = view.frame
+        self.fillMode = .ResizeAspectFill
+        self.alwaysRepeat = true
+        self.sound = true
+        self.startTime = 0.0
+        self.duration = 12.0
+        self.alpha = 1
+        self.backgroundColor = UIColor.blackColor()
+        self.contentURL = url
+        self.restartForeground = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,7 +92,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         
     }
     
-    @IBAction func onTakePicture(sender: AnyObject) {
+    func onTakePicture() {
         let vc = UIImagePickerController()
         vc.delegate = self
         vc.allowsEditing = true
@@ -82,7 +101,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         self.presentViewController(vc, animated: true, completion: nil)
     }
     
-    @IBAction func onChooseFromLib(sender: AnyObject) {
+    func onChooseFromLib() {
         let vc = UIImagePickerController()
         vc.delegate = self
         vc.allowsEditing = true
@@ -97,10 +116,44 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         self.dismissViewControllerAnimated(true, completion:  nil)
     }
     
+    
+    @IBAction func onCancelButton(sender: AnyObject) {
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     func imageTapped(img: AnyObject) {
         print("Profile pic image tapped")
         // TODO: Animate Take Picture, Choose from Library, and Cancel buttons
         //       To slide up on screen. Make sure to dismiss keyboard too.
+        
+        view.endEditing(true) // Gets rid of keyboard
+        
+        openActionSheet()
+    }
+    
+    func openActionSheet() {
+        // UIAlertController Action Sheet
+        let alertController = UIAlertController(title: nil, message: "Set Profile Picture", preferredStyle: .ActionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            // Dismiss actionsheet
+        }
+        
+        let choosePicAction = UIAlertAction(title: "Choose From Library", style: .Default) { (action) in
+            self.onChooseFromLib()
+        }
+        
+        let takePicAction = UIAlertAction(title: "Take Picture", style: .Default) { (action) in
+            self.onTakePicture()
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(choosePicAction)
+        alertController.addAction(takePicAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            // Presents action sheet
+        }
     }
     
     func imagePickerController(picker: UIImagePickerController,

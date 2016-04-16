@@ -63,27 +63,21 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     func defaultMenuImage() -> UIImage {
         var defaultMenuImage = UIImage()
         
-        struct Static {
-            static var onceToken: dispatch_once_t = 0
-        }
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(30, 22), false, 0.0)
         
-        dispatch_once(&Static.onceToken, { () -> Void in
-            UIGraphicsBeginImageContextWithOptions(CGSizeMake(30, 22), false, 0.0)
-            
-            UIColor.blackColor().setFill()
-            UIBezierPath(rect: CGRectMake(0, 3, 30, 1)).fill()
-            UIBezierPath(rect: CGRectMake(0, 10, 30, 1)).fill()
-            UIBezierPath(rect: CGRectMake(0, 17, 30, 1)).fill()
-            
-            UIColor.whiteColor().setFill()
-            UIBezierPath(rect: CGRectMake(0, 4, 30, 1)).fill()
-            UIBezierPath(rect: CGRectMake(0, 11,  30, 1)).fill()
-            UIBezierPath(rect: CGRectMake(0, 18, 30, 1)).fill()
-            
-            defaultMenuImage = UIGraphicsGetImageFromCurrentImageContext()
-            
-            UIGraphicsEndImageContext()
-        })
+        UIColor.blackColor().setFill()
+        UIBezierPath(rect: CGRectMake(0, 3, 30, 1)).fill()
+        UIBezierPath(rect: CGRectMake(0, 10, 30, 1)).fill()
+        UIBezierPath(rect: CGRectMake(0, 17, 30, 1)).fill()
+        
+        UIColor.whiteColor().setFill()
+        UIBezierPath(rect: CGRectMake(0, 4, 30, 1)).fill()
+        UIBezierPath(rect: CGRectMake(0, 11,  30, 1)).fill()
+        UIBezierPath(rect: CGRectMake(0, 18, 30, 1)).fill()
+        
+        defaultMenuImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
         
         return defaultMenuImage
     }

@@ -12,12 +12,14 @@ import Parse
 class FriendsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     var allUsers: [PFObject]?
     var friends: [PFObject]?
+    var arrayUsernames: [String] = []
     var filteredUsers: [PFObject]?
     var myOwnObject: PFObject? // all updates revolve around this object
     var searchActive: Bool = false
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var addFriendButtonView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +74,12 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         
         cell.nameLabel.text = user["username"] as? String
         
+        cell.addFriendView.hidden = false
+        
+        if arrayUsernames.contains(user["lowercaseUsername"] as! String) {
+            cell.addFriendView.hidden = true
+        }
+        
         if let profile = user.valueForKey("profilePic")! as? PFFile {
             profile.getDataInBackgroundWithBlock({
                 (imageData: NSData?, error: NSError?) -> Void in
@@ -79,7 +87,13 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
                     let image = UIImage(data:imageData!)
                     cell.profileImage.image = image
                     
+                    // Make profile picture circular
+                    cell.profileImage.layer.masksToBounds = false
+                    cell.profileImage.layer.cornerRadius = cell.profileImage.frame.height/2
+                    cell.profileImage.clipsToBounds = true
+                    
                     print("Profile Picture Loaded")
+                    
                 }
             })
         }
@@ -94,7 +108,28 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         
         return cell
     }
-    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        //1. Setup the CATransform3D structure
+        var rotation = CATransform3D()
+        rotation = CATransform3DMakeRotation( CGFloat((90.0*M_PI)/180.0), 0.0, 0.7, 0.4);
+        rotation.m34 = (1.0 / (-600))
+        
+        //2. Define the initial state (Before the animation)
+        cell.layer.shadowColor = UIColor.blackColor().CGColor
+        cell.layer.shadowOffset = CGSizeMake(10, 10);
+        cell.alpha = 0;
+        
+        cell.layer.transform = rotation;
+        cell.layer.anchorPoint = CGPointMake(0, 0.5);
+        
+        //3. Define the final state (After the animation) and commit the animation
+        UIView.beginAnimations("rotation", context: nil)
+        UIView.setAnimationDuration(0.9)
+        cell.layer.transform = CATransform3DIdentity;
+        cell.alpha = 1;
+        cell.layer.shadowOffset = CGSizeMake(0, 0);
+        UIView.commitAnimations()
+    }
     
     /* MARK: - Search Bar Functions
      *
@@ -138,7 +173,7 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
                 self.tableView.reloadData()
                 if let objects = objects {
                     for object in objects {
-                        print("OBJECT: \(object)")
+                        //print("OBJECT: \(object)")
                         self.tableView.reloadData()
                     }
                 }
@@ -209,9 +244,11 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
                 self.friends = objects
                 self.tableView.reloadData()
                 
-                if let objects = objects {
-                    for object in objects {
-                        print(object)
+                if objects != nil {
+                    for object in objects! {
+                        self.arrayUsernames.append(object.valueForKey("lowercaseUsername") as! String)
+                        print("LOWERCASE USERNAMES: \(object.valueForKey("lowercaseUsername")!)")
+                        print("lowercaseUsername: \(self.arrayUsernames)")
                     }
                 }
             } else {
@@ -226,7 +263,7 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
      *
      */
     @IBAction func onAddFriend(sender: AnyObject) {
-        let cell = sender.superview!!.superview as! UITableViewCell
+        let cell = sender.superview!?.superview!.superview as! UITableViewCell
         let indexPath = tableView.indexPathForCell(cell)
         
         var data: [PFObject]?
@@ -234,10 +271,10 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         searchActive ? (data = filteredUsers) : (data = friends)
         
         let personToFriend = data![(indexPath?.row)!]
-        print(personToFriend)
+        //print(personToFriend)
         
         //This is used to update friends into PFObjects
-        print(personToFriend["lowercaseUsername"]!)
+        //print(personToFriend["lowercaseUsername"]!)
         myOwnObject!.addUniqueObjectsFromArray(["\(personToFriend["lowercaseUsername"]!)"], forKey:"friendAdd")
         myOwnObject!.saveInBackground()
         personToFriend.addUniqueObjectsFromArray(["\(myOwnObject!["lowercaseUsername"])"], forKey: "friendRequest")

@@ -30,11 +30,57 @@ import CoreLocation
 import SwiftyJSON
 
 class GoogleDataProvider {
-  let apiKey = "AIzaSyBjkr78eByfQnT7Tf-CwUifQHEqbT05qqY"
+  let apiKey = "AIzaSyCnIoj_O7MX-MKUI7kGiBuNvmfqt1UtCGo"
   var photoCache = [String:UIImage]()
   var placesTask: NSURLSessionDataTask?
+  var directionsTask: NSURLSessionDataTask?
   var session: NSURLSession {
     return NSURLSession.sharedSession()
+  }
+  weak var delegate : LocationDetailsViewControllerDelegate!
+    
+    func fetchDirection(myLat: Double, myLong: Double, theirLat: Double, theirLong: Double, completion: ((String) -> Void )) -> ()
+  {
+    
+    var urlString = "http://localhost:10000/maps/api/directions/json?origin=\(myLat),\(myLong)&destination=\(theirLat),\(theirLong)&key=\(apiKey)"
+    urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+    print(urlString)
+    if let task = directionsTask where task.taskIdentifier > 0 && task.state == .Running {
+        task.cancel()
+    }
+   
+    UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+    let request = NSURLRequest(URL: NSURL(string:urlString)!)
+    let session = NSURLSession.sharedSession()
+    var g = ""
+    var f = NSDictionary()
+    session.dataTaskWithRequest(request,
+        completionHandler: {(data: NSData?, response: NSURLResponse?, error: NSError?) in
+            
+            if error == nil {
+                if let object = try! NSJSONSerialization.JSONObjectWithData(data!, options: []) as? NSDictionary {
+                
+                print(object)
+                
+                let routes = object["routes"] as! [NSDictionary]
+                for route in routes {
+                     g = ((route["overview_polyline"]!["points"]!)!) as! String
+                    print(g)
+                    //self.delegate.vectored(self, encodedPolyline: g)
+
+                    
+
+                }
+                dispatch_async(dispatch_get_main_queue()) {
+                   completion(g)
+                    }
+            }
+            else {
+                print("Direction API error")
+            }
+            }
+            
+    }).resume()
   }
   
   func fetchPlacesNearCoordinate(coordinate: CLLocationCoordinate2D, radius: Double, types:[String], completion: (([GooglePlace]) -> Void)) -> ()
@@ -54,7 +100,7 @@ class GoogleDataProvider {
       var placesArray = [GooglePlace]()
       if let aData = data {
         let json = JSON(data:aData, options:NSJSONReadingOptions.MutableContainers, error: nil)
-        print(json["error_message"])
+        print("Error message: \(json["error_message"])")
         if let results = json["results"].arrayObject as? [[String : AnyObject]] {
             //print(results)
           for rawPlace in results {
