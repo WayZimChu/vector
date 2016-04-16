@@ -15,6 +15,8 @@ class MainViewCell: UITableViewCell {
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var onlineStatusImage: UIImageView!
     
+    @IBOutlet weak var addFriendView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

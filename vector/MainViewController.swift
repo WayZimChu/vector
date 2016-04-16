@@ -144,8 +144,8 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		cell.nameLabel.text = user["username"] as? String
         let otherLocation = CLLocation(latitude: user["latitude"] as! Double, longitude: user["longitude"] as! Double)
         var distance = locationManager.location!.distanceFromLocation(otherLocation)
-       print(distance)
-        distance = distance/1600
+        print(distance)
+        distance = distance/1600 // 1600 because it's in meters
         cell.distanceLabel.text = NSString(format: "%.2f miles away", distance) as String
         
 		if let profile = user.valueForKey("profilePic")! as? PFFile {
@@ -154,6 +154,11 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 				if (error == nil) {
 					let image = UIImage(data:imageData!)
 					cell.profileImage.image = image
+                    
+                    // Make profile picture circular
+                    cell.profileImage.layer.masksToBounds = false
+                    cell.profileImage.layer.cornerRadius = cell.profileImage.frame.height/2
+                    cell.profileImage.clipsToBounds = true
 					
 					//print("Profile Picture Loaded")
 				}

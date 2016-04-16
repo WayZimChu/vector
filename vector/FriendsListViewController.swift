@@ -12,12 +12,14 @@ import Parse
 class FriendsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     var allUsers: [PFObject]?
     var friends: [PFObject]?
+    var arrayUsernames: [String] = []
     var filteredUsers: [PFObject]?
     var myOwnObject: PFObject? // all updates revolve around this object
     var searchActive: Bool = false
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var addFriendButtonView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +74,12 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         
         cell.nameLabel.text = user["username"] as? String
         
+        cell.addFriendView.hidden = false
+        
+        if arrayUsernames.contains(user["lowercaseUsername"] as! String) {
+            cell.addFriendView.hidden = true
+        }
+        
         if let profile = user.valueForKey("profilePic")! as? PFFile {
             profile.getDataInBackgroundWithBlock({
                 (imageData: NSData?, error: NSError?) -> Void in
@@ -79,7 +87,13 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
                     let image = UIImage(data:imageData!)
                     cell.profileImage.image = image
                     
+                    // Make profile picture circular
+                    cell.profileImage.layer.masksToBounds = false
+                    cell.profileImage.layer.cornerRadius = cell.profileImage.frame.height/2
+                    cell.profileImage.clipsToBounds = true
+                    
                     print("Profile Picture Loaded")
+                    
                 }
             })
         }
@@ -209,9 +223,11 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
                 self.friends = objects
                 self.tableView.reloadData()
                 
-                if let objects = objects {
-                    for object in objects {
-                        //print(object)
+                if objects != nil {
+                    for object in objects! {
+                        self.arrayUsernames.append(object.valueForKey("lowercaseUsername") as! String)
+                        print("LOWERCASE USERNAMES: \(object.valueForKey("lowercaseUsername")!)")
+                        print("lowercaseUsername: \(self.arrayUsernames)")
                     }
                 }
             } else {
