@@ -18,7 +18,7 @@ class LoginViewController: VideoSplashViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let url = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource(nil, ofType: "mp4")!)
+        let url = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("globe", ofType: "mp4")!)
         
         self.videoFrame = view.frame
         self.fillMode = .ResizeAspectFill

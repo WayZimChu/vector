@@ -8,8 +8,9 @@
 
 import UIKit
 import Parse
+import VideoSplashKit
 
-class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SignUpViewController: VideoSplashViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -30,6 +31,19 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         profileImageView.layer.masksToBounds = false
         profileImageView.layer.cornerRadius = profileImageView.frame.height/2
         profileImageView.clipsToBounds = true
+        
+        let url = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("david", ofType: "mp4")!)
+        
+        self.videoFrame = view.frame
+        self.fillMode = .ResizeAspectFill
+        self.alwaysRepeat = true
+        self.sound = true
+        self.startTime = 0.0
+        self.duration = 12.0
+        self.alpha = 1
+        self.backgroundColor = UIColor.blackColor()
+        self.contentURL = url
+        self.restartForeground = true
     }
 
     override func didReceiveMemoryWarning() {
