@@ -14,6 +14,7 @@
 		7A4565281C92734600A24BF3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4565261C92734600A24BF3 /* User.swift */; };
 		7AB5A3911CA4877A0051ADCE /* MarkerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB5A38F1CA4877A0051ADCE /* MarkerInfoView.swift */; };
 		7ACBA7581CA44495009D5A7F /* PlaceMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ACBA7571CA44495009D5A7F /* PlaceMarker.swift */; };
+		7AD7A4891CC1F67700A4E82B /* globe.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7AD7A4881CC1F67700A4E82B /* globe.mp4 */; };
 		8106E7A01CB38E5E00CCE68A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8106E79F1CB38E5E00CCE68A /* BaseViewController.swift */; };
 		8106E7A21CB38E9600CCE68A /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8106E7A11CB38E9600CCE68A /* MenuViewController.swift */; };
 		813290801CA1E991004E3FFC /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8132907F1CA1E991004E3FFC /* Profile.swift */; };
@@ -41,6 +42,7 @@
 		7A4565261C92734600A24BF3 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7AB5A38F1CA4877A0051ADCE /* MarkerInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkerInfoView.swift; sourceTree = "<group>"; };
 		7ACBA7571CA44495009D5A7F /* PlaceMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceMarker.swift; sourceTree = "<group>"; };
+		7AD7A4881CC1F67700A4E82B /* globe.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = globe.mp4; sourceTree = SOURCE_ROOT; };
 		8106E79F1CB38E5E00CCE68A /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		8106E7A11CB38E9600CCE68A /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		8132907F1CA1E991004E3FFC /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 		818AEED41C7D3A370027BE00 /* vector */ = {
 			isa = PBXGroup;
 			children = (
+				7AD7A4881CC1F67700A4E82B /* globe.mp4 */,
 				278E43271C92694E002BD781 /* Models */,
 				81E061881C977E4500D49DEE /* Views */,
 				81E061831C97780300D49DEE /* View Controllers */,
@@ -230,6 +233,7 @@
 				27CB69B11CADD85200F29276 /* MarkerInfoView.xib in Resources */,
 				818AEEE31C7D3A370027BE00 /* LaunchScreen.storyboard in Resources */,
 				818AEEE01C7D3A370027BE00 /* Assets.xcassets in Resources */,
+				7AD7A4891CC1F67700A4E82B /* globe.mp4 in Resources */,
 				818AEEDB1C7D3A370027BE00 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

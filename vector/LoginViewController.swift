@@ -8,8 +8,9 @@
 
 import UIKit
 import Parse
+import VideoSplashKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: VideoSplashViewController {
 
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -17,6 +18,18 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let url = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource(nil, ofType: "mp4")!)
+        
+        self.videoFrame = view.frame
+        self.fillMode = .ResizeAspectFill
+        self.alwaysRepeat = true
+        self.sound = true
+        self.startTime = 0.0
+        self.duration = 12.0
+        self.alpha = 1
+        self.backgroundColor = UIColor.blackColor()
+        self.contentURL = url
+        self.restartForeground = true
 
         // Do any additional setup after loading the view.
         displayKeyboard()

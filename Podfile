@@ -9,5 +9,6 @@ target 'vector' do
 	pod ‘Parse’
 	pod 'SwiftyJSON'
 	pod 'GoogleMaps'
+	pod 'VideoSplashKit'
 end
 
