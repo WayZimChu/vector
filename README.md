@@ -18,9 +18,6 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] User can adjust midpoint based on time and/or distance
-- [ ] User can can choose method of transportation.
-- [ ] Friends locations update based on their GPS location
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 

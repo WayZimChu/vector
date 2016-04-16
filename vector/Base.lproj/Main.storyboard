@@ -598,7 +598,7 @@
                                     <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Search for friends!" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vT9-ru-oY2">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <color key="tintColor" red="0.0" green="0.2613261093" blue="0.46052631579999997" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="barTintColor" red="0.042302643924087432" green="0.84976750027019587" blue="0.86118209362030029" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="barTintColor" red="0.37647058823529411" green="0.40784313725490196" blue="0.49019607843137253" alpha="1" colorSpace="calibratedRGB"/>
                                         <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                                         <scopeButtonTitles>
                                             <string>Title</string>
