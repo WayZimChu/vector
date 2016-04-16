@@ -1,8 +1,8 @@
 # Group Project - Vector
 
-Vector is an interface to find a place to meet between two points of location.
+Need to try a new food spot, bar or café? Vector is a simple, intuitive app that allows you and a friend to find a meeting spot exactly at the midpoint between your locations. Wherever the midpoint is calculated, icons pop up on a map near the midpoint, allowing you to choose the type of meeting place, such as a bar, café, bakery, restaurant, or supermarket. Use the convenience of meeting your friend somewhere in the middle with Vector.
 
-Time spent: **31** mythical man hours spent in total
+Time spent: **42** mythical man hours spent in total
 
 ## User Stories
 
@@ -82,7 +82,7 @@ Describe any challenges encountered while building the app.
 - Google Maps API: coordinate.longitude, coordinate.latitude
 - Google Places API: name, vicinity, geometry.location.lat, geometry.location.lng, placeType, photos
 
-## License 
+## License
 
     Copyright 2016 [name of copyright owner]
 
