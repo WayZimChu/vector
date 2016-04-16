@@ -62,7 +62,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         print("%%%%% \((PFUser.currentUser()?.username!)!)")
         loadOwnObject((PFUser.currentUser()?.username!)!)
 	}
-	
+
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
@@ -101,12 +101,17 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 	{
 //		print("in recursive")
 		NSThread.sleepForTimeInterval(10)
+		if let selfID = (self.myOwnObject?.objectId) {
 		if let location = locationManager.location?.coordinate {
-		print("recursively updating: " + (self.myOwnObject?.objectId)!)
+		print("recursively updating: " + selfID)
 		Post.updateLocation((myOwnObject?.objectId!)!, long: (location.longitude), lat: (location.latitude))
 		NSThread.sleepForTimeInterval(30)
 		} else {
 			print("recursion failed: could not find coordinates")
+			NSThread.sleepForTimeInterval(10)
+		}
+		} else {
+			print("recursion failed: could not find myOwnObject")
 			NSThread.sleepForTimeInterval(10)
 		}
 		recursiveUpdate()
