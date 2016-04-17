@@ -44,7 +44,7 @@ class GoogleDataProvider {
     
     var urlString = "http://localhost:10000/maps/api/directions/json?origin=\(myLat),\(myLong)&destination=\(theirLat),\(theirLong)&key=\(apiKey)"
     urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-    print(urlString)
+    //print(urlString)
     if let task = directionsTask where task.taskIdentifier > 0 && task.state == .Running {
         task.cancel()
     }
@@ -60,12 +60,12 @@ class GoogleDataProvider {
             if error == nil {
                 if let object = try! NSJSONSerialization.JSONObjectWithData(data!, options: []) as? NSDictionary {
                 
-                print(object)
+                //print(object)
                 
                 let routes = object["routes"] as! [NSDictionary]
                 for route in routes {
                      g = ((route["overview_polyline"]!["points"]!)!) as! String
-                    print(g)
+                    //print(g)
                     //self.delegate.vectored(self, encodedPolyline: g)
 
                     
@@ -100,7 +100,7 @@ class GoogleDataProvider {
       var placesArray = [GooglePlace]()
       if let aData = data {
         let json = JSON(data:aData, options:NSJSONReadingOptions.MutableContainers, error: nil)
-        print("Error message: \(json["error_message"])")
+        //print("Error message: \(json["error_message"])")
         if let results = json["results"].arrayObject as? [[String : AnyObject]] {
             //print(results)
           for rawPlace in results {

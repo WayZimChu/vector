@@ -62,7 +62,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         print("%%%%% \((PFUser.currentUser()?.username!)!)")
         loadOwnObject((PFUser.currentUser()?.username!)!)
 	}
-	
+
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
@@ -73,7 +73,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
      */
     func vectored(controller: LocationDetailsViewController, encodedPolyline: String) {
         navigationController?.popToViewController(self, animated: true)
-        print("got the encoded polyline back: \(encodedPolyline)")
+        //print("got the encoded polyline back: \(encodedPolyline)")
         //clear the map of extraneous information
         //mapView.clear()
         //create a GMSPath from the encoded polyline taken from GoogleDirections API
@@ -101,12 +101,19 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 	{
 //		print("in recursive")
 		NSThread.sleepForTimeInterval(10)
+		if let selfID = (self.myOwnObject?.objectId) {
 		if let location = locationManager.location?.coordinate {
-		print("recursively updating: " + (self.myOwnObject?.objectId)!)
+		print("recursively updating: " + selfID)
+		//print("recursively updating: " + (self.myOwnObject?.objectId)!)
+
 		Post.updateLocation((myOwnObject?.objectId!)!, long: (location.longitude), lat: (location.latitude))
 		NSThread.sleepForTimeInterval(30)
 		} else {
 			print("recursion failed: could not find coordinates")
+			NSThread.sleepForTimeInterval(10)
+		}
+		} else {
+			print("recursion failed: could not find myOwnObject")
 			NSThread.sleepForTimeInterval(10)
 		}
 		recursiveUpdate()
@@ -128,7 +135,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		cell.nameLabel.text = user["username"] as? String
         let otherLocation = CLLocation(latitude: user["latitude"] as! Double, longitude: user["longitude"] as! Double)
         var distance = locationManager.location!.distanceFromLocation(otherLocation)
-        print(distance)
+        //print(distance)
         distance = distance/1600 // 1600 because it's in meters
         cell.distanceLabel.text = NSString(format: "%.2f miles away", distance) as String
         
@@ -153,7 +160,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 	}
 	
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("Fetch locations called")
+        //print("Fetch locations cled")
         mapView.clear()
         let otherUser = users![indexPath.row]
         let myLocation = locationManager.location?.coordinate
@@ -161,12 +168,26 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         let midpoint = calculateMidpoint([myLocation!, otherLocation])
         fetchLocations(midpoint)
         mapView.animateToLocation(midpoint)
+        
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        UIView.animateWithDuration( 2, delay: 0.5, options: [UIViewAnimationOptions.CurveEaseInOut, UIViewAnimationOptions.Autoreverse, UIViewAnimationOptions.Repeat], animations: { cell!.alpha = 0.5}, completion: nil)
+        //
+        //animate the cell while selected
+        //
+        //
+    }
+    
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        //let cell = tableView.cellForRowAtIndexPath(indexPath)
+        print("deselected")
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+        
     }
 	
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         //1. Setup the CATransform3D structure
         var rotation = CATransform3D()
-        rotation = CATransform3DMakeRotation( CGFloat((90.0*M_PI)/180.0), 0.0, 0.7, 0.4);
+        rotation = CATransform3DMakeRotation( CGFloat((60.0*M_PI)/180.0), 0.0, 0.7, 0.4);
         rotation.m34 = (1.0 / (-600))
         
         //2. Define the initial state (Before the animation)
@@ -185,13 +206,12 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         cell.layer.shadowOffset = CGSizeMake(0, 0);
         UIView.commitAnimations()
     }
-	
     
 	func fetchLocations(coord: CLLocationCoordinate2D) {
 		dataMachine.fetchPlacesNearCoordinate(coord, radius: searchRadius, types: meetingPlaceTypes){places in
 			for place: GooglePlace in places {
 				let marker = PlaceMarker(place: place)
-				let markerView = MarkerInfoView()
+				//let markerView = MarkerInfoView()
 				//print("places \(places.count)")
 				// marker icon control
                     marker.title = place.name
@@ -226,11 +246,11 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		// Iterate through all online friends' coordinates
 		for (location) in onlineCoordinates {
 			numCoordinates++
-			print("Lat: \(location.latitude) | Long: \(location.longitude)")
+			//print("Lat: \(location.latitude) | Long: \(location.longitude)")
 			let latRadians = location.latitude * (π/180)   // Convert Latitude to Radians
 			let longRadians = location.longitude * (π/180) // Convert Longitude to Radians
-			print("latRadians: \(latRadians)")
-			print("longRadians: \(longRadians)")
+			//print("latRadians: \(latRadians)")
+			//print("longRadians: \(longRadians)")
 			
 			// Convert latitude and longitude to cartesian coordinates
 			combinedCartesianX += (cos(latRadians) * cos(longRadians)) // Combined X Coordinate
@@ -241,9 +261,9 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		combinedCartesianX /= Double(numCoordinates)
 		combinedCartesianY /= Double(numCoordinates)
 		combinedCartesianZ /= Double(numCoordinates)
-		print("combinedCartesianX: \(combinedCartesianX)")
-		print("combinedCartesianY: \(combinedCartesianY)")
-		print("combinedCartesianZ: \(combinedCartesianZ)")
+		//print("combinedCartesianX: \(combinedCartesianX)")
+		//print("combinedCartesianY: \(combinedCartesianY)")
+		//print("combinedCartesianZ: \(combinedCartesianZ)")
 		
 		let midpointX = atan2(combinedCartesianZ, (sqrt(pow(combinedCartesianX, 2) + pow(combinedCartesianY, 2))))
 		let midpointY = atan2(combinedCartesianY, combinedCartesianX)
@@ -251,7 +271,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		let midpointLatitude = (180/π) * midpointX  // Convert from radians to degrees
 		let midpointLongitude = (180/π) * midpointY // Convert from radians to degrees
 		
-		print("Midpoint | Lat: \(midpointLatitude) | Long: \(midpointLongitude)")
+		//print("Midpoint | Lat: \(midpointLatitude) | Long: \(midpointLongitude)")
 		let midpoint = CLLocationCoordinate2DMake(midpointLatitude, midpointLongitude)
 		
 		return midpoint
@@ -269,7 +289,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
             user = object![0]
             if error == nil {
                 //The find succeeded.
-                print("Successfully retrieved my own object \(user)")
+                //print("Successfully retrieved my own object \(user)")
                 self.myOwnObject = user
                 self.users = self.loadFriends()
             }
@@ -333,7 +353,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
             friends = objects
             if error == nil {
                 // The find succeeded!
-                print("FRIENDS::: Successfully retrieved \(objects!.count)")
+                //print("FRIENDS::: Successfully retrieved \(objects!.count)")
                 friends = objects
                 self.users = friends
                 self.tableView.reloadData()
@@ -358,14 +378,14 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
             destinationNavigationController.myOwnObject = self.myOwnObject!
         } else if segue.identifier == "updateProfileSegue" {
             let destinationNavigationController = segue.destinationViewController as! ProfileViewController
-            print("MY OWN OBJECT:::::: \(myOwnObject)")
+            //print("MY OWN OBJECT:::::: \(myOwnObject)")
             destinationNavigationController.myOwnObject = self.myOwnObject!
         } else if segue.identifier == "toPlacesProfile" {
             let marker = sender as! PlaceMarker
             let destinationNavigationController = segue.destinationViewController as! LocationDetailsViewController
             destinationNavigationController.placeHolder = marker.place
-            print("place sent to Location View controller")
-            print(marker.place.name)
+            //print("place sent to Location View controller")
+            //print(marker.place.name)
             destinationNavigationController.myObject = myOwnObject
             var sentView = segue.destinationViewController as! LocationDetailsViewController
             sentView.delegate = self

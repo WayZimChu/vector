@@ -66,7 +66,7 @@ class MarkerInfoView: UIView {
 	
 	func initSubviews() {
 		let nib = UINib(nibName: "MarkerInfoView", bundle: nil)
-		print("in subviews")
+		//print("in subviews")
 		nib.instantiateWithOwner(self, options: nil)
 		markerInfoView.frame = frame
 		addSubview(markerInfoView)
