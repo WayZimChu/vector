@@ -42,7 +42,7 @@ class GooglePlace {
   init(dictionary:[String : AnyObject], acceptedTypes: [String])
   {
     let json = JSON(dictionary)
-    print(json)
+    //print(json)
     rating = json["rating"].stringValue
     name = json["name"].stringValue
     address = json["formatted_address"].stringValue

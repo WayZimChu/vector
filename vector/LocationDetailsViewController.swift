@@ -91,5 +91,4 @@ class LocationDetailsViewController: UIViewController, GMSPanoramaViewDelegate {
 		
 	}
 	
-	
 }
