@@ -10,5 +10,6 @@ target 'vector' do
 	pod 'SwiftyJSON'
 	pod 'GoogleMaps'
 	pod 'VideoSplashKit'
+	pod 'MBProgressHUD', '~> 0.9.2'
 end
 

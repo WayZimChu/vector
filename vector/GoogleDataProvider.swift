@@ -100,7 +100,7 @@ class GoogleDataProvider {
       var placesArray = [GooglePlace]()
       if let aData = data {
         let json = JSON(data:aData, options:NSJSONReadingOptions.MutableContainers, error: nil)
-        //print("Error message: \(json["error_message"])")
+        print("Error message: \(json["error_message"])")
         if let results = json["results"].arrayObject as? [[String : AnyObject]] {
             //print(results)
           for rawPlace in results {

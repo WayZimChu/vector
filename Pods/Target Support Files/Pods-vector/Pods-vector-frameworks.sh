@@ -86,6 +86,7 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-vector/AFNetworking.framework"
   install_framework "Pods-vector/Bolts.framework"
+  install_framework "Pods-vector/MBProgressHUD.framework"
   install_framework "Pods-vector/Parse.framework"
   install_framework "Pods-vector/SwiftyJSON.framework"
   install_framework "Pods-vector/VideoSplashKit.framework"
@@ -93,6 +94,7 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-vector/AFNetworking.framework"
   install_framework "Pods-vector/Bolts.framework"
+  install_framework "Pods-vector/MBProgressHUD.framework"
   install_framework "Pods-vector/Parse.framework"
   install_framework "Pods-vector/SwiftyJSON.framework"
   install_framework "Pods-vector/VideoSplashKit.framework"
