@@ -61,15 +61,15 @@ class LocationDetailsViewController: UIViewController, GMSPanoramaViewDelegate {
             self.m = g
         }
 
-
+        print("place info: \(placeHolder)")
     }
     
     @IBAction func vectorMe(sender: AnyObject) {
-        print(myObject)
-        print(placeHolder)
+        //print(myObject)
+        //print(placeHolder)
 
         
-        print("this is g: \(m)")
+        //print("this is g: \(m)")
         delegate.vectored(self, encodedPolyline: m)
         
 
