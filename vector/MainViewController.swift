@@ -11,6 +11,7 @@ import Foundation
 import CoreLocation
 import GoogleMaps
 import Parse
+import MBProgressHUD
 
 class MainViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, LocationDetailsViewControllerDelegate {
 	var placeArray: GooglePlace?
@@ -20,6 +21,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 	var users: [PFObject]?
 	var myOwnObject: PFObject? //All update functions revolve around this object.
     var polyline: GMSPolyline?
+    var huddie: MBProgressHUD?
     
 	let meetingPlaceTypes = ["bakery", "bar", "cafe", "grocery_or_supermarket", "restaurant"]
 	
@@ -99,12 +101,10 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
      */
 	func recursiveUpdate()
 	{
-//		print("in recursive")
 		NSThread.sleepForTimeInterval(10)
 		if let selfID = (self.myOwnObject?.objectId) {
 		if let location = locationManager.location?.coordinate {
 		print("recursively updating: " + selfID)
-		//print("recursively updating: " + (self.myOwnObject?.objectId)!)
 
 		Post.updateLocation((myOwnObject?.objectId!)!, long: (location.longitude), lat: (location.latitude))
 		NSThread.sleepForTimeInterval(30)
@@ -112,10 +112,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 			print("recursion failed: could not find coordinates")
 			NSThread.sleepForTimeInterval(10)
 		}
-		} else {
-			print("recursion failed: could not find myOwnObject")
-			NSThread.sleepForTimeInterval(10)
-		}
+        }
 		recursiveUpdate()
 	}
 	
@@ -166,6 +163,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         let myLocation = locationManager.location?.coordinate
         let otherLocation = CLLocationCoordinate2DMake(otherUser["latitude"] as! Double, otherUser["longitude"] as! Double)
         let midpoint = calculateMidpoint([myLocation!, otherLocation])
+        
         fetchLocations(midpoint)
         mapView.animateToLocation(midpoint)
         
@@ -208,7 +206,8 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
     }
     
 	func fetchLocations(coord: CLLocationCoordinate2D) {
-		dataMachine.fetchPlacesNearCoordinate(coord, radius: searchRadius, types: meetingPlaceTypes){places in
+		//MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        dataMachine.fetchPlacesNearCoordinate(coord, radius: searchRadius, types: meetingPlaceTypes){places in
 			for place: GooglePlace in places {
 				let marker = PlaceMarker(place: place)
 				//let markerView = MarkerInfoView()
@@ -225,6 +224,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 			}
 			
 		}
+        //MBProgressHUD.hideHUDForView(self.view, animated: true)
 	}
 	
 	func calculateMidpoint(arrayOfCoordinates: [CLLocationCoordinate2D]) -> CLLocationCoordinate2D {
@@ -357,12 +357,12 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
                 friends = objects
                 self.users = friends
                 self.tableView.reloadData()
-                
+                /*
                 if let objects = objects {
                     for object in objects {
                        // print(object)
                     }
-                }
+                }*/
             } else {
                 // Log details of the failure
                 print("Error: \(error!) \(error!.userInfo)")
@@ -387,7 +387,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
             //print("place sent to Location View controller")
             //print(marker.place.name)
             destinationNavigationController.myObject = myOwnObject
-            var sentView = segue.destinationViewController as! LocationDetailsViewController
+            let sentView = segue.destinationViewController as! LocationDetailsViewController
             sentView.delegate = self
         }
     }

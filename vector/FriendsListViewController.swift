@@ -131,6 +131,21 @@ class FriendsListViewController: UIViewController, UITableViewDataSource, UITabl
         UIView.commitAnimations()
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        UIView.animateWithDuration( 2, delay: 0.5, options: [UIViewAnimationOptions.CurveEaseInOut, UIViewAnimationOptions.Autoreverse, UIViewAnimationOptions.Repeat], animations: { cell!.alpha = 0.5}, completion: nil)
+        //
+        //animate the cell while selected
+        //
+        //
+    }
+    
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        //let cell = tableView.cellForRowAtIndexPath(indexPath)
+        print("deselected")
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+        
+    }
     /* MARK: - Search Bar Functions
      *
      */

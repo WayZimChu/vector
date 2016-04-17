@@ -16,6 +16,7 @@ PODS:
     - AFNetworking/NSURLSession
   - Bolts/Tasks (1.6.0)
   - GoogleMaps (1.12.3)
+  - MBProgressHUD (0.9.2)
   - Parse (1.12.0):
     - Bolts/Tasks (~> 1.5)
   - SwiftyJSON (2.3.2)
@@ -24,6 +25,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking
   - GoogleMaps
+  - MBProgressHUD (~> 0.9.2)
   - Parse
   - SwiftyJSON
   - VideoSplashKit
@@ -32,6 +34,7 @@ SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   Bolts: f52a250053bb517ca874523c3913776359ab3def
   GoogleMaps: a4ac67918d0b5ba5f6b9893ac80487e357779e6c
+  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   Parse: de2c52a9a1421b91ae7594ab8ce191afd184f19b
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   VideoSplashKit: 0aa63d0bb37c5bd357de3e6a2a13dea5acad4d66
