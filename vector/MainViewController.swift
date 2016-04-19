@@ -93,6 +93,12 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         polyline?.strokeWidth = 5
         //put polyline on map
         polyline?.map = mapView
+        
+        let alert = UIAlertController(title: "Vectored", message: "Relax and drive safe.", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: {action in
+            self.dismissViewControllerAnimated(false, completion: nil) }
+            ))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     
@@ -206,7 +212,9 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
     }
     
 	func fetchLocations(coord: CLLocationCoordinate2D) {
-		//MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        loadingNotification.mode = MBProgressHUDMode.Indeterminate
+        loadingNotification.labelText = "Finding places :)"
         dataMachine.fetchPlacesNearCoordinate(coord, radius: searchRadius, types: meetingPlaceTypes){places in
 			for place: GooglePlace in places {
 				let marker = PlaceMarker(place: place)
@@ -222,9 +230,10 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 				
 				marker.map = self.mapView
 			}
-			
+            self.mapView.camera = GMSCameraPosition(target: coord, zoom: 13, bearing: 0, viewingAngle: 45)
+			MBProgressHUD.hideHUDForView(self.view, animated: true)
 		}
-        //MBProgressHUD.hideHUDForView(self.view, animated: true)
+        
 	}
 	
 	func calculateMidpoint(arrayOfCoordinates: [CLLocationCoordinate2D]) -> CLLocationCoordinate2D {
