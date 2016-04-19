@@ -31,6 +31,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         profileImageView.userInteractionEnabled = true
         profileImageView.addGestureRecognizer(tapGestureRecognizer)
         
+        // To hide keyboard when tapped anywhere on screen
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
+        
         firstnameTextField.text = myOwnObject!["firstname"] as? String
         lastnameTextField.text = myOwnObject!["lastname"] as? String
         phonenumTextField.text = myOwnObject!["phonenum"] as? String
@@ -132,6 +136,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             
             // Dismiss UIImagePickerController to go back to your original view controller
             dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     /*
