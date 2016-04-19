@@ -95,7 +95,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         polyline?.map = mapView
         
         let alert = UIAlertController(title: "Vectored", message: "Relax and drive safe.", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: {action in
+        alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: {action in
             self.dismissViewControllerAnimated(false, completion: nil) }
             ))
         self.presentViewController(alert, animated: true, completion: nil)
@@ -230,7 +230,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 				
 				marker.map = self.mapView
 			}
-            self.mapView.camera = GMSCameraPosition(target: coord, zoom: 13, bearing: 0, viewingAngle: 45)
+            self.mapView.camera = GMSCameraPosition(target: coord, zoom: 13.5, bearing: 0, viewingAngle: 45)
 			MBProgressHUD.hideHUDForView(self.view, animated: true)
 		}
         

@@ -63,6 +63,31 @@ class LoginViewController: VideoSplashViewController {
                 self.performSegueWithIdentifier("loginSegue", sender: nil)
             } else {
                 print("Username is required")
+                print(error)
+                if error?.code == 200 {
+                    print("No Username")
+                    let alert = UIAlertController(title: "Error", message: "Username Required.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: {action in
+                        self.dismissViewControllerAnimated(false, completion: nil) }
+                        ))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+                else if error?.code == 201 {
+                    print("No Password")
+                    let alert = UIAlertController(title: "Error", message: "Password Required.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: {action in
+                        self.dismissViewControllerAnimated(false, completion: nil) }
+                        ))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+                else if error?.code == 101 {
+                    print("invalid")
+                    let alert = UIAlertController(title: "Error", message: "Invalid username/password.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: {action in
+                        self.dismissViewControllerAnimated(false, completion: nil) }
+                        ))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
             }
         }
     }
