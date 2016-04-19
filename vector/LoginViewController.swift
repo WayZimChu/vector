@@ -41,7 +41,9 @@ class LoginViewController: VideoSplashViewController {
         signUpButtonView.layer.cornerRadius = 3
         signUpButtonView.clipsToBounds = true
         
-        //displayKeyboard()
+        // To hide keyboard when tapped anywhere on screen
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,6 +53,10 @@ class LoginViewController: VideoSplashViewController {
     
     func displayKeyboard() {
         self.usernameTextField.becomeFirstResponder()
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     @IBAction func onLogin(sender: AnyObject) {
@@ -78,3 +84,4 @@ class LoginViewController: VideoSplashViewController {
     */
 
 }
+
