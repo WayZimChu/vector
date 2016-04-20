@@ -34,7 +34,6 @@ class GooglePlace {
   let address: String
   let coordinate: CLLocationCoordinate2D
   let placeType: String
-  let phoneNum: String
   let rating: String
   let priceLevel: Int
   var categories: [String] = []
@@ -56,8 +55,8 @@ class GooglePlace {
     //print(json)
     rating = json["rating"].stringValue
     name = json["name"].stringValue
-    address = json["formatted_address"].stringValue
-    phoneNum = json["formatted_phone_number"].stringValue
+    // address = json["formatted_address"].stringValue // ONLY FOR TEXT SEARCH
+    address = json["vicinity"].stringValue
     openNow = json["opening_hours"]["open_now"].boolValue
     priceLevel = json["price_level"].intValue
     

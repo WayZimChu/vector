@@ -236,72 +236,61 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="3 Miles away from you" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xqC-5i-HMa">
-                                <rect key="frame" x="211" y="373" width="144" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Fast Food, Burgers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6jV-Xz-Uct">
                                 <rect key="frame" x="20" y="392" width="122" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5cQ-F9-ZmA">
-                                <rect key="frame" x="20" y="524" width="25" height="25"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VQT-vG-tTZ">
-                                <rect key="frame" x="20" y="557" width="25" height="25"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bqg-Bo-hj5">
-                                <rect key="frame" x="20" y="590" width="25" height="25"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1051 Ocean Ave, San Francisco, CA 94112" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QjX-uQ-TBv">
-                                <rect key="frame" x="53" y="529" width="237" height="15"/>
+                                <rect key="frame" x="20" y="416" width="237" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="interactive" editable="NO" text="(415) 584-2650" translatesAutoresizingMaskIntoConstraints="NO" id="lCb-lP-Uzq">
-                                <rect key="frame" x="48" y="553" width="101" height="25"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
-                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES"/>
-                            </textView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xbd-FX-Ahz" customClass="GMSPanoramaView">
                                 <rect key="frame" x="0.0" y="64" width="375" height="290"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i8B-IE-Ndd">
-                                <rect key="frame" x="147" y="439" width="71" height="30"/>
-                                <state key="normal" title="Vector me"/>
-                                <connections>
-                                    <action selector="vectorMe:" destination="Vcz-R1-Cp7" eventType="touchUpInside" id="iKi-bn-rEp"/>
-                                </connections>
-                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="3 Miles away from you" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xqC-5i-HMa">
+                                <rect key="frame" x="20" y="439" width="144" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Open Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dvw-oW-pYQ">
-                                <rect key="frame" x="52" y="595" width="59" height="15"/>
+                                <rect key="frame" x="296" y="375" width="59" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cM1-iD-h82">
+                                <rect key="frame" x="20" y="594" width="335" height="53"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i8B-IE-Ndd">
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="53"/>
+                                        <state key="normal" title="Vector Me">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="vectorMe:" destination="Vcz-R1-Cp7" eventType="touchUpInside" id="iKi-bn-rEp"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.32549019610000002" green="0.78823529410000004" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="clockIcon" destination="bqg-Bo-hj5" id="2Un-Va-nOK"/>
                         <outlet property="locationAddress" destination="QjX-uQ-TBv" id="SWd-qS-Vit"/>
                         <outlet property="locationCategory" destination="6jV-Xz-Uct" id="ZfW-cG-916"/>
                         <outlet property="locationDistFromYou" destination="xqC-5i-HMa" id="VWl-MZ-S2y"/>
-                        <outlet property="locationIcon" destination="5cQ-F9-ZmA" id="wJc-8F-gJW"/>
                         <outlet property="locationName" destination="zre-Oh-0Tj" id="y31-XN-g7L"/>
-                        <outlet property="locationPhoneNum" destination="lCb-lP-Uzq" id="7ry-CB-WyQ"/>
                         <outlet property="openNowLabel" destination="Dvw-oW-pYQ" id="aEJ-j1-gbP"/>
                         <outlet property="panoV" destination="xbd-FX-Ahz" id="is9-U8-JgF"/>
-                        <outlet property="phoneIcon" destination="VQT-vG-tTZ" id="K4e-6K-iON"/>
+                        <outlet property="vectorMeButtonView" destination="cM1-iD-h82" id="chd-kQ-07o"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hgx-CY-2qk" userLabel="First Responder" sceneMemberID="firstResponder"/>

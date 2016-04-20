@@ -22,13 +22,9 @@ class LocationDetailsViewController: UIViewController, GMSPanoramaViewDelegate {
 	@IBOutlet weak var locationAddress: UILabel!
     @IBOutlet weak var locationDistFromYou: UILabel!
 	
-	@IBOutlet weak var locationPhoneNum: UITextView!
     @IBOutlet weak var openNowLabel: UILabel!
 	
-	@IBOutlet weak var locationIcon: UIImageView!
-	@IBOutlet weak var phoneIcon: UIImageView!
-	@IBOutlet weak var clockIcon: UIImageView!
-	
+    @IBOutlet weak var vectorMeButtonView: UIView!
 	
 	@IBOutlet weak var panoV: GMSPanoramaView!
 	
@@ -44,10 +40,13 @@ class LocationDetailsViewController: UIViewController, GMSPanoramaViewDelegate {
 		
 		panoV.moveNearCoordinate(placeHolder.coordinate)
 		panoV.delegate = self
+        
+        // Round the edges of the buttons
+        vectorMeButtonView.layer.cornerRadius = 3
+        vectorMeButtonView.clipsToBounds = true
 		
 		locationName.text = placeHolder.name
 		locationAddress.text = placeHolder.address
-		locationPhoneNum.text = placeHolder.phoneNum
 		dataMachine = GoogleDataProvider()
 		let myLat = myObject!.valueForKey("latitude") as! Double
 		let myLong = myObject!.valueForKey("longitude") as! Double
