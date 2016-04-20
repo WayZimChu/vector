@@ -27,6 +27,10 @@ class SignUpViewController: VideoSplashViewController, UIImagePickerControllerDe
         profileImageView.userInteractionEnabled = true
         profileImageView.addGestureRecognizer(tapGestureRecognizer)
         
+        // To hide keyboard when tapped anywhere on screen
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
+        
         // Make profile picture circular
         profileImageView.layer.masksToBounds = false
         profileImageView.layer.cornerRadius = profileImageView.frame.height/2
@@ -167,6 +171,10 @@ class SignUpViewController: VideoSplashViewController, UIImagePickerControllerDe
             
             // Dismiss UIImagePickerController to go back to your original view controller
             dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     /*

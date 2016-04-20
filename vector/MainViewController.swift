@@ -86,7 +86,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         let cameraUpdate = GMSCameraUpdate.fitBounds(coordinateBounds, withPadding: 80.0)
         //move camera to bounds
         mapView.moveCamera(cameraUpdate)
-        
+        polyline?.map = nil
         //create polyline
         polyline = GMSPolyline(path: path)
         polyline?.strokeColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
