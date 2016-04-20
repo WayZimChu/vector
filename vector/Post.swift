@@ -25,6 +25,21 @@ class Post: NSObject {
         }
     }
     
+    class func updateGoingToLocation(ID: String, goingToLong: Double, goingToLat: Double){
+        let query = PFQuery(className:"Profile")
+        query.getObjectInBackgroundWithId(ID) {
+            (profileObject: PFObject?, error: NSError?) -> Void in
+            if error != nil {
+                print(error)
+            } else if let profileObject = profileObject {
+                profileObject["GoingToLocationLong"] = goingToLong
+                profileObject["GoingToLocationLat"] = goingToLat
+                profileObject.saveInBackground()
+            }
+        }
+        
+    }
+    
     class func updateProfile(ID: String, firstname: String?,
         lastname: String?, phonenum: String?, profileImage: UIImage?, lowercaseName: String?) {
             let query = PFQuery(className: "Profile")
