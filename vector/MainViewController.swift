@@ -215,7 +215,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         loadingNotification.mode = MBProgressHUDMode.Indeterminate
         loadingNotification.labelText = "Finding places :)"
-        dataMachine.fetchPlacesNearCoordinate(coord, radius: searchRadius, types: meetingPlaceTypes){places in
+        dataMachine.fetchPlacesNearCoordinate(coord, radius: searchRadius, types: meetingPlaceTypes) { places in
 			for place: GooglePlace in places {
 				let marker = PlaceMarker(place: place)
 				//let markerView = MarkerInfoView()
@@ -236,6 +236,10 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         
 	}
 	
+    /* MARK: - Midpoint Function
+     *         Calculates midpoint between all coordinates in an array
+     *         Parameters: An array of CLLocationCoordinate2D
+     */
 	func calculateMidpoint(arrayOfCoordinates: [CLLocationCoordinate2D]) -> CLLocationCoordinate2D {
 		// Get lat/long of all friends online, store into an array
 		//    Do this in cellForRowAtIndexPath I think...
@@ -285,6 +289,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		
 		return midpoint
 	}
+    
 	/** loads profile owner's profile object so it can be updated
      *
      */

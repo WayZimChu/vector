@@ -36,17 +36,31 @@ class GooglePlace {
   let placeType: String
   let phoneNum: String
   let rating: String
+  let priceLevel: Int
+  var categories: [String] = []
+  let openNow: Bool
   var photoReference: String?
   var photo: UIImage?
   
-  init(dictionary:[String : AnyObject], acceptedTypes: [String])
-  {
+  init(dictionary:[String : AnyObject], acceptedTypes: [String]) {
+    // Let's use a dictionary to nicely format the strings in categories
+    let typesDict: [String : String] = [
+        "bakery" : "Bakery",
+        "bar" : "Bar",
+        "cafe" : "Cafe",
+        "grocery_or_supermarket" : "Grocery",
+        "restaurant" : "Restaurant"
+    ]
+    
     let json = JSON(dictionary)
     //print(json)
     rating = json["rating"].stringValue
     name = json["name"].stringValue
     address = json["formatted_address"].stringValue
     phoneNum = json["formatted_phone_number"].stringValue
+    openNow = json["opening_hours"]["open_now"].boolValue
+    priceLevel = json["price_level"].intValue
+    
     let lat = json["geometry"]["location"]["lat"].doubleValue as CLLocationDegrees
     let lng = json["geometry"]["location"]["lng"].doubleValue as CLLocationDegrees
     coordinate = CLLocationCoordinate2DMake(lat, lng)
@@ -57,10 +71,13 @@ class GooglePlace {
     let possibleTypes = acceptedTypes.count > 0 ? acceptedTypes : ["bakery", "bar", "cafe", "grocery_or_supermarket", "restaurant"]
     for type in json["types"].arrayObject as! [String] {
       if possibleTypes.contains(type) {
+        categories.append(typesDict[type]!)
         foundType = type
         break
       }
     }
     placeType = foundType
-  }
+    }
 }
+
+
