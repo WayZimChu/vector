@@ -37,17 +37,17 @@ class GoogleDataProvider {
   var session: NSURLSession {
     return NSURLSession.sharedSession()
   }
+    
   weak var delegate : LocationDetailsViewControllerDelegate!
     
-    func fetchDirection(myLat: Double, myLong: Double, theirLat: Double, theirLong: Double, completion: ((String) -> Void )) -> ()
-  {
+  func fetchDirection(myLat: Double, myLong: Double, theirLat: Double, theirLong: Double, completion: ((String) -> Void )) -> () {
     
     var urlString = "http://localhost:10000/maps/api/directions/json?origin=\(myLat),\(myLong)&destination=\(theirLat),\(theirLong)&key=\(apiKey)"
     urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
     //print(urlString)
-    if let task = directionsTask where task.taskIdentifier > 0 && task.state == .Running {
-        task.cancel()
-    }
+        if let task = directionsTask where task.taskIdentifier > 0 && task.state == .Running {
+            task.cancel()
+        }
    
     UIApplication.sharedApplication().networkActivityIndicatorVisible = true
     let request = NSURLRequest(URL: NSURL(string:urlString)!)
@@ -60,31 +60,26 @@ class GoogleDataProvider {
             if error == nil {
                 if let object = try! NSJSONSerialization.JSONObjectWithData(data!, options: []) as? NSDictionary {
                 
-                //print(object)
+                    //print(object)
                 
-                let routes = object["routes"] as! [NSDictionary]
-                for route in routes {
-                     g = ((route["overview_polyline"]!["points"]!)!) as! String
-                    //print(g)
-                    //self.delegate.vectored(self, encodedPolyline: g)
-
-                    
-
-                }
-                dispatch_async(dispatch_get_main_queue()) {
-                   completion(g)
+                    let routes = object["routes"] as! [NSDictionary]
+                    for route in routes {
+                        g = ((route["overview_polyline"]!["points"]!)!) as! String
+                        //print(g)
+                        //self.delegate.vectored(self, encodedPolyline: g)
                     }
+                    dispatch_async(dispatch_get_main_queue()) {
+                        completion(g)
+                    }
+                }
+                else {
+                    print("Direction API error")
+                }
             }
-            else {
-                print("Direction API error")
-            }
-            }
-            
-    }).resume()
+        }).resume()
   }
   
-  func fetchPlacesNearCoordinate(coordinate: CLLocationCoordinate2D, radius: Double, types:[String], completion: (([GooglePlace]) -> Void)) -> ()
-  {
+  func fetchPlacesNearCoordinate(coordinate: CLLocationCoordinate2D, radius: Double, types:[String], completion: (([GooglePlace]) -> Void)) -> () {
     var urlString = "http://localhost:10000/maps/api/place/nearbysearch/json?key=\(apiKey)&location=\(coordinate.latitude),\(coordinate.longitude)&radius=\(radius)&rankby=prominence&sensor=true"
     let typesString = types.count > 0 ? types.joinWithSeparator("|") : "food"
     urlString += "&types=\(typesString)"
