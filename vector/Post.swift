@@ -33,7 +33,7 @@ class Post: NSObject {
                 print(error)
             } else if let profileObject = profileObject {
                 profileObject["GoingToLocationLong"] = goingToLong
-                profileObject["GoingToLocationLat"] = goingtoLat
+                profileObject["GoingToLocationLat"] = goingToLat
                 profileObject.saveInBackground()
             }
         }
