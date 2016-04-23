@@ -2,7 +2,7 @@
 
 Need to try a new food spot, bar or café? Vector is a simple, intuitive app that allows you and a friend to find a meeting spot exactly at the midpoint between your locations. Wherever the midpoint is calculated, icons pop up on a map near the midpoint, allowing you to choose the type of meeting place, such as a bar, café, bakery, restaurant, or supermarket. Use the convenience of meeting your friend somewhere in the middle with Vector.
 
-Time spent: **42** mythical man hours spent in total
+Time spent: **54** mythical man hours spent in total
 
 ## User Stories
 
@@ -18,6 +18,7 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
+- [X] User can select multiple friends and calculate the midpoint between everyone selected
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
