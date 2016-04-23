@@ -22,6 +22,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 	var myOwnObject: PFObject? //All update functions revolve around this object.
     var polyline: GMSPolyline?
     var huddie: MBProgressHUD?
+    var coordinatesDict = [String : CLLocationCoordinate2D]()
     
 	let meetingPlaceTypes = ["bakery", "bar", "cafe", "grocery_or_supermarket", "restaurant"]
 	
@@ -37,9 +38,10 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		super.viewDidLoad()
 		
 		// Do any additional setup after loading the view.
-        
 		tableView.delegate = self
 		tableView.dataSource = self
+        tableView.allowsMultipleSelection = true
+        
 		mapView.delegate = self
 		locationManager.delegate = self
 		locationManager.requestWhenInUseAuthorization()
@@ -122,15 +124,20 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		recursiveUpdate()
 	}
 	
+    /*
+     * MARK: - number of rows in selection for tableView
+     */
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if let users = users {
 			return users.count
-		}
-		else {
+		} else {
 			return 0
 		}
 	}
 	
+   /*
+    * MARK: - Cell for row at indexPath
+    */
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("MainViewCell", forIndexPath: indexPath) as! MainViewCell
 		let user = users![indexPath.row]
@@ -162,28 +169,50 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 		return cell
 	}
 	
+   /*
+    * MARK: - Did select row at indexPath
+    */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //print("Fetch locations cled")
         mapView.clear()
         let otherUser = users![indexPath.row]
         let myLocation = locationManager.location?.coordinate
         let otherLocation = CLLocationCoordinate2DMake(otherUser["latitude"] as! Double, otherUser["longitude"] as! Double)
-        let midpoint = calculateMidpoint([myLocation!, otherLocation])
+        
+        // Add coordinates to the dictionary
+        coordinatesDict.updateValue(myLocation!, forKey: "my_coordinates")
+        coordinatesDict.updateValue(otherLocation, forKey: "\(otherUser["lowercaseUsername"]!)")
+        
+        // Calculate midpoint
+        let midpoint = calculateMidpoint(coordinatesDict)
         
         fetchLocations(midpoint)
         mapView.animateToLocation(midpoint)
         
         let cell = tableView.cellForRowAtIndexPath(indexPath)
-        UIView.animateWithDuration( 2, delay: 0.5, options: [UIViewAnimationOptions.CurveEaseInOut, UIViewAnimationOptions.Autoreverse, UIViewAnimationOptions.Repeat], animations: { cell!.alpha = 0.5}, completion: nil)
+        // UIView.animateWithDuration( 2, delay: 0.5, options: [UIViewAnimationOptions.CurveEaseInOut, UIViewAnimationOptions.Autoreverse, UIViewAnimationOptions.Repeat], animations: { cell!.alpha = 0.5}, completion: nil)
+
         //
         //animate the cell while selected
         //
         //
     }
     
+   /*
+    * MARK: - Did deselect row at indexPath
+    */
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        //let cell = tableView.cellForRowAtIndexPath(indexPath)
-        print("deselected")
+        mapView.clear()
+        
+        let otherUser = users![indexPath.row]
+        
+        // Deselected, so let's remove their coordinates from the coordinate dictionary
+        coordinatesDict.removeValueForKey("\(otherUser["lowercaseUsername"]!)")
+        
+        // Recalculate the midpoint
+        let midpoint = calculateMidpoint(coordinatesDict)
+        fetchLocations(midpoint)
+        mapView.animateToLocation(midpoint)
+        
         tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
         
     }
@@ -210,7 +239,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         cell.layer.shadowOffset = CGSizeMake(0, 0);
         UIView.commitAnimations()
     }
-    
+
 	func fetchLocations(coord: CLLocationCoordinate2D) {
         let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         loadingNotification.mode = MBProgressHUDMode.Indeterminate
@@ -240,13 +269,18 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
      *         Calculates midpoint between all coordinates in an array
      *         Parameters: An array of CLLocationCoordinate2D
      */
-	func calculateMidpoint(arrayOfCoordinates: [CLLocationCoordinate2D]) -> CLLocationCoordinate2D {
-		// Get lat/long of all friends online, store into an array
-		//    Do this in cellForRowAtIndexPath I think...
+    func calculateMidpoint(dictOfCoordinates: [String : CLLocationCoordinate2D]) -> CLLocationCoordinate2D {
 		// TEST DATA:::
 		//let yourLocation = CLLocationCoordinate2DMake(37.7258391,-122.4507056) // CCSF Coordinates
 		//let friend1Loc = CLLocationCoordinate2DMake(37.8049393,-122.4233581) // David's old address
-		//let onlineCoordinates = [yourLocation, friend1Loc]
+        
+        // Convert dictionary of coordinates into array of coordinates
+        var arrayOfCoordinates = [CLLocationCoordinate2D]()
+        
+        for coordinates in dictOfCoordinates.values {
+            arrayOfCoordinates.append(coordinates)
+        }
+
 		let onlineCoordinates = arrayOfCoordinates
 		
 		// Let's calculate the center of gravity of everything in the onlineCoordinates array

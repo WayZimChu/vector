@@ -117,7 +117,7 @@
                                     <constraint firstAttribute="height" constant="248" id="cqG-sz-D9g"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MainViewCell" rowHeight="87" id="iO0-G0-TBH" customClass="MainViewCell" customModule="vector" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="MainViewCell" rowHeight="87" id="iO0-G0-TBH" customClass="MainViewCell" customModule="vector" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="87"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iO0-G0-TBH" id="qfD-gB-mtu">
@@ -171,6 +171,7 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
+                                        <color key="tintColor" red="0.37647058820000001" green="0.40784313729999999" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="distanceLabel" destination="4pP-MH-2hY" id="L16-Ac-zNf"/>
                                             <outlet property="nameLabel" destination="6zR-JQ-pbH" id="xM0-H3-MNj"/>
