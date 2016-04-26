@@ -65,6 +65,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         self.addSlideMenuButton()
         print("%%%%% \((PFUser.currentUser()?.username!)!)")
         loadOwnObject((PFUser.currentUser()?.username!)!)
+        coordinatesDict.removeAll()
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -95,6 +96,9 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         polyline?.strokeWidth = 5
         //put polyline on map
         polyline?.map = mapView
+        
+        // Clear dictionary of coordinates
+        coordinatesDict.removeAll()
         
         let alert = UIAlertController(title: "Vectored", message: "Relax and drive safe.", preferredStyle: .Alert)
         let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
