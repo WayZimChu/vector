@@ -96,10 +96,11 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         //put polyline on map
         polyline?.map = mapView
         
-        let alert = UIAlertController(title: "Vectored", message: "Relax and drive safe.", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: {action in
-            self.dismissViewControllerAnimated(false, completion: nil) }
-            ))
+        let alert = UIAlertController(title: "Vectored", message: "Relax and drive safe.", preferredStyle: .Alert)
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            // It will dismiss itself
+        }
+        alert.addAction(OKAction)
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
